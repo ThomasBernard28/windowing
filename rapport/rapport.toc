@@ -1,3 +1,5 @@
 \babel@toc {french}{}\relax 
-\contentsline {section}{\numberline {1}Intro}{2}{section.1}%
-\contentsline {section}{\numberline {2}Outro}{3}{section.2}%
+\contentsline {section}{\numberline {1}Question 1}{2}{section.1}%
+\contentsline {paragraph}{Si on ne considère que les coordonnées en x, voyez-vous que celles-ci sont organisées selon une file de priorité ? Où est la coordonnée minimum (maximum)? Cette file à priorité est-elle un tas ? Justifiez.}{2}{section*.2}%
+\contentsline {section}{\numberline {2}Question 2}{2}{section.2}%
+\contentsline {paragraph}{Si on ne considère que les coordonnées en y, voyez-vous que celles-ci sont organisées selon un arbre binaire de recherche ? Où est la coordonnée minimum (maximum)? Justifiez.}{2}{section*.3}%
