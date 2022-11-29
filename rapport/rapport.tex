@@ -62,7 +62,7 @@
             \begin{tabular}[t]{c c c}
                 \includegraphics[height=1.5cm]{images/logoumons.jpg} &
                 \hspace{0.3cm} &
-                \includegraphics[height=1.5cm]{images/logofs.jpg}
+                \includegraphics[height=1.5cm]{images/logofs.jpg}:
             \end{tabular}
         \end{center}~\\
         
@@ -76,13 +76,31 @@
 \newpage
 
 \section{Question 1}
-    \paragraph{Si on ne considère que les coordonnées en x, voyez-vous que celles-ci sont organisées selon une file de priorité ?
-    Où est la coordonnée minimum (maximum)? Cette file à priorité est-elle un tas ? Justifiez.}
+    Oui on voit qu'il s'agit d'une file de priorité. La coordonnée x minimum se trouve à la racine alors que la coordonnéex maximum se trouve quant à elle
+    dans une des feuilles. On peut ainsi accéder à une fenêtre de coordonnée sur x en partant de son minimum en allant jusqu'à son maximum une feuille. 
+    On peut voir qu'il s'agit d'un tas car tout noeud père a une coordonnée x inférieure à celles de ses fils (droits et gauches). La contrainte disant
+    qu'il doit y avoir autant de noeuds dans la partie droite que la partie gauche correspond bien à la définition d'un tas qui veut que chaque couche
+    soit remplie à l'exception de la couche où se trouvent les feuilles.
 
 \section{Question 2}
-    \paragraph{Si on ne considère que les coordonnées en y, voyez-vous que celles-ci sont organisées selon un arbre binaire de recherche ?  Où est la coordonnée minimum (maximum)? Justifiez.} 
     Oui on voit bien que les données sont organisées sous forme d'un arbre binaire car une coordonée y inférieur à celle de son père
     deviendra le fils gauche de ce père alors que qu'elle deviendra le fils droit de ce même père dans l'autre cas. La coordonnée minimale se trouve donc dans la feuille la plus à gauche 
     alors que la coordonnée maximale se trouve elle dans la feuille la plus à droite.
+
+\section{Question 3}
+    L'arbre de recherche à priorité est équilibré grâce au fait que l'on se serve de la médiane des coordonnées y pour répartir les noeuds dans les sous arbres
+    gauches et droits de la racine. Cela assure une certaine parité au niveau du nombre de noeuds présents dans les sous arbres gauches et droits de la racine.
+    De plus le modèle de tas pour les coordonnées x assure également cette parité par rapport aux coordonnées x qui ont seulement pour contraintes d'être
+    supérieures à celles de leur père.
+
+\section{Question 4}
+
+\section{Question 5}
+
+\section{Question 6}
+
+\section{Question 7}
+
+\section{Question 8}
 
 \end{document}

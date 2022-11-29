@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.9.2)  22 NOV 2022 17:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.9.2)  29 NOV 2022 09:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -420,12 +420,12 @@ LaTeX Info: Redefining \nameref on input line 26.
 \@outlinefile=\write4
 \openout4 = `rapport.out'.
 
-<images/logoumons.jpg, id=15, 336.2964pt x 114.9093pt>
+<images/logoumons.jpg, id=39, 336.2964pt x 114.9093pt>
 File: images/logoumons.jpg Graphic file (type jpg)
 <use images/logoumons.jpg>
 Package pdftex.def Info: images/logoumons.jpg  used on input line 63.
 (pdftex.def)             Requested size: 124.90494pt x 42.67912pt.
-<images/logofs.jpg, id=16, 1968.35374pt x 873.2625pt>
+<images/logofs.jpg, id=40, 1968.35374pt x 873.2625pt>
 File: images/logofs.jpg Graphic file (type jpg)
 <use images/logofs.jpg>
 Package pdftex.def Info: images/logofs.jpg  used on input line 65.
@@ -443,21 +443,21 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has b
 l.76 \newpage
               [1] [2] (./rapport.aux)
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 58D64FE0EC35812EE343BE91F0D34C6A;192.
+(rerunfilecheck)             Checksum: D2FD5C60358F9745AAE6149A24A3FA16;768.
  ) 
 Here is how much of TeX's memory you used:
- 13481 strings out of 478268
- 231442 string characters out of 5836864
+ 13489 strings out of 478268
+ 231519 string characters out of 5836864
  566435 words of memory out of 5000000
- 31469 multiletter control sequences out of 15000+600000
+ 31473 multiletter control sequences out of 15000+600000
  476463 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,10n,92p,333b,426s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,10n,92p,317b,426s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on rapport.pdf (3 pages, 323975 bytes).
+Output written on rapport.pdf (3 pages, 321343 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
- 58 compressed objects within 1 object stream
- 8 named destinations out of 1000 (max. 500000)
- 39 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 110 PDF objects out of 1000 (max. 8388607)
+ 86 compressed objects within 1 object stream
+ 12 named destinations out of 1000 (max. 500000)
+ 87 words of extra memory for PDF output out of 10000 (max. 10000000)
 
