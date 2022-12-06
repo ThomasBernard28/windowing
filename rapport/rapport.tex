@@ -76,22 +76,34 @@
 \newpage
 
 \section{Question 1}
-    Oui on voit qu'il s'agit d'une file de priorité. La coordonnée x minimum se trouve à la racine alors que la coordonnéex maximum se trouve quant à elle
-    dans une des feuilles. On peut ainsi accéder à une fenêtre de coordonnée sur x en partant de son minimum en allant jusqu'à son maximum une feuille. 
-    On peut voir qu'il s'agit d'un tas car tout noeud père a une coordonnée x inférieure à celles de ses fils (droits et gauches). La contrainte disant
-    qu'il doit y avoir autant de noeuds dans la partie droite que la partie gauche correspond bien à la définition d'un tas qui veut que chaque couche
-    soit remplie à l'exception de la couche où se trouvent les feuilles.
+    On voit en effet qu'il s'agit d'une file à priorité sur les coordonnées x. On va toujours prendre le point possédant la coordonnée x minimum
+    afin de le placer dans la racine et ce pour chaque racine de chaque sous arbre. Ce qui fait que chaque racine de chaque sous arbre est un x minimal du
+    jeux de points restants pour le sous arbre étudié. Donc, chacun des fils a bien une coordonée x inférieure ou égale à celle de son père.
+    En revanche, il ne s'agit pas d'un tas. En effet, les couches ne sont pas remplies de droite à gauche et la condition de répartition établie
+    sur la médiane des y impose qu'il y ait autant de noeuds dans les sous arbres gauche et droit de la racine. En conclusion, aucune condition
+    n'impose de remplir la dernière couche complètement de droite à gauche si il n'y a pas assez de noueds pour le faire. On ne peut donc pas avoir de tas.\\
+    La coordonnée x minimum se trouve donc dans la racine de l'arbre et la 
+    coordonnée x maximum se trouve dans une des feuilles.
 
 \section{Question 2}
-    Oui on voit bien que les données sont organisées sous forme d'un arbre binaire car une coordonée y inférieur à celle de son père
-    deviendra le fils gauche de ce père alors que qu'elle deviendra le fils droit de ce même père dans l'autre cas. La coordonnée minimale se trouve donc dans la feuille la plus à gauche 
-    alors que la coordonnée maximale se trouve elle dans la feuille la plus à droite.
+    On voit qu'il s'agit d'une arbre binaire de recherche. Tout d'abord, les conditions d'un ABR sont que pour tout noeud n, son fils gauche $f_g$ est 
+    tel que $n.data > f_g.data$ et son fils droit $f_d$ est tel que $n.data < f_d.data$. \\
+    Ici la "data" qui est utilisée pour comparer chaque noeud avec ses fils avant une insertion est $y_{mid}$ la médiane des coordonnées y des points
+    présents dans l'esemble actuellement considéré. On retrouvera donc dans le sous arbre gauche de la racine l'ensemble des points dont les coordonnées
+    y sont strictements inférieures à la médiane $y_{mid}$. Par conséquent la médiane des coordonnées y des points du sous arbre gauche qui servira
+    de "data" pour le fils gauche de la racine sera également strictement inférieure à la médiane $y_{mid}$. Pour le sous arbre droit il s'agit du même raisonnement
+    mais en partant du fait que les coordonnées y des points du sous arbre droit seront strictement supérieures à la médiane $y_{mid}$, id. pour la médiane des coordonnée
+    y des ces points. \\
+    La coordonnée y minimum se trouve donc dans la feuille la plus à gauche de l'ABR comme elle aura été strictement inférieure à toutes les médianes elle-même inférieures
+    à celle de la racine. Et la coordonnée maximum se trouvera dans la feuille la plus à droite de l'ABR comme elle aura été strictement suppérieure à toutes
+    les médianes elles-même supérieures à celle de la racine.
 
+\newpage
 \section{Question 3}
-    L'arbre de recherche à priorité est équilibré grâce au fait que l'on se serve de la médiane des coordonnées y pour répartir les noeuds dans les sous arbres
-    gauches et droits de la racine. Cela assure une certaine parité au niveau du nombre de noeuds présents dans les sous arbres gauches et droits de la racine.
-    De plus le modèle de tas pour les coordonnées x assure également cette parité par rapport aux coordonnées x qui ont seulement pour contraintes d'être
-    supérieures à celles de leur père.
+    Le fait que les noeuds soient répartis dans les sous-arbres droit et gauche de la racine à l'aide d'une médiane assure par la définition de
+    la médiane qu'il y aura autant de noeuds possédant une coordonnées $y < y_{mid}$ que de noeuds possédant une coordonnée $y > y_{mid}$.
+    Ce principe est respecté de manière récursive pour chaque noeud de chaque sous arbre. On peut donc voir l'équilibre de cette structure comme le fait
+    qu'il y ait autant de noeuds à droite qu'à gauche de chaque racine de chaque sous arbre.
 
 \section{Question 4}
 
