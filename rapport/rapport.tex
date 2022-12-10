@@ -76,6 +76,9 @@
 \newpage
 
 \section{Question 1}
+    \paragraph{Si on ne considère que les coordonnées en x, voyez-vous que celles-ci sont organisées selon
+    une file à priorité ? Où est la coordonnée minimum (maximum) ? Cette file à priorité est-elle
+    un tas ? Justifiez.}
     On voit en effet qu'il s'agit d'une file à priorité sur les coordonnées x. On va toujours prendre le point possédant la coordonnée x minimum
     afin de le placer dans la racine et ce pour chaque racine de chaque sous arbre. Ce qui fait que chaque racine de chaque sous arbre est un x minimal du
     jeux de points restants pour le sous arbre étudié. Donc, chacun des fils a bien une coordonée x inférieure ou égale à celle de son père.
@@ -86,6 +89,8 @@
     coordonnée x maximum se trouve dans une des feuilles.
 
 \section{Question 2}
+    \paragraph{Si on ne considère que les coordonnées en y, voyez-vous que celles-ci sont organisées selon
+    un arbre binaire de recherche ? Où est la coordonnée minimum (maximum) ? Justifiez.}
     On voit qu'il s'agit d'une arbre binaire de recherche. Tout d'abord, les conditions d'un ABR sont que pour tout noeud n, son fils gauche $f_g$ est 
     tel que $n.data > f_g.data$ et son fils droit $f_d$ est tel que $n.data < f_d.data$. \\
     Ici la "data" qui est utilisée pour comparer chaque noeud avec ses fils avant une insertion est $y_{mid}$ la médiane des coordonnées y des points
@@ -100,19 +105,42 @@
 
 \newpage
 \section{Question 3}
+    \paragraph{De quelle façon est équilibré un arbre de recherche à priorité ?}
     Le fait que les noeuds soient répartis dans les sous-arbres droit et gauche de la racine à l'aide d'une médiane assure par la définition de
     la médiane qu'il y aura autant de noeuds possédant une coordonnées $y < y_{mid}$ que de noeuds possédant une coordonnée $y > y_{mid}$.
     Ce principe est respecté de manière récursive pour chaque noeud de chaque sous arbre. On peut donc voir l'équilibre de cette structure comme le fait
     qu'il y ait autant de noeuds à droite qu'à gauche de chaque racine de chaque sous arbre.
 
 \section{Question 4}
+    \paragraph{La construction d’un arbre de recherche à priorité peut se faire en $O(n \log_2 n)$ si n est le
+        nombre de points de $R^2$ contenus dans l’arbre. Expliquez comment on peut y parvenir et
+    comment le prouver. Il faut sans doute utiliser une autre structure de données qui permet
+    de calculer efficacement la médiane.}
 
 \section{Question 5}
+Ici la question implique de modifier la manière dont la fenêtre de recherche est bornnée sur la coordonnée x. Rappellons que les coordonnées x sont organisées sous forme d'une file à priorité.
+Ce qui implique que les fils d'un noeud ont une coordonnée x supérieure ou égale à celle de leur père. L'algorithme proposé est initialement rédigé pour des requêtes bornées par un x maximum. Il y a donc
+une condition qui contrôle pour chaque noeud de chaque sous-arbre en partant de la racine si la coordonnée x est inférieure ou égale à la borne supérieure de la fenêtre de recherche. \\
+
+    \begin{enumerate}
+        \item \textbf{Fenêtre bornée par un x minimum} Dans ce cas, on peut utiliser la définition de file à priorité à notre avantage. En effet, on change la condition de contrôle de la coordonnée x.
+        A présent au lieu de contrôler si la coordonée x est inférieure ou égale à la borne supérieure de la fenêtre de recherche, on contrôle si la coordonnée x est supérieure ou égale à la borne inférieure de la fenêtre de recherche.
+        Si c'est le cas, alors on peut accepter l'entiereté du sous arbres car les fils de la racine de ce sous arbres auront une coordonnée supérieure ou égale à celle de leur père.
+        \item \textbf{Fenêtre bornée par un x minimum et un x maximum} Dans ce cas on associe les deux conditions. Il faut que pour chaque noeud du sous arbre considéré, la coordonnée x soit supérieure ou égale à la borne inférieure et
+        inférieure ou égale à la borne supérieure de la fenêtre de recherche. Dans le cas où l'on rencontre un noeud dont la coordonée x est supérieure à celle de la borne supérieure on considère par la définition
+        d'une file à priorité que tous ses descendants auront une coordonnée x supérieure à celle de la borne supérieure. On peut donc arrêter la recherche dans ce sous arbre.
+    \end{enumerate}
 
 \section{Question 6}
+    \paragraph{Les auteurs du Chapitre 10 font l’hypothèse que tous les points ont des coordonnées bien
+distinctes en x et en y. Expliquez pourquoi.}
 
 \section{Question 7}
+    \paragraph{Une technique est présentée à la page 111. Celle-ci permet de simuler des coordonnées
+distinctes pour un ensemble de points quelconques et une requête. Expliquez comment.}
 
 \section{Question 8}
+    \paragraph{Dans le chapitre, la technique présentée est adaptée à des points. Quelles différences
+    importantes aurait-on avec des segments de droite ? Comment peut-on adapter la technique ?}
 
 \end{document}

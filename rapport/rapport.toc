@@ -1,9 +1,16 @@
 \babel@toc {french}{}\relax 
 \contentsline {section}{\numberline {1}Question 1}{2}{section.1}%
+\contentsline {paragraph}{Si on ne considère que les coordonnées en x, voyez-vous que celles-ci sont organisées selon une file à priorité ? Où est la coordonnée minimum (maximum) ? Cette file à priorité est-elle un tas ? Justifiez.}{2}{section*.2}%
 \contentsline {section}{\numberline {2}Question 2}{2}{section.2}%
+\contentsline {paragraph}{Si on ne considère que les coordonnées en y, voyez-vous que celles-ci sont organisées selon un arbre binaire de recherche ? Où est la coordonnée minimum (maximum) ? Justifiez.}{2}{section*.3}%
 \contentsline {section}{\numberline {3}Question 3}{3}{section.3}%
+\contentsline {paragraph}{De quelle façon est équilibré un arbre de recherche à priorité ?}{3}{section*.4}%
 \contentsline {section}{\numberline {4}Question 4}{3}{section.4}%
+\contentsline {paragraph}{La construction d’un arbre de recherche à priorité peut se faire en $O(n \qopname \relax o{log}_2 n)$ si n est le nombre de points de $R^2$ contenus dans l’arbre. Expliquez comment on peut y parvenir et comment le prouver. Il faut sans doute utiliser une autre structure de données qui permet de calculer efficacement la médiane.}{3}{section*.5}%
 \contentsline {section}{\numberline {5}Question 5}{3}{section.5}%
-\contentsline {section}{\numberline {6}Question 6}{3}{section.6}%
-\contentsline {section}{\numberline {7}Question 7}{3}{section.7}%
-\contentsline {section}{\numberline {8}Question 8}{3}{section.8}%
+\contentsline {section}{\numberline {6}Question 6}{4}{section.6}%
+\contentsline {paragraph}{Les auteurs du Chapitre 10 font l’hypothèse que tous les points ont des coordonnées bien distinctes en x et en y. Expliquez pourquoi.}{4}{section*.6}%
+\contentsline {section}{\numberline {7}Question 7}{4}{section.7}%
+\contentsline {paragraph}{Une technique est présentée à la page 111. Celle-ci permet de simuler des coordonnées distinctes pour un ensemble de points quelconques et une requête. Expliquez comment.}{4}{section*.7}%
+\contentsline {section}{\numberline {8}Question 8}{4}{section.8}%
+\contentsline {paragraph}{Dans le chapitre, la technique présentée est adaptée à des points. Quelles différences importantes aurait-on avec des segments de droite ? Comment peut-on adapter la technique ?}{4}{section*.8}%
