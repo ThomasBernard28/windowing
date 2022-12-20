@@ -79,11 +79,11 @@
     \paragraph{Si on ne considère que les coordonnées en x, voyez-vous que celles-ci sont organisées selon
     une file à priorité ? Où est la coordonnée minimum (maximum) ? Cette file à priorité est-elle
     un tas ? Justifiez.}
-    On voit en effet qu'il s'agit d'une file à priorité sur les coordonnées x. On va toujours prendre le point possédant la coordonnée x minimum
-    afin de le placer dans la racine et ce pour chaque racine de chaque sous arbre. Ce qui fait que chaque racine de chaque sous arbre est un x minimal du
-    jeux de points restants pour le sous arbre étudié. Donc, chacun des fils a bien une coordonée x inférieure ou égale à celle de son père.
-    En revanche, il ne s'agit pas d'un tas. En effet, les couches ne sont pas remplies de droite à gauche et la condition de répartition établie
-    sur la médiane des y impose qu'il y ait autant de noeuds dans les sous arbres gauche et droit de la racine. En conclusion, aucune condition
+    En effet, on voit qu'il s'agit d'une file à priorité sur les coordonnées x. On va toujours prendre le point possédant la coordonnée x minimum
+    afin de le placer dans le noeud racine et ce pour chaque noeud racine de chaque sous arbre. Ce qui fait que chaque racine de chaque sous arbre est un x minimal du
+    jeux de points restants pour le sous arbre étudié. Donc, chacun des fils a bien une coordonée x inférieure ou égale à celle de son père.\\
+    En revanche, il ne s'agit pas d'un tas. En effet, les couches ne sont pas remplies de droite à gauche. De plus, la condition de répartition établie
+    sur la médiane des y impose qu'il y ait autant de noeuds dans les sous arbres gauche et droit de la racine.\\ En conclusion, aucune condition
     n'impose de remplir la dernière couche complètement de droite à gauche si il n'y a pas assez de noueds pour le faire. On ne peut donc pas avoir de tas.\\
     La coordonnée x minimum se trouve donc dans la racine de l'arbre et la 
     coordonnée x maximum se trouve dans une des feuilles.
@@ -97,8 +97,8 @@
     présents dans l'esemble actuellement considéré. On retrouvera donc dans le sous arbre gauche de la racine l'ensemble des points dont les coordonnées
     y sont strictements inférieures à la médiane $y_{mid}$. Par conséquent la médiane des coordonnées y des points du sous arbre gauche qui servira
     de "data" pour le fils gauche de la racine sera également strictement inférieure à la médiane $y_{mid}$. Pour le sous arbre droit il s'agit du même raisonnement
-    mais en partant du fait que les coordonnées y des points du sous arbre droit seront strictement supérieures à la médiane $y_{mid}$, id. pour la médiane des coordonnée
-    y des ces points. \\
+    mais en partant du fait que les coordonnées y des points du sous arbre droit seront strictement supérieures à la médiane $y_{mid}$, i.e pour la médiane des coordonnées
+    y de ces points. \\
     La coordonnée y minimum se trouve donc dans la feuille la plus à gauche de l'ABR comme elle aura été strictement inférieure à toutes les médianes elle-même inférieures
     à celle de la racine. Et la coordonnée maximum se trouvera dans la feuille la plus à droite de l'ABR comme elle aura été strictement suppérieure à toutes
     les médianes elles-même supérieures à celle de la racine.
@@ -118,7 +118,7 @@
     de calculer efficacement la médiane.}
 
 \section{Question 5}
-Ici la question implique de modifier la manière dont la fenêtre de recherche est bornnée sur la coordonnée x. Rappellons que les coordonnées x sont organisées sous forme d'une file à priorité.
+Ici la question implique de modifier la manière dont la fenêtre de recherche est bornée sur la coordonnée x. Rappellons que les coordonnées x sont organisées sous forme d'une file à priorité.
 Ce qui implique que les fils d'un noeud ont une coordonnée x supérieure ou égale à celle de leur père. L'algorithme proposé est initialement rédigé pour des requêtes bornées par un x maximum. Il y a donc
 une condition qui contrôle pour chaque noeud de chaque sous-arbre en partant de la racine si la coordonnée x est inférieure ou égale à la borne supérieure de la fenêtre de recherche. \\
 
@@ -138,8 +138,8 @@ une condition qui contrôle pour chaque noeud de chaque sous-arbre en partant de
 \section{Question 6}
     \paragraph{Les auteurs du Chapitre 10 font l’hypothèse que tous les points ont des coordonnées bien
 distinctes en x et en y. Expliquez pourquoi.}
-Dans l'abre de recherche à priorité la comparaison de noeuds se fait par rapport à la coordonée x et la médiane ymid. Un problème se pose lorsque 2 points devant être insérés on une coordonée x identique et une coordonnée y se trouvant du 
-même côté de la médiane $y_mid$ de la racine du sous arbre. En effet, imaginons deux points $(2,3)$ et $(2,4)$ et la racine du sous arbre dans lequel ils doivent être insérés ayant une médiane de 2. Les deux noeuds doivent figurer dans
+Dans l'arbre de recherche à priorité, la comparaison de noeuds se fait par rapport à la coordonée x et à la médiane ymid. Un problème se pose lorsque 2 points devant être insérés ont une coordonée x identique et une coordonnée y se trouvant du 
+même côté de la médiane $y_{mid}$ de la racine du sous arbre. En effet, imaginons deux points $(2,3)$ et $(2,4)$ et la racine du sous arbre dont la médiane est $y_{mid} = 2$ dans lequel ils doivent être insérés. Les deux noeuds doivent figurer dans
 le sous arbres droit. Dès lors on va se servir de la règle de la file de priorité sur x et on va sélectionner la coordonnée x la plus petit en priorité. Or, ici, x = 2 dans les deux cas on ne peut dont pas déterminer quel noeud sera le fils droit 
 et quel noeud deviendra un potentiel fils de ce fils droit.
 
@@ -148,9 +148,9 @@ et quel noeud deviendra un potentiel fils de ce fils droit.
 distinctes pour un ensemble de points quelconques et une requête. Expliquez comment.}
 La technique présentée est celle des "composite-numbers". Au lieu de définir un point par sa coordonnée x et sa coordonnée y tq $p = (p_x , p_y)$ on va le définir à l'aide
 d'un composite number pour chaque coordonnée comme suit : $p = ((p_x|p_y),(p_y|p_x))$.
-Dès lors, les coordonnées x et y deviennent des composite numbers et si l'on reprend l'exemple donné à la question 6 on voit qu'à présent les point seront respectivement
-représentés comme suit : $((2|3), (3|2))$ et $((2|4),(4|2))$. On voit à présent que l'on peut trouver lequel de ces deux points à une coordonnée x plus petites en comparant
-les deux membres du composites number. On aura bien que 2=2 mais également que 3<4. Ceci est également valable dans le cas où 2 coordonnées y sont identiques.
+Dès lors, les coordonnées x et y deviennent des composite numbers et si l'on reprend l'exemple donné à la question 6 on voit qu'à présent les points seront respectivement
+représentés comme suit : $((2|3), (3|2))$ et $((2|4),(4|2))$. On voit à présent que l'on peut trouver lequel de ces deux points a une coordonnée x plus petite en comparant
+les deux membres du composite number. On aura bien que 2=2 mais également que 3<4. Ceci est également valable dans le cas où 2 coordonnées y sont identiques.
 
 \section{Question 8}
     \paragraph{Dans le chapitre, la technique présentée est adaptée à des points. Quelles différences
