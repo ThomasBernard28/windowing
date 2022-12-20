@@ -116,6 +116,12 @@
         nombre de points de $R^2$ contenus dans l’arbre. Expliquez comment on peut y parvenir et
     comment le prouver. Il faut sans doute utiliser une autre structure de données qui permet
     de calculer efficacement la médiane.}
+    L'algorithme de construction de l'arbre de recherche à priorité peut être trouvé sur internet (Wikipédia). A l'aide du master theorem
+    vu au cours de SDD1 on peut prouver que cet algorithme est en $O(n \log n)$ sous la condition que l'on puisse obtenir la médiane au 
+    maximum en O(n). Pour cela, il faut créer une structure de donnée dans laquelle on va trier nos points selon la coordonnée y. Une fois qu'on 
+    a une liste triée on peut obtenir la médiane en O(1). On peut voir ci-dessous l'algorithme de création d'un arbre de recherche à priorité
+    avec le calcul de complexité ainsi que la source du code : 
+    %TODO : faire la preuve de complexité sur la tablette afin d'insérer l'image ici.
 
 \section{Question 5}
 Ici la question implique de modifier la manière dont la fenêtre de recherche est bornée sur la coordonnée x. Rappellons que les coordonnées x sont organisées sous forme d'une file à priorité.

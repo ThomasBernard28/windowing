@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.9.2)  20 DEC 2022 20:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.9.2)  20 DEC 2022 22:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -442,29 +442,29 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has b
                    \relax 
 l.76 \newpage
               [1] [2]
-Underfull \hbox (badness 10000) in paragraph at lines 121--124
+Underfull \hbox (badness 10000) in paragraph at lines 127--130
 
  []
 
-[3]
-Overfull \hbox (2.96503pt too wide) in paragraph at lines 159--159
+[3] [4]
+Overfull \hbox (2.96503pt too wide) in paragraph at lines 165--165
 \T1/cmr/bx/n/10 Quelles dif-fé-rences im-por-tantes aurait-on avec des seg-ments de droite ?
  []
 
-[4] [5] (./rapport.aux)
+[5] (./rapport.aux)
 Package rerunfilecheck Info: File `rapport.out' has not changed.
 (rerunfilecheck)             Checksum: D2FD5C60358F9745AAE6149A24A3FA16;768.
  ) 
 Here is how much of TeX's memory you used:
  13505 strings out of 478268
  231654 string characters out of 5836864
- 570435 words of memory out of 5000000
+ 571435 words of memory out of 5000000
  31475 multiletter control sequences out of 15000+600000
  476463 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,10n,92p,458b,452s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,10n,92p,458b,450s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on rapport.pdf (6 pages, 390643 bytes).
+Output written on rapport.pdf (6 pages, 392093 bytes).
 PDF statistics:
  162 PDF objects out of 1000 (max. 8388607)
  124 compressed objects within 2 object streams
