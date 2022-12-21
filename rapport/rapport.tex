@@ -161,5 +161,14 @@ les deux membres du composite number. On aura bien que 2=2 mais également que 3
 \section{Question 8}
     \paragraph{Dans le chapitre, la technique présentée est adaptée à des points. Quelles différences
     importantes aurait-on avec des segments de droite ? Comment peut-on adapter la technique ?}
+    Un point est représenté par une coordonnée x et y comme suit : $p = (x,y)$, si on lui applique la technique des composite-numbers, il sera
+    représenté comme suit : $p = ((p_x|p_y),(p_y|p_x))$. On va donc essayer d'adapter cette notation à un segment de droite. Tout d'abord, 
+    on peut établir qu'un segment de droite est défini par 2 points : $p = (x,y)$ et $q=(x',y')$ qui sont ses extrémités. On peut également
+    établir que dans les cas des segments de droite le problème énoncé à la question 6, n'est pas d'application car même si 2 segments avaient
+    une extrémités en commun, ils ne pourraient pas avoir l'autre extrémité en commun sans être identiques, on pourrait donc se servir d'une 
+    des deux extrémités afin de déterminer quel segment est le plus proche du x parent ou de la médiane parent. Dès lors, nous avions pensé
+    à écrire un segment comme suit : $segment = ((x|y),(x'|y'))$ mais il s'avère que cela rendra le calcul de la médiane plus compliqué du fait
+    qu'il faudra accéder aux 2 termes du composite-number. En conclusion un segment sera représenté comme suit : $segment = ((x|x'),(y|y'))$ c'est à dire,
+    avec les coordonnées x de cahque extrémité comme première composante et les coordonnées y de chaque extrémité comme deuxième composante.
 
 \end{document}

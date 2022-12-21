@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.9.2)  20 DEC 2022 22:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.9.2)  21 DEC 2022 11:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -447,7 +447,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 127--130
  []
 
 [3] [4]
-Overfull \hbox (2.96503pt too wide) in paragraph at lines 165--165
+Overfull \hbox (2.96503pt too wide) in paragraph at lines 164--173
 \T1/cmr/bx/n/10 Quelles dif-fé-rences im-por-tantes aurait-on avec des seg-ments de droite ?
  []
 
@@ -463,11 +463,11 @@ Here is how much of TeX's memory you used:
  476463 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,10n,92p,458b,450s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on rapport.pdf (6 pages, 392093 bytes).
+{/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on rapport.pdf (6 pages, 402753 bytes).
 PDF statistics:
- 162 PDF objects out of 1000 (max. 8388607)
- 124 compressed objects within 2 object streams
+ 167 PDF objects out of 1000 (max. 8388607)
+ 127 compressed objects within 2 object streams
  26 named destinations out of 1000 (max. 500000)
  87 words of extra memory for PDF output out of 10000 (max. 10000000)
 
