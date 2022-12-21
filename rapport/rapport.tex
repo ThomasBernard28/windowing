@@ -16,6 +16,34 @@
 \graphicspath{images/}
 
 \usepackage{blindtext}
+\usepackage{listings}
+\usepackage{color}
+
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{background}{rgb}{0.95,0.95,0.96}
+
+\lstset{frame=tb,
+  backgroundcolor=\color{background},
+  numbers=left,
+  numbersep=5pt,
+  captionpos=b,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 
 \usepackage{subfiles} % Best loaded last in the preamble
 
@@ -117,11 +145,71 @@
     comment le prouver. Il faut sans doute utiliser une autre structure de données qui permet
     de calculer efficacement la médiane.}
     L'algorithme de construction de l'arbre de recherche à priorité peut être trouvé sur internet (Wikipédia). A l'aide du master theorem
-    vu au cours de SDD1 on peut prouver que cet algorithme est en $O(n \log n)$ sous la condition que l'on puisse obtenir la médiane au 
-    maximum en O(n). Pour cela, il faut créer une structure de donnée dans laquelle on va trier nos points selon la coordonnée y. Une fois qu'on 
-    a une liste triée on peut obtenir la médiane en O(1). On peut voir ci-dessous l'algorithme de création d'un arbre de recherche à priorité
-    avec le calcul de complexité ainsi que la source du code : 
+    vu au cours de SDD1 on peut prouver que cet algorithme est en $O(n \log n)$. On peut voir ci-dessous l'algorithme de création d'un arbre 
+    de recherche à priorité avec le calcul de complexité ainsi que la source du code : 
     %TODO : faire la preuve de complexité sur la tablette afin d'insérer l'image ici.
+    \medskip
+    \begin{lstlisting}
+tree construct_tree(data) {
+    if length(data) > 1 {
+            
+        node_point = find_point_with_minimum_priority(data) // Select the point with the lowest priority
+              
+        reduced_data = remove_point_from_data(data, node_point)
+        node_key = calculate_median(reduced_data) // calculate median, excluding the selected point
+              
+        // Divide the points 
+        left_data = []
+        right_data = []    
+             
+        for (point in reduced_data) {
+            if point.key <= node_key
+                left_data.append(point)
+            else
+                right_data.append(point)
+        }
+          
+        left_subtree = construct_tree(left_data)
+        right_subtree = construct_tree(right_data)
+          
+        return node // Node containing the node_key, node_point and the left and right subtrees
+          
+    } else if length(data) == 1 {
+        return leaf node // Leaf node containing the single remaining data point
+    } else if length(data) == 0 {
+        return null // This node is empty
+    }
+}
+
+    \end{lstlisting}
+\medskip
+    \textbf{Source : } \url{https://en.wikipedia.org/wiki/Priority_search_tree}\\
+
+    \textbf{Calcul de complexité : }
+    Les lignes 2,4,6,10,11,23,25,26,27 et 28 sont en O(1). \\
+    \begin{enumerate}
+        \item\textbf{find\_point\_with\_minimmum\_priority(data) : } Il s'agit de trouver la coordonnée minimum en x on va donc itérer au maximum
+        n fois en O(1) on a donc du O(n).
+        \item\textbf{calculate\_median(reduced\_data) : } Si l'on a trié les données selon les y au sein d'une liste au préalable on peut calculer la 
+        médiane de reduced\_data en O(1) car elle se trouver à l'indice : $\frac{len(reduced\_data)}{2}$
+        \item\textbf{boucle for : } Toutes les instructions au sein de la boule for sont en O(1) on effectue au maximum n itérations dans la boucle
+        ce qui veut dire que celle-ci est en O(n).
+        \item\textbf{Appels récursifs des lignes 20 et 21 :} On va appliquer le Master theorem afin de calculer la complexité des appels récursifs.
+        La formule est la suivante : $T(n) = aT(\frac{n}{b}) + O(n^d)$ où : 
+            \begin{enumerate}
+                \item \textbf{n : } taille du problème = n
+                \item \textbf{a : } nombre de sous-problèmes dans lequel l'appel est divisé. Dans notre cas $a = 2$.
+                \item \textbf{$\frac{n}{b}$ : } La taille de chaque sous problème. Dans notre cas c'est $\frac{n-1}{2}$
+                \item \textbf{$O(n^d)$ : } Correspond au coût de gestion du reste de la fonction ici en O(n) donc $d=1$
+            \end{enumerate}
+        Le master Theorem dit que si $d = \log_b(a)$ alors on a $T(n) = O(n^d \log_b(n))$. On a bien que $1 = \log_2(2)$ donc
+        Notre appel récursif est effectué en $O(n\log_2n)$.
+
+    \end{enumerate}
+
+    En conclusion si l'on addition tout on obtient que l'algorithme est bien en $O(n\log_2n)$
+
+\newpage
 
 \section{Question 5}
 Ici la question implique de modifier la manière dont la fenêtre de recherche est bornée sur la coordonnée x. Rappellons que les coordonnées x sont organisées sous forme d'une file à priorité.
@@ -140,7 +228,7 @@ une condition qui contrôle pour chaque noeud de chaque sous-arbre en partant de
         \item \textbf{Fenêtre non bornée sur un y maximum.} Dans le cas où la fenêtre n'est pas bornée sur un y maximum on peut établir que tous les sous arbres à droite du noeud
         $v_{split}$ auront une coordonnée en y comprise dans l'intervalle car la coordonnée y maximale se trouve dans la feuille la plus à droite de l'arbre.
     \end{enumerate}
-
+\newpage
 \section{Question 6}
     \paragraph{Les auteurs du Chapitre 10 font l’hypothèse que tous les points ont des coordonnées bien
 distinctes en x et en y. Expliquez pourquoi.}

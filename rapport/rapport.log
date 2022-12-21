@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.9.2)  21 DEC 2022 11:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.9.2)  21 DEC 2022 16:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -353,57 +353,81 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 \c@blind@randommax=\count314
 \c@blind@pangramcount=\count315
 \c@blind@pangrammax=\count316
+) (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count317
+\lst@gtempboxa=\box54
+\lst@token=\toks32
+\lst@length=\count318
+\lst@currlwidth=\dimen175
+\lst@column=\count319
+\lst@pos=\count320
+\lst@lostspace=\dimen176
+\lst@width=\dimen177
+\lst@newlines=\count321
+\lst@lineno=\count322
+\lst@maxwidth=\dimen178
+ (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count323
+\lst@skipnumbers=\count324
+\lst@framebox=\box55
+) (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+ (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
 ) (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/subfiles/subfiles.sty
 Package: subfiles 2020/11/14 v2.2 Multi-file projects (package)
  (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/import/import.sty
 Package: import 2020/04/01  v 6.2
 )) (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count317
-\l__pdf_internal_box=\box54
+\l__color_backend_stack_int=\count325
+\l__pdf_internal_box=\box56
 ) (./rapport.aux)
 \openout1 = `rapport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
  (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count318
-\scratchdimen=\dimen175
-\scratchbox=\box55
-\nofMPsegments=\count319
-\nofMParguments=\count320
-\everyMPshowfont=\toks32
-\MPscratchCnt=\count321
-\MPscratchDim=\dimen176
-\MPnumerator=\count322
-\makeMPintoPDFobject=\count323
-\everyMPtoPDFconversion=\toks33
+\scratchcounter=\count326
+\scratchdimen=\dimen179
+\scratchbox=\box57
+\nofMPsegments=\count327
+\nofMParguments=\count328
+\everyMPshowfont=\toks33
+\MPscratchCnt=\count329
+\MPscratchDim=\dimen180
+\MPnumerator=\count330
+\makeMPintoPDFobject=\count331
+\everyMPtoPDFconversion=\toks34
 ) (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Info: Redefining \degres on input line 26.
-LaTeX Info: Redefining \up on input line 26.
-Package hyperref Info: Link coloring ON on input line 26.
+LaTeX Info: Redefining \degres on input line 54.
+LaTeX Info: Redefining \up on input line 54.
+Package hyperref Info: Link coloring ON on input line 54.
  (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/refcount/refcount.sty
@@ -411,24 +435,25 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count324
+\c@section@level=\count332
 )
-LaTeX Info: Redefining \ref on input line 26.
-LaTeX Info: Redefining \pageref on input line 26.
-LaTeX Info: Redefining \nameref on input line 26.
+LaTeX Info: Redefining \ref on input line 54.
+LaTeX Info: Redefining \pageref on input line 54.
+LaTeX Info: Redefining \nameref on input line 54.
  (./rapport.out) (./rapport.out)
 \@outlinefile=\write4
 \openout4 = `rapport.out'.
 
+\c@lstlisting=\count333
 <images/logoumons.jpg, id=39, 336.2964pt x 114.9093pt>
 File: images/logoumons.jpg Graphic file (type jpg)
 <use images/logoumons.jpg>
-Package pdftex.def Info: images/logoumons.jpg  used on input line 63.
+Package pdftex.def Info: images/logoumons.jpg  used on input line 91.
 (pdftex.def)             Requested size: 124.90494pt x 42.67912pt.
 <images/logofs.jpg, id=40, 1968.35374pt x 873.2625pt>
 File: images/logofs.jpg Graphic file (type jpg)
 <use images/logofs.jpg>
-Package pdftex.def Info: images/logofs.jpg  used on input line 65.
+Package pdftex.def Info: images/logofs.jpg  used on input line 93.
 (pdftex.def)             Requested size: 96.17085pt x 42.67912pt.
  [1
 
@@ -440,34 +465,53 @@ Package pdftex.def Info: images/logofs.jpg  used on input line 65.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.76 \newpage
-              [1] [2]
-Underfull \hbox (badness 10000) in paragraph at lines 127--130
+l.104 \newpage
+               [1] [2]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 152.
+ (/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+) [3]
+Underfull \hbox (badness 10000) in paragraph at lines 186--187
 
  []
 
-[3] [4]
-Overfull \hbox (2.96503pt too wide) in paragraph at lines 164--173
+
+Underfull \hbox (badness 10000) in paragraph at lines 188--190
+
+ []
+
+
+Overfull \hbox (1.12035pt too wide) in paragraph at lines 205--207
+\T1/cmr/m/n/10 Le mas-ter Theo-rem dit que si $\OML/cmm/m/it/10 d \OT1/cmr/m/n/10 = [][](\OML/cmm/m/it/10 a\OT1/cmr/m/n/10 )$ \T1/cmr/m/n/10 alors on a $\OML/cmm/m/it/10 T\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 n\OT1/cmr/m/n/10 ) = \OML/cmm/m/it/10 O\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 n[] [][]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 n\OT1/cmr/m/n/10 ))$\T1/cmr/m/n/10 .
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 215--218
+
+ []
+
+[5]
+Overfull \hbox (2.96503pt too wide) in paragraph at lines 252--261
 \T1/cmr/bx/n/10 Quelles dif-fé-rences im-por-tantes aurait-on avec des seg-ments de droite ?
  []
 
-[5] (./rapport.aux)
+[6] [7] (./rapport.aux)
 Package rerunfilecheck Info: File `rapport.out' has not changed.
 (rerunfilecheck)             Checksum: D2FD5C60358F9745AAE6149A24A3FA16;768.
  ) 
 Here is how much of TeX's memory you used:
- 13505 strings out of 478268
- 231654 string characters out of 5836864
- 571435 words of memory out of 5000000
- 31475 multiletter control sequences out of 15000+600000
- 476463 words of font info for 39 fonts, out of 8000000 for 9000
+ 15400 strings out of 478268
+ 257162 string characters out of 5836864
+ 804400 words of memory out of 5000000
+ 33305 multiletter control sequences out of 15000+600000
+ 479388 words of font info for 44 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,10n,92p,458b,450s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on rapport.pdf (6 pages, 402753 bytes).
+ 94i,10n,92p,458b,2020s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0500.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb></usr/local/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
+Output written on rapport.pdf (8 pages, 517623 bytes).
 PDF statistics:
- 167 PDF objects out of 1000 (max. 8388607)
- 127 compressed objects within 2 object streams
- 26 named destinations out of 1000 (max. 500000)
+ 246 PDF objects out of 1000 (max. 8388607)
+ 196 compressed objects within 2 object streams
+ 67 named destinations out of 1000 (max. 500000)
  87 words of extra memory for PDF output out of 10000 (max. 10000000)
 

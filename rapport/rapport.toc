@@ -7,10 +7,10 @@
 \contentsline {paragraph}{De quelle façon est équilibré un arbre de recherche à priorité ?}{3}{section*.4}%
 \contentsline {section}{\numberline {4}Question 4}{3}{section.4}%
 \contentsline {paragraph}{La construction d’un arbre de recherche à priorité peut se faire en $O(n \qopname \relax o{log}_2 n)$ si n est le nombre de points de $R^2$ contenus dans l’arbre. Expliquez comment on peut y parvenir et comment le prouver. Il faut sans doute utiliser une autre structure de données qui permet de calculer efficacement la médiane.}{3}{section*.5}%
-\contentsline {section}{\numberline {5}Question 5}{3}{section.5}%
-\contentsline {section}{\numberline {6}Question 6}{4}{section.6}%
-\contentsline {paragraph}{Les auteurs du Chapitre 10 font l’hypothèse que tous les points ont des coordonnées bien distinctes en x et en y. Expliquez pourquoi.}{4}{section*.6}%
-\contentsline {section}{\numberline {7}Question 7}{4}{section.7}%
-\contentsline {paragraph}{Une technique est présentée à la page 111. Celle-ci permet de simuler des coordonnées distinctes pour un ensemble de points quelconques et une requête. Expliquez comment.}{4}{section*.7}%
-\contentsline {section}{\numberline {8}Question 8}{5}{section.8}%
-\contentsline {paragraph}{Dans le chapitre, la technique présentée est adaptée à des points. Quelles différences importantes aurait-on avec des segments de droite ? Comment peut-on adapter la technique ?}{5}{section*.8}%
+\contentsline {section}{\numberline {5}Question 5}{5}{section.5}%
+\contentsline {section}{\numberline {6}Question 6}{6}{section.6}%
+\contentsline {paragraph}{Les auteurs du Chapitre 10 font l’hypothèse que tous les points ont des coordonnées bien distinctes en x et en y. Expliquez pourquoi.}{6}{section*.6}%
+\contentsline {section}{\numberline {7}Question 7}{6}{section.7}%
+\contentsline {paragraph}{Une technique est présentée à la page 111. Celle-ci permet de simuler des coordonnées distinctes pour un ensemble de points quelconques et une requête. Expliquez comment.}{6}{section*.7}%
+\contentsline {section}{\numberline {8}Question 8}{6}{section.8}%
+\contentsline {paragraph}{Dans le chapitre, la technique présentée est adaptée à des points. Quelles différences importantes aurait-on avec des segments de droite ? Comment peut-on adapter la technique ?}{6}{section*.8}%
