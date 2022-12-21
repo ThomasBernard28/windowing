@@ -112,22 +112,22 @@
     jeux de points restants pour le sous arbre étudié. Donc, chacun des fils a bien une coordonée x inférieure ou égale à celle de son père.\\
     En revanche, il ne s'agit pas d'un tas. En effet, les couches ne sont pas remplies de droite à gauche. De plus, la condition de répartition établie
     sur la médiane des y impose qu'il y ait autant de noeuds dans les sous arbres gauche et droit de la racine.\\ En conclusion, aucune condition
-    n'impose de remplir la dernière couche complètement de droite à gauche si il n'y a pas assez de noueds pour le faire. On ne peut donc pas avoir de tas.\\
+    n'impose de remplir la dernière couche complètement de droite à gauche si il n'y a pas assez de noeuds pour le faire. On ne peut donc pas avoir de tas.\\
     La coordonnée x minimum se trouve donc dans la racine de l'arbre et la 
     coordonnée x maximum se trouve dans une des feuilles.
 
 \section{Question 2}
     \paragraph{Si on ne considère que les coordonnées en y, voyez-vous que celles-ci sont organisées selon
     un arbre binaire de recherche ? Où est la coordonnée minimum (maximum) ? Justifiez.}
-    On voit qu'il s'agit d'une arbre binaire de recherche. Tout d'abord, les conditions d'un ABR sont que pour tout noeud n, son fils gauche $f_g$ est 
+    On voit qu'il s'agit d'un arbre binaire de recherche. Tout d'abord, les conditions pour avoir un ABR sont que pour tout noeud n, son fils gauche $f_g$ est 
     tel que $n.data > f_g.data$ et son fils droit $f_d$ est tel que $n.data < f_d.data$. \\
     Ici la "data" qui est utilisée pour comparer chaque noeud avec ses fils avant une insertion est $y_{mid}$ la médiane des coordonnées y des points
-    présents dans l'esemble actuellement considéré. On retrouvera donc dans le sous arbre gauche de la racine l'ensemble des points dont les coordonnées
+    présents dans l'ensemble actuellement considéré. On retrouvera donc dans le sous arbre gauche de la racine l'ensemble des points dont les coordonnées
     y sont strictements inférieures à la médiane $y_{mid}$. Par conséquent la médiane des coordonnées y des points du sous arbre gauche qui servira
     de "data" pour le fils gauche de la racine sera également strictement inférieure à la médiane $y_{mid}$. Pour le sous arbre droit il s'agit du même raisonnement
     mais en partant du fait que les coordonnées y des points du sous arbre droit seront strictement supérieures à la médiane $y_{mid}$, i.e pour la médiane des coordonnées
     y de ces points. \\
-    La coordonnée y minimum se trouve donc dans la feuille la plus à gauche de l'ABR comme elle aura été strictement inférieure à toutes les médianes elle-même inférieures
+    La coordonnée y minimum se trouve donc dans la feuille la plus à gauche de l'ABR puisqu'elle est strictement inférieure à toutes les médianes elle-même inférieures
     à celle de la racine. Et la coordonnée maximum se trouvera dans la feuille la plus à droite de l'ABR comme elle aura été strictement suppérieure à toutes
     les médianes elles-même supérieures à celle de la racine.
 
@@ -192,7 +192,7 @@ tree construct_tree(data) {
         n fois en O(1) on a donc du O(n).
         \item\textbf{calculate\_median(reduced\_data) : } Si l'on a trié les données selon les y au sein d'une liste au préalable on peut calculer la 
         médiane de reduced\_data en O(1) car elle se trouver à l'indice : $\frac{len(reduced\_data)}{2}$
-        \item\textbf{boucle for : } Toutes les instructions au sein de la boule for sont en O(1) on effectue au maximum n itérations dans la boucle
+        \item\textbf{boucle for : } Toutes les instructions au sein de la boucle for sont en O(1) on effectue au maximum n itérations dans la boucle
         ce qui veut dire que celle-ci est en O(n).
         \item\textbf{Appels récursifs des lignes 20 et 21 :} On va appliquer le Master theorem afin de calculer la complexité des appels récursifs.
         La formule est la suivante : $T(n) = aT(\frac{n}{b}) + O(n^d)$ où : 
@@ -207,7 +207,7 @@ tree construct_tree(data) {
 
     \end{enumerate}
 
-    En conclusion si l'on addition tout on obtient que l'algorithme est bien en $O(n\log_2n)$
+    En conclusion si l'on additionne tout, on obtient que l'algorithme est bien en $O(n\log_2n)$
 
 \newpage
 
@@ -219,7 +219,7 @@ une condition qui contrôle pour chaque noeud de chaque sous-arbre en partant de
     \begin{enumerate}
         \item \textbf{Fenêtre bornée par un x minimum.} Dans ce cas, on peut utiliser la définition de file à priorité à notre avantage. En effet, on change la condition de contrôle de la coordonnée x.
         A présent au lieu de contrôler si la coordonée x est inférieure ou égale à la borne supérieure de la fenêtre de recherche, on contrôle si la coordonnée x est supérieure ou égale à la borne inférieure de la fenêtre de recherche.
-        Si c'est le cas, alors on peut accepter l'entiereté du sous arbres car les fils de la racine de ce sous arbres auront une coordonnée supérieure ou égale à celle de leur père.
+        Si c'est le cas, alors on peut accepter l'entièreté du sous arbres car les fils de la racine de ce sous arbres auront une coordonnée supérieure ou égale à celle de leur père.
         \item \textbf{Fenêtre bornée par un x minimum et un x maximum.} Dans ce cas on associe les deux conditions. Il faut que pour chaque noeud du sous arbre considéré, la coordonnée x soit supérieure ou égale à la borne inférieure et
         inférieure ou égale à la borne supérieure de la fenêtre de recherche. Dans le cas où l'on rencontre un noeud dont la coordonée x est supérieure à celle de la borne supérieure on considère par la définition
         d'une file à priorité que tous ses descendants auront une coordonnée x supérieure à celle de la borne supérieure. On peut donc arrêter la recherche dans ce sous arbre.
@@ -232,9 +232,9 @@ une condition qui contrôle pour chaque noeud de chaque sous-arbre en partant de
 \section{Question 6}
     \paragraph{Les auteurs du Chapitre 10 font l’hypothèse que tous les points ont des coordonnées bien
 distinctes en x et en y. Expliquez pourquoi.}
-Dans l'arbre de recherche à priorité, la comparaison de noeuds se fait par rapport à la coordonée x et à la médiane ymid. Un problème se pose lorsque 2 points devant être insérés ont une coordonée x identique et une coordonnée y se trouvant du 
+Dans l'arbre de recherche à priorité, la comparaison de noeuds se fait par rapport à la coordonée x et à la médiane $y_{mid}$. Un problème se pose lorsque 2 points devant être insérés ont une coordonée x identique et une coordonnée y se trouvant du 
 même côté de la médiane $y_{mid}$ de la racine du sous arbre. En effet, imaginons deux points $(2,3)$ et $(2,4)$ et la racine du sous arbre dont la médiane est $y_{mid} = 2$ dans lequel ils doivent être insérés. Les deux noeuds doivent figurer dans
-le sous arbres droit. Dès lors on va se servir de la règle de la file de priorité sur x et on va sélectionner la coordonnée x la plus petit en priorité. Or, ici, x = 2 dans les deux cas on ne peut dont pas déterminer quel noeud sera le fils droit 
+le sous arbres droit. Dès lors on va se servir de la règle de la file de priorité sur x et on va sélectionner la coordonnée x la plus petite en priorité. Or, ici, x = 2 dans les deux cas. On ne peut donc pas déterminer quel noeud sera le fils droit 
 et quel noeud deviendra un potentiel fils de ce fils droit.
 
 \section{Question 7}
@@ -257,6 +257,6 @@ les deux membres du composite number. On aura bien que 2=2 mais également que 3
     des deux extrémités afin de déterminer quel segment est le plus proche du x parent ou de la médiane parent. Dès lors, nous avions pensé
     à écrire un segment comme suit : $segment = ((x|y),(x'|y'))$ mais il s'avère que cela rendra le calcul de la médiane plus compliqué du fait
     qu'il faudra accéder aux 2 termes du composite-number. En conclusion un segment sera représenté comme suit : $segment = ((x|x'),(y|y'))$ c'est à dire,
-    avec les coordonnées x de cahque extrémité comme première composante et les coordonnées y de chaque extrémité comme deuxième composante.
+    avec les coordonnées x de chaque extrémité comme première composante et les coordonnées y de chaque extrémité comme deuxième composante.
 
 \end{document}
