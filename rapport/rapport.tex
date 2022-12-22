@@ -222,7 +222,7 @@ une condition qui contrôle pour chaque noeud de chaque sous-arbre en partant de
         Si c'est le cas, alors on peut accepter l'entièreté du sous arbres car les fils de la racine de ce sous arbres auront une coordonnée supérieure ou égale à celle de leur père.
         \item \textbf{Fenêtre bornée par un x minimum et un x maximum.} Dans ce cas on associe les deux conditions. Il faut que pour chaque noeud du sous arbre considéré, la coordonnée x soit supérieure ou égale à la borne inférieure et
         inférieure ou égale à la borne supérieure de la fenêtre de recherche. Dans le cas où l'on rencontre un noeud dont la coordonée x est supérieure à celle de la borne supérieure on considère par la définition
-        d'une file à priorité que tous ses descendants auront une coordonnée x supérieure à celle de la borne supérieure. On peut donc arrêter la recherche dans ce sous arbre.
+        d'une file à priorité que tous ses descendants ont une coordonnée x supérieure à celle de la borne supérieure. On peut donc arrêter la recherche dans ce sous arbre.
         \item \textbf{Fenêtre non bornée sur un y minimum.} Dans le cas où la fenêtre n'est pas bornée sur un y minimum on peut établir que tous les sous abres à gauche du noeud 
         $v_{split}$ auront une coordonnée en y comprise dans l'intervalle car la coordonnée y minimale se trouve dans la feuille la plus à gauche de l'arbre.
         \item \textbf{Fenêtre non bornée sur un y maximum.} Dans le cas où la fenêtre n'est pas bornée sur un y maximum on peut établir que tous les sous arbres à droite du noeud
@@ -241,10 +241,10 @@ et quel noeud deviendra un potentiel fils de ce fils droit.
     \paragraph{Une technique est présentée à la page 111. Celle-ci permet de simuler des coordonnées
 distinctes pour un ensemble de points quelconques et une requête. Expliquez comment.}
 La technique présentée est celle des "composite-numbers". Au lieu de définir un point par sa coordonnée x et sa coordonnée y tq $p = (p_x , p_y)$ on va le définir à l'aide
-d'un composite number pour chaque coordonnée comme suit : $p = ((p_x|p_y),(p_y|p_x))$.
-Dès lors, les coordonnées x et y deviennent des composite numbers et si l'on reprend l'exemple donné à la question 6 on voit qu'à présent les points seront respectivement
+d'un composite-number pour chaque coordonnée comme suit : $p = ((p_x|p_y),(p_y|p_x))$.
+Dès lors, les coordonnées x et y deviennent des composite-number et si l'on reprend l'exemple donné à la question 6 on voit qu'à présent les points seront respectivement
 représentés comme suit : $((2|3), (3|2))$ et $((2|4),(4|2))$. On voit à présent que l'on peut trouver lequel de ces deux points a une coordonnée x plus petite en comparant
-les deux membres du composite number. On aura bien que 2=2 mais également que 3<4. Ceci est également valable dans le cas où 2 coordonnées y sont identiques.
+les deux membres de guache du composite-number. On aura bien que 2=2 mais également que 3<4. Ceci est également valable dans le cas où 2 coordonnées y sont identiques.
 
 \section{Question 8}
     \paragraph{Dans le chapitre, la technique présentée est adaptée à des points. Quelles différences
@@ -253,7 +253,7 @@ les deux membres du composite number. On aura bien que 2=2 mais également que 3
     représenté comme suit : $p = ((p_x|p_y),(p_y|p_x))$. On va donc essayer d'adapter cette notation à un segment de droite. Tout d'abord, 
     on peut établir qu'un segment de droite est défini par 2 points : $p = (x,y)$ et $q=(x',y')$ qui sont ses extrémités. On peut également
     établir que dans les cas des segments de droite le problème énoncé à la question 6, n'est pas d'application car même si 2 segments avaient
-    une extrémités en commun, ils ne pourraient pas avoir l'autre extrémité en commun sans être identiques, on pourrait donc se servir d'une 
+    une extrémité en commun, ils ne pourraient pas avoir l'autre extrémité en commun sans être identiques, on pourrait donc se servir d'une 
     des deux extrémités afin de déterminer quel segment est le plus proche du x parent ou de la médiane parent. Dès lors, nous avions pensé
     à écrire un segment comme suit : $segment = ((x|y),(x'|y'))$ mais il s'avère que cela rendra le calcul de la médiane plus compliqué du fait
     qu'il faudra accéder aux 2 termes du composite-number. En conclusion un segment sera représenté comme suit : $segment = ((x|x'),(y|y'))$ c'est à dire,
