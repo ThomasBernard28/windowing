@@ -1,14 +1,22 @@
 package windowing;
 
 import windowing.datastructures.*;
+import windowing.scenes.*;
+
 import java.util.ArrayList; 
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.layout.StackPane;
+import javafx.scene.Scene;
+
+
 class App {
 
-    private ArrayList segments = new ArrayList();
+    public  ArrayList<Segment> segments = new ArrayList<Segment>();
     private PrioritySearchTree pst;
     
     /**
@@ -28,23 +36,31 @@ class App {
                                          Integer.parseInt(c[2]), Integer.parseInt(c[3])));
             }
             reader.close();
-        } catch ( FileNotFoundException e) {
+        } catch ( FileNotFoundException e ) {
             System.out.println("File " + path + " not found");
         }
     }
 
-    public void generate_pst() {}
-
     public void print_segments() {
-        segments.forEach((s) -> System.out.println(s));
+        segments.forEach( (s) -> System.out.println(s) );
     }
 }
 
-public class Main {
+public class Main extends Application {
 
     public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Windowing app");
+        SegmentsScene scene = new SegmentsScene(new StackPane());
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        
         App app = new App();
         app.load_segments("segments1.txt");
-        app.print_segments();
+        scene.show_segments(app.segments); 
     }
 }

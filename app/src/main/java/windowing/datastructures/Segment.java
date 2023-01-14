@@ -4,23 +4,27 @@ import java.util.ArrayList;
 
 public class Segment {
     
-    private int x1; //Smallest x
-    private int x2; //biggest x
-    private int y1; //smallest y
-    private int y2; //biggest y
+    private double x1; //Smallest x
+    private double x2; //biggest x
+    private double y1; //smallest y
+    private double y2; //biggest y
 
-    public Segment(int x1, int y1, int x2, int y2){
+    public Segment(double x1, double y1, double x2, double y2){
         this.x1 = x1;
-	this.x2 = x2;
-	this.y1 = y1;
-	this.y2 = y2;
+        this.x2 = x2;
+        this.y1 = y1;
+        this.y2 = y2;
     }
     
-    public ArrayList get_coord() {
-        ArrayList coord = new ArrayList();
-        return coord;
+    public ArrayList get_coords() {
+        ArrayList<Double> coords = new ArrayList<Double>();
+        coords.add(x1);
+        coords.add(y1);
+        coords.add(x2);
+        coords.add(y2);
+        return coords;
     }
-    
+
     /*
     public Arraylist get_composite_coord() {
     }
@@ -28,9 +32,9 @@ public class Segment {
 
     @Override
     public String toString() {
-        return "  x1:" + Integer.toString(x1) + 
-               "; x2:" + Integer.toString(x2) +
-               "; y1:" + Integer.toString(y1) +
-               "; y2:" + Integer.toString(y2);
+        return "  x1:" + Double.toString(x1) + 
+               "; x2:" + Double.toString(x2) +
+               "; y1:" + Double.toString(y1) +
+               "; y2:" + Double.toString(y2);
     }
 }
