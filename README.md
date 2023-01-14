@@ -1,5 +1,5 @@
 # windowing
 Data Structure Project
 
-- Gava : 17
+- Java : 17
 - Gradle : 7.6
