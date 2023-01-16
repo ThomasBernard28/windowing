@@ -20,6 +20,7 @@ public class SegmentsScene extends Scene {
     private StackPane canvas;
     private Stage stage;
     private AppWindowing app;
+    private String path = "";
 
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
@@ -28,8 +29,10 @@ public class SegmentsScene extends Scene {
         this.app = app;
         ScrollPane scrollPane = new ScrollPane();
         Button importButton = new Button("import");
+        Button reloadButton = new Button("reload");
         Button windowButton = new Button("window");
-        ToolBar toolbar = new ToolBar(importButton, windowButton);
+        Button clearButton  = new Button("clear");
+        ToolBar toolbar = new ToolBar(importButton, reloadButton, windowButton, clearButton);
         
         // scrollPane config
         scrollPane.setPrefHeight(500);
@@ -43,10 +46,17 @@ public class SegmentsScene extends Scene {
         // buttons event
         importButton.setOnAction( e -> import_popup() );
         windowButton.setOnAction( e -> window_popup() );
+        clearButton.setOnAction( e -> canvas.getChildren().clear() );
+        reloadButton.setOnAction( e -> show_segments(app.segments) );
+
+        // click event
+        //canvas.setOnMousePressed( e -> System.out.println(Double.toString(e.getX()) + ", " +  Double.toString(e.getY())) );
+        //canvas.setOnMouseReleased( e -> System.out.println(Double.toString(e.getX()) + ", " +  Double.toString(e.getY())) );
     }
     
     /**
      * @Param segments : Segments to be displayed
+     * TODO: use first line of dataset file to print the grid
     **/
     public void show_segments(ArrayList<Segment> segments) {
         ArrayList<Double> c; 
@@ -68,7 +78,7 @@ public class SegmentsScene extends Scene {
         Label l = new Label("path :");
         TextField tf = new TextField(System.getProperty("user.dir")+"/build/resources/main/segments1.txt");
         Button b = new Button("Import");
-        b.setOnAction( e -> { app.load_segments(tf.getText()); show_segments(app.segments); popup.hide(); });
+        b.setOnAction( e -> { path = tf.getText(); app.load_segments(path); show_segments(app.segments); popup.hide(); });
         vb.getChildren().addAll(l, tf, b);
         popup.getContent().add(vb);
         popup.show(stage);
