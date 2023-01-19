@@ -59,6 +59,10 @@ public class SegmentsScene extends Scene {
      * TODO: use first line of dataset file to print the grid
     **/
     public void show_segments(ArrayList<Segment> segments) {
+        /**
+        * method to display the segments from the given array list
+        */
+
         ArrayList<Double> c; 
         Group group = new Group();
         for ( Segment s : segments ) {
@@ -72,6 +76,9 @@ public class SegmentsScene extends Scene {
     }
 
     public void import_popup() {
+        /**
+        * display a popup window asking for a segments file 
+        */
         Popup popup = new Popup();
         VBox vb = new VBox(10);
         vb.setStyle("-fx-background-color: #DDF5C6;");

@@ -17,6 +17,12 @@ public class AppWindowing {
     * TODO : better exceptions
     **/
     public void load_segments(String file) {
+        /**
+        * method that read the file at the given path and transform
+        * the information of each line into a Segment
+        * the result is stored in the 'segments' array list
+        */
+        
         segments = new ArrayList<Segment>();
         try {
             File myFile = new File(file);

@@ -10,8 +10,6 @@ import javafx.scene.Scene;
 
 public class Main extends Application {
 
-    public static AppWindowing app = new AppWindowing();
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -20,7 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Windowing app");
         primaryStage.setResizable(false);
-        SegmentsScene scene = new SegmentsScene(primaryStage, app, new VBox());
+        SegmentsScene scene = new SegmentsScene(primaryStage, new AppWindowing(), new VBox());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
