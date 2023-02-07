@@ -5,24 +5,35 @@ import java.util.ArrayList;
 public class PrioritySearchTree {
 
     private final int SIZE;
-    private final Segment[] structure;
+    private final Node[] structure;
 
     public PrioritySearchTree(int SIZE){
         this.SIZE = SIZE;
-        this.structure = new Segment[SIZE];
+        this.structure = new Node[SIZE];
     }
 
+    /**
+     * This method is an adaptation (to our specific needs) of the pseudo code algorithm from our report.
+     * The method only modify the PST by adding new nodes into it.
+     * @param segments Set of segments that have to be inserted in the PST
+     * @param tree initial tree/substree empty
+     */
     public void construct_tree(ArrayList<Segment> segments, PrioritySearchTree tree){
         //TODO tester si ce n'est pas plus opti de trier segments avant (notamment pour la médiane)
         if (segments.size() > 1){
             Segment min = find_min(segments);
-            tree.structure[0] = min;
-            //Reduce the set to compute the median on the remaining set. Min will figure in the current tree/substree root.
             segments.remove(min);
+            double median = find_median(segments);
+            tree.structure[0] = new Node(median, min);
+            //Reduce the set to compute the median on the remaining set. Min will figure in the current tree/substree root.
+
 
         }
         else if (segments.size() == 1){
-            tree.structure[0] = segments.get(0);
+            tree.structure[0] = new Node(0 ,segments.get(0));
+        }
+        else{
+            throw new IllegalArgumentException("The size of the segment sets must be at lest 1");
         }
 
     }
@@ -55,6 +66,11 @@ public class PrioritySearchTree {
             }
         }
         return min;
+    }
+
+    private double find_median(ArrayList<Segment> segments){
+        //TODO
+        return 0;
     }
 
 }

@@ -1,5 +1,6 @@
 package windowing.scenes;
 
+import windowing.datastructures.CompositeNumber;
 import windowing.datastructures.Segment;
 import windowing.AppWindowing;
 import javafx.stage.Stage;
@@ -63,11 +64,14 @@ public class SegmentsScene extends Scene {
         * method to display the segments from the given array list
         */
 
-        ArrayList<Double> c; 
+        CompositeNumber xComp;
+        CompositeNumber yComp;
         Group group = new Group();
         for ( Segment s : segments ) {
-            c = s.get_coords();
-            Line l = new Line(c.get(0)*20, c.get(1)*20, c.get(2)*20, c.get(3)*20); 
+            xComp = s.get_xComp();
+            yComp = s.get_yComp();
+
+            Line l = new Line(xComp.get_coord1()*20, yComp.get_coord1()*20, xComp.get_coord2()*20, yComp.get_coord2()*20);
             group.getChildren().add(l);
         }
         canvas.getChildren().clear();
