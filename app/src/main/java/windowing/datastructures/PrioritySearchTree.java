@@ -4,12 +4,17 @@ import java.util.ArrayList;
 
 public class PrioritySearchTree {
 
-    private final int SIZE;
+    private final int size;
     private final Node[] structure;
 
-    public PrioritySearchTree(int SIZE){
-        this.SIZE = SIZE;
-        this.structure = new Node[SIZE];
+    /**
+     * This Class contains all the methods to construct and explore a PrioritySearchTree.
+     * A PrioritySearchTree is composed of Nodes.
+     * @param size The total amount of Nodes inside a PrioritySearchTree.
+     */
+    public PrioritySearchTree(int size){
+        this.size = size;
+        this.structure = new Node[size];
     }
 
     /**
