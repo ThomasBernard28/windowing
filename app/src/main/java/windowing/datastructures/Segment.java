@@ -1,9 +1,26 @@
 package windowing.datastructures;
 
-import java.util.ArrayList;
-
 public class Segment {
-    
+
+    private final CompositeNumber xComp;
+    private final CompositeNumber yComp;
+
+    public Segment(CompositeNumber xComp, CompositeNumber yComp){
+        this.xComp = xComp;
+        this.yComp = yComp;
+    }
+    public CompositeNumber get_xComp(){
+        return xComp;
+    }
+    public CompositeNumber get_yComp(){
+        return yComp;
+    }
+    @Override
+    public String toString() {
+        return " ((x,x');(y,y')) : (" + xComp.toString() + ";" +
+                yComp.toString() + ")";
+    }
+    /*
     private double x1; //Smallest x
     private double x2; //biggest x
     private double y1; //smallest y
@@ -30,11 +47,4 @@ public class Segment {
     }
     */
 
-    @Override
-    public String toString() {
-        return "  x1:" + Double.toString(x1) + 
-               "; x2:" + Double.toString(x2) +
-               "; y1:" + Double.toString(y1) +
-               "; y2:" + Double.toString(y2);
-    }
 }

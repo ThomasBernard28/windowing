@@ -1,5 +1,6 @@
 package windowing;
 
+import org.checkerframework.checker.units.qual.C;
 import windowing.datastructures.*;
 import java.util.ArrayList; 
 import java.util.Scanner;
@@ -25,13 +26,15 @@ public class AppWindowing {
         
         segments = new ArrayList<Segment>();
         try {
+            //TODO : The first line in the file is not a segment : bounds of the initial window
             File myFile = new File(file);
             Scanner reader = new Scanner(myFile); 
             while ( reader.hasNextLine() ) {
                 String line = reader.nextLine();
-                String[] c = line.split(" "); 
-                segments.add(new Segment(Integer.parseInt(c[0]), Integer.parseInt(c[1]), 
-                                         Integer.parseInt(c[2]), Integer.parseInt(c[3])));
+                String[] c = line.split(" ");
+                Segment segment = new Segment(new CompositeNumber(Integer.parseInt(c[0]), Integer.parseInt(c[2])),
+                                                new CompositeNumber(Integer.parseInt(c[1]), Integer.parseInt(c[3])));
+                segments.add(segment);
             }
             reader.close();
         } catch ( FileNotFoundException e ) {
