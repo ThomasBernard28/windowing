@@ -14,6 +14,9 @@ import javafx.scene.shape.Line;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.stage.Popup;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 
 public class SegmentsScene extends Scene {
@@ -22,6 +25,7 @@ public class SegmentsScene extends Scene {
     private Stage stage;
     private AppWindowing app;
     private String path = "";
+    private boolean popupOnScreen = false;
 
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
@@ -30,10 +34,15 @@ public class SegmentsScene extends Scene {
         this.app = app;
         ScrollPane scrollPane = new ScrollPane();
         Button importButton = new Button("import");
+        importButton.setStyle("-fx-background-color: #457b9d;");
         Button reloadButton = new Button("reload");
+        reloadButton.setStyle("-fx-background-color: #f1faee;");
         Button windowButton = new Button("window");
+        windowButton.setStyle("-fx-background-color: #a8dadc;");
         Button clearButton  = new Button("clear");
-        ToolBar toolbar = new ToolBar(importButton, reloadButton, windowButton, clearButton);
+        clearButton.setStyle("-fx-background-color: #e63946;");
+        ToolBar toolbar = new ToolBar(importButton, windowButton, reloadButton, clearButton);
+        toolbar.setStyle("-fx-background-color: #1d3557;");
         
         // scrollPane config
         scrollPane.setPrefHeight(500);
@@ -83,18 +92,55 @@ public class SegmentsScene extends Scene {
         /**
         * display a popup window asking for a segments file 
         */
-        Popup popup = new Popup();
-        VBox vb = new VBox(10);
-        vb.setStyle("-fx-background-color: #DDF5C6;");
-        Label l = new Label("path :");
-        TextField tf = new TextField(System.getProperty("user.dir")+"/build/resources/main/segments1.txt");
-        Button b = new Button("Import");
-        b.setOnAction( e -> { path = tf.getText(); app.load_segments(path); show_segments(app.segments); popup.hide(); });
-        vb.getChildren().addAll(l, tf, b);
-        popup.getContent().add(vb);
-        popup.show(stage);
+        if ( !popupOnScreen ) {
+            popupOnScreen = true;
+            Popup popup = new Popup();
+            popup.setHideOnEscape(false);
+            VBox vb = new VBox(10);
+            vb.setStyle("-fx-background-color: #457b9d; -fx-padding: 10px;");
+            vb.setAlignment(Pos.CENTER);
+            Label l = new Label("Path :");
+            TextField tf = new TextField(System.getProperty("user.dir")+"/build/resources/main/segments2.txt");
+            Button b = new Button("import");
+            tf.setPrefWidth(700);
+            tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                public void handle(KeyEvent ke) {
+                    if (ke.getCode().equals(KeyCode.ESCAPE)) {
+                        popupOnScreen = false;
+                        popup.hide();
+                    }
+            }});
+            b.setOnAction( e -> { path = tf.getText(); app.load_segments(path); show_segments(app.segments); popupOnScreen = false; popup.hide(); });
+            vb.getChildren().addAll(l, tf, b);
+            popup.getContent().add(vb);
+            popup.show(stage, stage.getX()+125, stage.getY()+100);
+        }
     }
 
     public void window_popup() {
+        /**
+        * display a popup window asking for a window's size
+        */
+        if ( !popupOnScreen ) {
+            popupOnScreen = true;
+            Popup popup = new Popup();
+            VBox vb = new VBox(10);
+            vb.setStyle("-fx-background-color: #a8dadc; -fx-padding: 10px;");
+            vb.setAlignment(Pos.CENTER);
+            Label l = new Label("Window size :");
+            TextField tf = new TextField("x1 y1 x2 y2");
+            Button b = new Button("ok");
+            tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                public void handle(KeyEvent ke) {
+                    if (ke.getCode().equals(KeyCode.ESCAPE)) {
+                        popupOnScreen = false;
+                        popup.hide();
+                    }
+            }});
+            b.setOnAction( e -> { app.window(tf.getText().split(" ", 0)); popupOnScreen = false; popup.hide(); });
+            vb.getChildren().addAll(l, tf, b);
+            popup.getContent().add(vb);
+            popup.show(stage, stage.getX()+400, stage.getY()+100);
+        }
     }
 }

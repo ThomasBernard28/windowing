@@ -42,6 +42,9 @@ public class AppWindowing {
         }
     }
 
+    public void window(String[] window) {
+    }
+
     public void print_segments() {
         segments.forEach( (s) -> System.out.println(s) );
     }
