@@ -51,7 +51,7 @@ public class AppWindowing {
             reader.close();
             //Before we give the set of segments to our construct_tree() method we will sort them base on the y component in order
             //to later be able to compute the median of the set in O(1). Using Quicksort we can ensure a mean complexity of O(nlogn)
-            quicksort(segments, segments.get(0), segments.get(segments.size() - 1));
+            //quicksort(segments, segments.get(0), segments.get(segments.size() - 1));
         } catch ( FileNotFoundException e ) {
             Alert alert = new Alert(AlertType.ERROR, "File " + file + " not found");
             alert.show();
@@ -78,8 +78,29 @@ public class AppWindowing {
     }
 
     public int partition(ArrayList<Segment> segments, Segment start, Segment end){
-        //TODO
-        return 0;
+        int partIndex = segments.indexOf(start);
+        int endIndex = segments.indexOf(end);
+        for (int i = 0; i < endIndex -1; i ++){
+            CompositeNumber yCurrent = segments.get(i).get_yComp();
+            CompositeNumber yEnd = segments.get(endIndex).get_yComp();
+            // We compare the mean of the y component of each segment because they could both have one y coordinate in common.
+            if ((yCurrent.get_coord1() + yCurrent.get_coord2())/2 < (yEnd.get_coord1() + yEnd.get_coord2())/2){
+                swap(segments, i, partIndex);
+                partIndex ++;
+            }
+        }
+        swap(segments, endIndex, partIndex);
+        return partIndex;
+    }
+
+    public void swap(ArrayList<Segment> segments, int i, int j){
+        //swap element at index i and j.
+        Segment temp = segments.get(i);
+        Segment temp2 = segments.get(j);
+        segments.remove(temp);
+        segments.remove(temp2);
+        segments.add(i, temp2);
+        segments.add(j, temp);
     }
 
     public void print_segments() {
