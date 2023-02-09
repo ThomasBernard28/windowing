@@ -96,11 +96,8 @@ public class AppWindowing {
     public void swap(ArrayList<Segment> segments, int i, int j){
         //swap element at index i and j.
         Segment temp = segments.get(i);
-        Segment temp2 = segments.get(j);
-        segments.remove(temp);
-        segments.remove(temp2);
-        segments.add(i, temp2);
-        segments.add(j, temp);
+        segments.set(i, segments.get(j));
+        segments.set(j, temp);
     }
 
     public void print_segments() {
