@@ -5,16 +5,50 @@ import java.util.ArrayList;
 public class PrioritySearchTree {
 
     private final int size;
-    private final Node[] structure;
+    private Node root;
+
+    private Node lson;
+
+    private Node rson;
 
     /**
      * This Class contains all the methods to construct and explore a PrioritySearchTree.
-     * A PrioritySearchTree is composed of Nodes.
+     * A PrioritySearchTree is defined recursively. The reference to a PST is its root and the left son and right son of the root.
      * @param size The total amount of Nodes inside a PrioritySearchTree.
      */
-    public PrioritySearchTree(int size){
+    public PrioritySearchTree(int size, Node root, Node lson, Node rson){
         this.size = size;
-        this.structure = new Node[size];
+        this.root = root;
+        this.lson = lson;
+        this.rson = rson;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public Node getLson() {
+        return lson;
+    }
+
+    public Node getRson() {
+        return rson;
+    }
+
+    public void setRoot(Node root) {
+        this.root = root;
+    }
+
+    public void setLson(Node lson) {
+        this.lson = lson;
+    }
+
+    public void setRson(Node rson) {
+        this.rson = rson;
     }
 
     /**
@@ -24,18 +58,19 @@ public class PrioritySearchTree {
      * @param tree initial tree/substree empty
      */
     public void construct_tree(ArrayList<Segment> segments, PrioritySearchTree tree){
+
         //TODO tester si ce n'est pas plus opti de trier segments avant (notamment pour la médiane)
         if (segments.size() > 1){
             Segment min = find_min(segments);
             segments.remove(min);
             double median = find_median(segments);
-            tree.structure[0] = new Node(median, min);
+            tree.root = new Node(median, min);
             //Reduce the set to compute the median on the remaining set. Min will figure in the current tree/substree root.
 
 
         }
         else if (segments.size() == 1){
-            tree.structure[0] = new Node(0 ,segments.get(0));
+            tree.root = new Node(0 ,segments.get(0));
         }
         else{
             throw new IllegalArgumentException("The size of the segment sets must be at lest 1");
@@ -77,5 +112,4 @@ public class PrioritySearchTree {
         //TODO
         return 0;
     }
-
 }

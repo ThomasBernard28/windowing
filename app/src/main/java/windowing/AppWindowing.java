@@ -35,14 +35,37 @@ public class AppWindowing {
                 Segment segment = new Segment(new CompositeNumber(Integer.parseInt(c[0]), Integer.parseInt(c[2])),
                                                 new CompositeNumber(Integer.parseInt(c[1]), Integer.parseInt(c[3])));
                 segments.add(segment);
+
             }
             reader.close();
+            //Before we give the set of segments to our construct_tree() method we will sort them base on the y component in order
+            //to later be able to compute the median of the set in O(1). Using Quicksort we can ensure a mean complexity of O(nlogn)
+            quicksort(segments, segments.get(0), segments.get(segments.size() - 1));
         } catch ( FileNotFoundException e ) {
             System.out.println("File " + file + " not found");
         }
     }
 
     public void window(String[] window) {
+    }
+
+
+    public void quicksort(ArrayList<Segment> segments, Segment start, Segment end){
+        CompositeNumber yStart = start.get_yComp();
+        CompositeNumber yEnd = end.get_yComp();
+        // We compare the mean of the y component of each segment because they could both have one y coordinate in common.
+        if ((yStart.get_coord1() + yStart.get_coord2())/2 < (yEnd.get_coord1() + yEnd.get_coord2())/2){
+            int partIndex = partition(segments, start, end);
+            //left partition quicksort
+            quicksort(segments, start, segments.get(partIndex -1));
+            //right partition quicksort
+            quicksort(segments, segments.get(partIndex + 1), end);
+        }
+    }
+
+    public int partition(ArrayList<Segment> segments, Segment start, Segment end){
+        //TODO
+        return 0;
     }
 
     public void print_segments() {
