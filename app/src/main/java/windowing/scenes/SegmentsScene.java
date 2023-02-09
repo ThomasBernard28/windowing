@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.shape.Line;
+import javafx.scene.paint.Color;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.stage.Popup;
@@ -32,6 +33,9 @@ public class SegmentsScene extends Scene {
         this.canvas = new StackPane();
         this.stage = stage;
         this.app = app;
+        canvas.setMinWidth(1000);
+        canvas.setMinHeight(500);
+        canvas.setAlignment(Pos.CENTER);
         ScrollPane scrollPane = new ScrollPane();
         Button importButton = new Button("import");
         importButton.setStyle("-fx-background-color: #457b9d;");
@@ -81,6 +85,8 @@ public class SegmentsScene extends Scene {
             yComp = s.get_yComp();
 
             Line l = new Line(xComp.get_coord1()*20, yComp.get_coord1()*20, xComp.get_coord2()*20, yComp.get_coord2()*20);
+            l.setStrokeWidth(2.0);
+            l.setStroke(Color.GREEN);
             group.getChildren().add(l);
         }
         canvas.getChildren().clear();
@@ -137,7 +143,7 @@ public class SegmentsScene extends Scene {
                         popup.hide();
                     }
             }});
-            b.setOnAction( e -> { app.window(tf.getText().split(" ", 0)); popupOnScreen = false; popup.hide(); });
+            b.setOnAction( e -> { show_segments(app.query(tf.getText().split(" ", 0))); popupOnScreen = false; popup.hide(); });
             vb.getChildren().addAll(l, tf, b);
             popup.getContent().add(vb);
             popup.show(stage, stage.getX()+400, stage.getY()+100);
