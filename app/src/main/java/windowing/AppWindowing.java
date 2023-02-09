@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 
 public class AppWindowing {
 
-    public  ArrayList<Segment> segments;
+    public ArrayList<Segment> segments;
+    public ArrayList window = new ArrayList();
     private PrioritySearchTree pst;
     
     /**
@@ -26,23 +29,35 @@ public class AppWindowing {
         
         segments = new ArrayList<Segment>();
         try {
-            //TODO : The first line in the file is not a segment : bounds of the initial window
             File myFile = new File(file);
             Scanner reader = new Scanner(myFile); 
+            boolean firstLine = true;
             while ( reader.hasNextLine() ) {
                 String line = reader.nextLine();
-                String[] c = line.split(" ");
-                Segment segment = new Segment(new CompositeNumber(Integer.parseInt(c[0]), Integer.parseInt(c[2])),
-                                                new CompositeNumber(Integer.parseInt(c[1]), Integer.parseInt(c[3])));
-                segments.add(segment);
+                if ( firstLine ) {
+                    for ( String w : line.split(" ", 0) ) {
+                        window.add(Float.parseFloat(w));     
+                    }
+                    firstLine = false;
+                    System.out.println(window);
+                }
+                else {
+                    String[] c = line.split(" ");
+                    Segment segment = new Segment(new CompositeNumber(Integer.parseInt(c[0]), Integer.parseInt(c[2])),
+                                                    new CompositeNumber(Integer.parseInt(c[1]), Integer.parseInt(c[3])));
+                    segments.add(segment);
+                }
             }
             reader.close();
         } catch ( FileNotFoundException e ) {
-            System.out.println("File " + file + " not found");
+            Alert alert = new Alert(AlertType.ERROR, "File " + file + " not found");
+            alert.show();
         }
     }
 
-    public void window(String[] window) {
+    public ArrayList query(String[] window) {
+        ArrayList wSegments = new ArrayList();
+        return wSegments;
     }
 
     public void print_segments() {
