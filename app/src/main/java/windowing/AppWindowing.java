@@ -12,7 +12,7 @@ import javafx.scene.control.Alert;
 public class AppWindowing {
 
     public ArrayList<Segment> segments;
-    public ArrayList window = new ArrayList();
+    public ArrayList<Float> window;
     private PrioritySearchTree pst;
     
     /**
@@ -28,6 +28,7 @@ public class AppWindowing {
         */
         
         segments = new ArrayList<Segment>();
+        window = new ArrayList<Float>();
         try {
             File myFile = new File(file);
             Scanner reader = new Scanner(myFile); 
@@ -58,6 +59,10 @@ public class AppWindowing {
         }
     }
 
+    /**
+    * @Param window : bounds of the window
+    * @Return an arrayList of segments that are within the window
+    */
     public ArrayList query(String[] window) {
         ArrayList wSegments = new ArrayList();
         return wSegments;

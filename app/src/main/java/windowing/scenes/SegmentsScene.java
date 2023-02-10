@@ -12,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.MouseButton;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.stage.Popup;
@@ -27,6 +29,8 @@ public class SegmentsScene extends Scene {
     private AppWindowing app;
     private String path = "";
     private boolean popupOnScreen = false;
+    private Double mouseX = 500.0;
+    private Double mouseY = 250.0;
 
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
@@ -50,8 +54,8 @@ public class SegmentsScene extends Scene {
         
         // scrollPane config
         scrollPane.setPrefHeight(500);
-        scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-        scrollPane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+        scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
+        scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
         scrollPane.setContent(canvas);
 
         root.getChildren().add(toolbar);
@@ -62,6 +66,24 @@ public class SegmentsScene extends Scene {
         windowButton.setOnAction( e -> window_popup() );
         clearButton.setOnAction( e -> canvas.getChildren().clear() );
         reloadButton.setOnAction( e -> show_segments(app.segments) );
+
+        // mouse event
+        canvas.setOnMouseDragged(e -> {
+            if ( e.getX() < mouseX ) {
+                scrollPane.setHvalue(scrollPane.getHvalue()-1);
+            } 
+            if ( e.getX() > mouseX ) {
+                scrollPane.setHvalue(scrollPane.getHvalue()+1);
+            }
+            if ( e.getY() < mouseY ) {
+                scrollPane.setVvalue(scrollPane.getVvalue()-1);
+            }
+            if ( e.getY() > mouseY ) {
+                scrollPane.setVvalue(scrollPane.getVvalue()+1);
+            }
+            mouseX = e.getX();
+            mouseY = e.getY();
+        });
 
         // click event
         //canvas.setOnMousePressed( e -> System.out.println(Double.toString(e.getX()) + ", " +  Double.toString(e.getY())) );
@@ -85,13 +107,40 @@ public class SegmentsScene extends Scene {
             yComp = s.get_yComp();
 
             Line l = new Line(xComp.get_coord1()*20, yComp.get_coord1()*20, xComp.get_coord2()*20, yComp.get_coord2()*20);
-            l.setStrokeWidth(2.0);
+            l.setStrokeWidth(3.0);
             l.setStroke(Color.GREEN);
             group.getChildren().add(l);
         }
-        canvas.getChildren().clear();
+        draw_grid();
         canvas.getChildren().add(group);
-        canvas.setMargin(group, new Insets(20, 20, 20, 20));
+        //canvas.setMargin(group, new Insets(20, 20, 20, 20));
+    }
+
+    public void show_window(String[] window) {
+    }
+
+    public void draw_grid() {
+        float xMin = app.window.get(0);
+        float yMin = app.window.get(1);
+        float xMax = app.window.get(2);
+        float yMax = app.window.get(3);
+        float step = ( Math.abs(xMin) + Math.abs(xMax) ) /10;
+        Group grid = new Group();
+        float position = xMin;
+        while ( position <= xMax ) {
+            Line l = new Line(position*20, yMin*20, position*20, yMax*20);
+            grid.getChildren().add(l);
+            position += step;
+        }
+        position = yMin;
+        while ( position <= yMax ) {
+            Line l = new Line(xMin*20, position*20, xMax*20, position*20);
+            grid.getChildren().add(l);
+            position += step;
+        }
+        canvas.getChildren().clear();
+        canvas.getChildren().add(grid);
+        canvas.setMargin(grid, new Insets(20, 20, 20, 20));
     }
 
     public void import_popup() {
@@ -116,7 +165,11 @@ public class SegmentsScene extends Scene {
                         popup.hide();
                     }
             }});
-            b.setOnAction( e -> { path = tf.getText(); app.load_segments(path); show_segments(app.segments); popupOnScreen = false; popup.hide(); });
+            b.setOnAction( e -> { app.load_segments(tf.getText()); 
+                                  show_segments(app.segments); 
+                                  popupOnScreen = false; 
+                                  popup.hide(); 
+            });
             vb.getChildren().addAll(l, tf, b);
             popup.getContent().add(vb);
             popup.show(stage, stage.getX()+125, stage.getY()+100);
@@ -135,7 +188,7 @@ public class SegmentsScene extends Scene {
             vb.setAlignment(Pos.CENTER);
             Label l = new Label("Window size :");
             TextField tf = new TextField("x1 y1 x2 y2");
-            Button b = new Button("ok");
+            Button b = new Button("apply");
             tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 public void handle(KeyEvent ke) {
                     if (ke.getCode().equals(KeyCode.ESCAPE)) {
@@ -143,10 +196,15 @@ public class SegmentsScene extends Scene {
                         popup.hide();
                     }
             }});
-            b.setOnAction( e -> { show_segments(app.query(tf.getText().split(" ", 0))); popupOnScreen = false; popup.hide(); });
+            b.setOnAction( e -> { show_window(tf.getText().split(" ", 0));
+                                  show_segments(app.query(tf.getText().split(" ", 0))); 
+                                  popupOnScreen = false; 
+                                  popup.hide(); 
+            });
             vb.getChildren().addAll(l, tf, b);
             popup.getContent().add(vb);
             popup.show(stage, stage.getX()+400, stage.getY()+100);
         }
     }
+
 }
