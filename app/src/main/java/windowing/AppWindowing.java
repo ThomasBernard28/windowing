@@ -75,10 +75,13 @@ public class AppWindowing {
         // We compare the mean of the y component of each segment because they could both have one y coordinate in common.
         if ((yStart.get_coord1() + yStart.get_coord2())/2 < (yEnd.get_coord1() + yEnd.get_coord2())/2){
             int partIndex = partition(segments, start, end);
-            //left partition quicksort
-            quicksort(segments, start, segments.get(partIndex -1));
-            //right partition quicksort
-            quicksort(segments, segments.get(partIndex + 1), end);
+
+            if (partIndex >= 1 && partIndex < segments.size() - 1){
+                //left partition quicksort
+                quicksort(segments, start, segments.get(partIndex - 1));
+                //right partition quicksort
+                quicksort(segments, segments.get(partIndex + 1), end);
+            }
         }
     }
 
