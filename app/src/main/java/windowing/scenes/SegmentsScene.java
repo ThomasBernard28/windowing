@@ -27,7 +27,6 @@ public class SegmentsScene extends Scene {
     private StackPane canvas;
     private Stage stage;
     private AppWindowing app;
-    private String path = "";
     private boolean popupOnScreen = false;
     private Double mouseX = 500.0;
     private Double mouseY = 250.0;
@@ -37,29 +36,34 @@ public class SegmentsScene extends Scene {
         this.canvas = new StackPane();
         this.stage = stage;
         this.app = app;
+
+        // toolbar config
+        Button importButton = new Button("import");
+        Button reloadButton = new Button("reload");
+        Button windowButton = new Button("window");
+        Button clearButton  = new Button("clear");
+        ToolBar toolbar = new ToolBar(importButton, windowButton, reloadButton, clearButton);
+        root.getChildren().add(toolbar);
+        
+        // canvas config
         canvas.setMinWidth(1000);
         canvas.setMinHeight(500);
         canvas.setAlignment(Pos.CENTER);
-        ScrollPane scrollPane = new ScrollPane();
-        Button importButton = new Button("import");
-        importButton.setStyle("-fx-background-color: #457b9d;");
-        Button reloadButton = new Button("reload");
-        reloadButton.setStyle("-fx-background-color: #f1faee;");
-        Button windowButton = new Button("window");
-        windowButton.setStyle("-fx-background-color: #a8dadc;");
-        Button clearButton  = new Button("clear");
-        clearButton.setStyle("-fx-background-color: #e63946;");
-        ToolBar toolbar = new ToolBar(importButton, windowButton, reloadButton, clearButton);
-        toolbar.setStyle("-fx-background-color: #1d3557;");
-        
+
         // scrollPane config
+        ScrollPane scrollPane = new ScrollPane();
         scrollPane.setPrefHeight(500);
         scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
         scrollPane.setContent(canvas);
-
-        root.getChildren().add(toolbar);
         root.getChildren().add(scrollPane);
+
+        // style
+        importButton.setStyle("-fx-background-color: #457b9d;");
+        reloadButton.setStyle("-fx-background-color: #f1faee;");
+        windowButton.setStyle("-fx-background-color: #a8dadc;");
+        clearButton.setStyle("-fx-background-color: #e63946;");
+        toolbar.setStyle("-fx-background-color: #1d3557;");
 
         // buttons event
         importButton.setOnAction( e -> import_popup() );
@@ -92,7 +96,6 @@ public class SegmentsScene extends Scene {
     
     /**
      * @Param segments : Segments to be displayed
-     * TODO: use first line of dataset file to print the grid
     **/
     public void show_segments(ArrayList<Segment> segments) {
         /**
@@ -111,9 +114,10 @@ public class SegmentsScene extends Scene {
             l.setStroke(Color.GREEN);
             group.getChildren().add(l);
         }
+
+        canvas.getChildren().clear();
         draw_grid();
         canvas.getChildren().add(group);
-        //canvas.setMargin(group, new Insets(20, 20, 20, 20));
     }
 
     public void show_window(String[] window) {
@@ -126,19 +130,23 @@ public class SegmentsScene extends Scene {
         float yMax = app.window.get(3);
         float step = ( Math.abs(xMin) + Math.abs(xMax) ) /10;
         Group grid = new Group();
+
+        // drawing vertical lines
         float position = xMin;
         while ( position <= xMax ) {
             Line l = new Line(position*20, yMin*20, position*20, yMax*20);
             grid.getChildren().add(l);
             position += step;
         }
+
+        // drawing horizontal lines
         position = yMin;
         while ( position <= yMax ) {
             Line l = new Line(xMin*20, position*20, xMax*20, position*20);
             grid.getChildren().add(l);
             position += step;
         }
-        canvas.getChildren().clear();
+
         canvas.getChildren().add(grid);
         canvas.setMargin(grid, new Insets(20, 20, 20, 20));
     }
@@ -149,14 +157,21 @@ public class SegmentsScene extends Scene {
         */
         if ( !popupOnScreen ) {
             popupOnScreen = true;
+
+            // popup
             Popup popup = new Popup();
             popup.setHideOnEscape(false);
+
+            // vbox
             VBox vb = new VBox(10);
             vb.setStyle("-fx-background-color: #457b9d; -fx-padding: 10px;");
             vb.setAlignment(Pos.CENTER);
+
+            // label
             Label l = new Label("Path :");
+
+            // textfield
             TextField tf = new TextField(System.getProperty("user.dir")+"/build/resources/main/segments2.txt");
-            Button b = new Button("import");
             tf.setPrefWidth(700);
             tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 public void handle(KeyEvent ke) {
@@ -165,11 +180,15 @@ public class SegmentsScene extends Scene {
                         popup.hide();
                     }
             }});
+
+            // button
+            Button b = new Button("import");
             b.setOnAction( e -> { app.load_segments(tf.getText()); 
                                   show_segments(app.segments); 
                                   popupOnScreen = false; 
                                   popup.hide(); 
             });
+
             vb.getChildren().addAll(l, tf, b);
             popup.getContent().add(vb);
             popup.show(stage, stage.getX()+125, stage.getY()+100);
@@ -182,13 +201,20 @@ public class SegmentsScene extends Scene {
         */
         if ( !popupOnScreen ) {
             popupOnScreen = true;
+            
+            // popup
             Popup popup = new Popup();
+
+            //vbox
             VBox vb = new VBox(10);
             vb.setStyle("-fx-background-color: #a8dadc; -fx-padding: 10px;");
             vb.setAlignment(Pos.CENTER);
+                
+            // label
             Label l = new Label("Window size :");
+
+            // textfield
             TextField tf = new TextField("x1 y1 x2 y2");
-            Button b = new Button("apply");
             tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 public void handle(KeyEvent ke) {
                     if (ke.getCode().equals(KeyCode.ESCAPE)) {
@@ -196,11 +222,15 @@ public class SegmentsScene extends Scene {
                         popup.hide();
                     }
             }});
+
+            // button
+            Button b = new Button("apply");
             b.setOnAction( e -> { show_window(tf.getText().split(" ", 0));
                                   show_segments(app.query(tf.getText().split(" ", 0))); 
                                   popupOnScreen = false; 
                                   popup.hide(); 
             });
+
             vb.getChildren().addAll(l, tf, b);
             popup.getContent().add(vb);
             popup.show(stage, stage.getX()+400, stage.getY()+100);

@@ -17,8 +17,6 @@ public class AppWindowing {
     
     /**
     * @Param file : name of the dataset file
-    * TODO : test if file contains only numbers ( using regex )
-    * TODO : better exceptions
     **/
     public void load_segments(String file) {
         /**
@@ -40,7 +38,6 @@ public class AppWindowing {
                         window.add(Float.parseFloat(w));
                     }
                     firstLine = false;
-                    System.out.println(window);
                 }
                 else {
                     String[] c = line.split(" ");
