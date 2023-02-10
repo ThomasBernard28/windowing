@@ -84,8 +84,9 @@ public class AppWindowing {
 
     public int partition(ArrayList<Segment> segments, Segment start, Segment end){
         int partIndex = segments.indexOf(start);
+        int startIndex = segments.indexOf(start);
         int endIndex = segments.indexOf(end);
-        for (int i = 0; i < endIndex -1; i ++){
+        for (int i = startIndex; i < endIndex -1; i ++){
             CompositeNumber yCurrent = segments.get(i).get_yComp();
             CompositeNumber yEnd = segments.get(endIndex).get_yComp();
             // We compare the mean of the y component of each segment because they could both have one y coordinate in common.
