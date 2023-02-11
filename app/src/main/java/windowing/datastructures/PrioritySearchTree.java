@@ -4,52 +4,20 @@ import java.util.ArrayList;
 
 public class PrioritySearchTree {
 
-    private final int size;
     private Node root;
 
-    private Node lson;
-
-    private Node rson;
-
-    /**
-     * This Class contains all the methods to construct and explore a PrioritySearchTree.
-     * A PrioritySearchTree is defined recursively. The reference to a PST is its root and the left son and right son of the root.
-     * @param size The total amount of Nodes inside a PrioritySearchTree.
-     */
-    public PrioritySearchTree(int size, Node root, Node lson, Node rson){
-        this.size = size;
+    public PrioritySearchTree(Node root){
         this.root = root;
-        this.lson = lson;
-        this.rson = rson;
-    }
-
-    public int getSize() {
-        return size;
     }
 
     public Node getRoot() {
         return root;
     }
 
-    public Node getLson() {
-        return lson;
-    }
-
-    public Node getRson() {
-        return rson;
-    }
-
     public void setRoot(Node root) {
         this.root = root;
     }
 
-    public void setLson(Node lson) {
-        this.lson = lson;
-    }
-
-    public void setRson(Node rson) {
-        this.rson = rson;
-    }
 
     /**
      * This method is an adaptation (to our specific needs) of the pseudo code algorithm from our report.
@@ -58,6 +26,7 @@ public class PrioritySearchTree {
      * @param tree initial tree/substree empty
      */
     public void construct_tree(ArrayList<Segment> segments, PrioritySearchTree tree){
+        ArrayList<Segment> rootSegments = new ArrayList<Segment>();
 
         //TODO tester si ce n'est pas plus opti de trier segments avant (notamment pour la médiane)
         if (segments.size() > 1){
@@ -70,7 +39,8 @@ public class PrioritySearchTree {
 
         }
         else if (segments.size() == 1){
-            tree.root = new Node(0 ,segments.get(0));
+            rootSegments.add(segments.get(0));
+            tree.root = new Node(0 , segments.get(0));
         }
         else{
             throw new IllegalArgumentException("The size of the segment sets must be at lest 1");
@@ -109,7 +79,19 @@ public class PrioritySearchTree {
     }
 
     private double find_median(ArrayList<Segment> segments){
-        //TODO
-        return 0;
+        int index = find_median_index(segments);
+        Segment segment = segments.get(index);
+        CompositeNumber yComp = segment.get_yComp();
+        return (yComp.get_coord1() + yComp.get_coord2())/2;
+    }
+
+    private int find_median_index(ArrayList<Segment> segments){
+        // If the number of segments is even
+        if (segments.size() % 2 == 0){
+            return (segments.size() /2 )-1;
+        //Else the number of segments is odd
+        }else{
+            return ((segments.size() + 1) /2 ) -1;
+        }
     }
 }

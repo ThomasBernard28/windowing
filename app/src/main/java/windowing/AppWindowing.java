@@ -1,6 +1,5 @@
 package windowing;
 
-import org.checkerframework.checker.units.qual.C;
 import windowing.datastructures.*;
 import java.util.ArrayList; 
 import java.util.Scanner;
@@ -49,7 +48,7 @@ public class AppWindowing {
             reader.close();
             //Before we give the set of segments to our construct_tree() method we will sort them base on the y component in order
             //to later be able to compute the median of the set in O(1). Using Quicksort we can ensure a mean complexity of O(nlogn)
-            //quicksort(segments, segments.get(0), segments.get(segments.size() - 1));
+            quicksort(segments, segments.get(0), segments.get(segments.size() - 1));
         } catch ( FileNotFoundException e ) {
             Alert alert = new Alert(AlertType.ERROR, "File " + file + " not found");
             alert.show();
