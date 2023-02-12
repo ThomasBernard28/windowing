@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
+import windowing.datastructures.PrioritySearchTree.*;
 
 public class AppWindowing {
 

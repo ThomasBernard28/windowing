@@ -6,8 +6,14 @@ public class PrioritySearchTree {
 
     private Node root;
 
-    public PrioritySearchTree(Node root){
+    private PrioritySearchTree lson;
+
+    private PrioritySearchTree rson;
+
+    public PrioritySearchTree(Node root, PrioritySearchTree lson, PrioritySearchTree rson){
         this.root = root;
+        this.lson = lson;
+        this.rson = rson;
     }
 
     public Node getRoot() {
@@ -18,6 +24,21 @@ public class PrioritySearchTree {
         this.root = root;
     }
 
+    public PrioritySearchTree getLson() {
+        return lson;
+    }
+
+    public PrioritySearchTree getRson() {
+        return rson;
+    }
+
+    public void setLson(PrioritySearchTree lson) {
+        this.lson = lson;
+    }
+
+    public void setRson(PrioritySearchTree rson) {
+        this.rson = rson;
+    }
 
     /**
      * This method is an adaptation (to our specific needs) of the pseudo code algorithm from our report.
@@ -25,27 +46,32 @@ public class PrioritySearchTree {
      * @param segments Set of segments that have to be inserted in the PST
      * @param tree initial tree/substree empty
      */
-    public void construct_tree(ArrayList<Segment> segments, PrioritySearchTree tree){
-        ArrayList<Segment> rootSegments = new ArrayList<Segment>();
+    public PrioritySearchTree construct_tree(ArrayList<Segment> segments, PrioritySearchTree tree){
 
         //TODO tester si ce n'est pas plus opti de trier segments avant (notamment pour la médiane)
         if (segments.size() > 1){
             Segment min = find_min(segments);
             segments.remove(min);
-            double median = find_median(segments);
-            tree.root = new Node(median, min);
-            //Reduce the set to compute the median on the remaining set. Min will figure in the current tree/substree root.
 
+            //Compute the median
+            int index = find_median_index(segments);
+            Segment segment = segments.get(index);
+            CompositeNumber yComp = segment.get_yComp();
+            double median = (yComp.get_coord1() + yComp.get_coord2())/2;
+            tree.root = new Node(median, min);
+
+            //Reduce the set to compute the median on the remaining set. Min will figure in the current tree/substree root.
+            ArrayList<Segment> leftPart = (ArrayList<Segment>) segments.subList(0, index);
+            ArrayList<Segment> rightPart = (ArrayList<Segment>) segments.subList(index, segments.size() - 1);
+            tree.setLson(construct_tree(leftPart, tree.lson));
+            tree.setRson(construct_tree(rightPart, tree.rson));
 
         }
         else if (segments.size() == 1){
-            rootSegments.add(segments.get(0));
             tree.root = new Node(0 , segments.get(0));
+            segments.remove(0);
         }
-        else{
-            throw new IllegalArgumentException("The size of the segment sets must be at lest 1");
-        }
-
+        return tree;
     }
 
     /**
@@ -76,13 +102,6 @@ public class PrioritySearchTree {
             }
         }
         return min;
-    }
-
-    private double find_median(ArrayList<Segment> segments){
-        int index = find_median_index(segments);
-        Segment segment = segments.get(index);
-        CompositeNumber yComp = segment.get_yComp();
-        return (yComp.get_coord1() + yComp.get_coord2())/2;
     }
 
     private int find_median_index(ArrayList<Segment> segments){
