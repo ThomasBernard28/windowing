@@ -44,13 +44,13 @@ public class PrioritySearchTree {
      * This method is an adaptation (to our specific needs) of the pseudo code algorithm from our report.
      * The method only modify the PST by adding new nodes into it.
      * @param segments Set of segments that have to be inserted in the PST
-     * @param tree initial tree/substree empty
      */
-    public PrioritySearchTree construct_tree(ArrayList<Segment> segments, PrioritySearchTree tree){
-
+    public PrioritySearchTree construct_tree(ArrayList<Segment> segments){
+        PrioritySearchTree tree = null;
         //TODO tester si ce n'est pas plus opti de trier segments avant (notamment pour la médiane)
         if (segments.size() > 1){
             Segment min = find_min(segments);
+            //Reduce the set to compute the median on the remaining set. Min will figure in the current tree/substree root.
             segments.remove(min);
 
             //Compute the median
@@ -58,18 +58,20 @@ public class PrioritySearchTree {
             Segment segment = segments.get(index);
             CompositeNumber yComp = segment.get_yComp();
             double median = (yComp.get_coord1() + yComp.get_coord2())/2;
-            tree.root = new Node(median, min);
+            Node root = new Node(median, min);
 
-            //Reduce the set to compute the median on the remaining set. Min will figure in the current tree/substree root.
+            //Split the ArrayList in two parts.
             ArrayList<Segment> leftPart = (ArrayList<Segment>) segments.subList(0, index);
             ArrayList<Segment> rightPart = (ArrayList<Segment>) segments.subList(index, segments.size() - 1);
-            tree.setLson(construct_tree(leftPart, tree.lson));
-            tree.setRson(construct_tree(rightPart, tree.rson));
+            PrioritySearchTree lson = construct_tree(leftPart);
+            PrioritySearchTree rson = construct_tree(rightPart);
+            tree = new PrioritySearchTree(root, lson, rson);
 
         }
         else if (segments.size() == 1){
-            tree.root = new Node(0 , segments.get(0));
+            Node root = new Node(0 , segments.get(0));
             segments.remove(0);
+            tree = new PrioritySearchTree(root, construct_tree(segments), construct_tree(segments));
         }
         return tree;
     }
