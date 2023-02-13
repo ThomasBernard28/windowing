@@ -15,6 +15,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Text;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
@@ -32,6 +33,7 @@ public class SegmentsScene extends Scene {
     private boolean popupOnScreen = false;
     private Double mouseX = 500.0;
     private Double mouseY = 250.0;
+    private Double zoomLevel = 20.0;
 
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
@@ -51,6 +53,17 @@ public class SegmentsScene extends Scene {
         canvas.setMinWidth(1000);
         canvas.setMinHeight(500);
         canvas.setAlignment(Pos.CENTER);
+        canvas.setOnScroll( (ScrollEvent e) -> {
+            double deltaY = e.getDeltaY();
+            if ( deltaY < 0 && zoomLevel > 10 ) {
+                zoomLevel -= 10;
+                show_segments(app.segments);
+            }
+            if ( deltaY > 0 && zoomLevel < 100 ) {
+                zoomLevel += 10;
+                show_segments(app.segments);
+            }
+        } );
 
         // scrollPane config
         ScrollPane scrollPane = new ScrollPane();
@@ -111,7 +124,7 @@ public class SegmentsScene extends Scene {
             xComp = s.get_xComp();
             yComp = s.get_yComp();
 
-            Line l = new Line(xComp.get_coord1()*20, yComp.get_coord1()*20, xComp.get_coord2()*20, yComp.get_coord2()*20);
+            Line l = new Line(xComp.get_coord1()*zoomLevel, yComp.get_coord1()*zoomLevel, xComp.get_coord2()*zoomLevel, yComp.get_coord2()*zoomLevel);
             l.setStrokeWidth(3.0);
             l.setStroke(Color.GREEN);
             group.getChildren().add(l);
@@ -140,8 +153,8 @@ public class SegmentsScene extends Scene {
         // drawing vertical lines
         float position = xMin;
         while ( position <= xMax ) {
-            Text num = new Text(position*20, yMin*20-5, Float.toString((int)position));
-            Line l = new Line(position*20, yMin*20, position*20, yMax*20);
+            Text num = new Text(position*zoomLevel, yMin*zoomLevel-5, Float.toString((int)position));
+            Line l = new Line(position*zoomLevel, yMin*zoomLevel, position*zoomLevel, yMax*zoomLevel);
             grid.getChildren().addAll(l, num);
             position += step;
         }
@@ -149,8 +162,8 @@ public class SegmentsScene extends Scene {
         // drawing horizontal lines
         position = yMin;
         while ( position <= yMax ) {
-            Text num = new Text(xMin*20-30, position*20, Float.toString((int)position));
-            Line l = new Line(xMin*20, position*20, xMax*20, position*20);
+            Text num = new Text(xMin*zoomLevel-30, position*zoomLevel, Float.toString((int)position));
+            Line l = new Line(xMin*zoomLevel, position*zoomLevel, xMax*zoomLevel, position*zoomLevel);
             grid.getChildren().addAll(l, num);
             position += step;
         }
