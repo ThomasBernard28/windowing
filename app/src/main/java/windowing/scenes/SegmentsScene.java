@@ -11,7 +11,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.text.Text;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.stage.Popup;
@@ -113,6 +117,10 @@ public class SegmentsScene extends Scene {
             group.getChildren().add(l);
         }
 
+        // center point
+        Circle center = new Circle(0, 0, 5, Color.RED);
+        group.getChildren().add(center);
+
         canvas.getChildren().clear();
         draw_grid();
         canvas.getChildren().add(group);
@@ -132,16 +140,18 @@ public class SegmentsScene extends Scene {
         // drawing vertical lines
         float position = xMin;
         while ( position <= xMax ) {
+            Text num = new Text(position*20, yMin*20-5, Float.toString((int)position));
             Line l = new Line(position*20, yMin*20, position*20, yMax*20);
-            grid.getChildren().add(l);
+            grid.getChildren().addAll(l, num);
             position += step;
         }
 
         // drawing horizontal lines
         position = yMin;
         while ( position <= yMax ) {
+            Text num = new Text(xMin*20-30, position*20, Float.toString((int)position));
             Line l = new Line(xMin*20, position*20, xMax*20, position*20);
-            grid.getChildren().add(l);
+            grid.getChildren().addAll(l, num);
             position += step;
         }
 
