@@ -55,12 +55,12 @@ public class SegmentsScene extends Scene {
         canvas.setAlignment(Pos.CENTER);
         canvas.setOnScroll( (ScrollEvent e) -> {
             double deltaY = e.getDeltaY();
-            if ( deltaY < 0 && zoomLevel > 10 ) {
+            if ( deltaY < 0 && zoomLevel > 10 ) { // zoom in
                 zoomLevel -= 10;
                 show_segments(app.segments);
             }
-            if ( deltaY > 0 && zoomLevel < 100 ) {
-                zoomLevel += 10;
+            if ( deltaY > 0 && zoomLevel < 100 ) { // zoom out
+                zoomLevel += 1;
                 show_segments(app.segments);
             }
         } );
@@ -130,10 +130,6 @@ public class SegmentsScene extends Scene {
             group.getChildren().add(l);
         }
 
-        // center point
-        Circle center = new Circle(0, 0, 5, Color.RED);
-        group.getChildren().add(center);
-
         canvas.getChildren().clear();
         draw_grid();
         canvas.getChildren().add(group);
@@ -147,29 +143,39 @@ public class SegmentsScene extends Scene {
         float yMin = app.window.get(1);
         float xMax = app.window.get(2);
         float yMax = app.window.get(3);
-        float step = ( Math.abs(xMin) + Math.abs(xMax) ) /10;
         Group grid = new Group();
+        Group text = new Group();
+
+        // determine step
+        float width = Math.abs(xMin) + Math.abs(xMax);
+        int step = 1;
+        if ( width >= 100 ) { step = 10; }
 
         // drawing vertical lines
         float position = xMin;
-        while ( position <= xMax ) {
-            Text num = new Text(position*zoomLevel, yMin*zoomLevel-5, Float.toString((int)position));
+        while ( position <= xMax) {
+            Text num = new Text(position*zoomLevel, yMin*zoomLevel-30, Integer.toString((int)position));
             Line l = new Line(position*zoomLevel, yMin*zoomLevel, position*zoomLevel, yMax*zoomLevel);
-            grid.getChildren().addAll(l, num);
+            l.setStyle("-fx-opacity: 0.5;");
+            grid.getChildren().add(l);
+            text.getChildren().add(num);
             position += step;
         }
 
         // drawing horizontal lines
         position = yMin;
         while ( position <= yMax ) {
-            Text num = new Text(xMin*zoomLevel-30, position*zoomLevel, Float.toString((int)position));
+            Text num = new Text(xMin*zoomLevel-30, position*zoomLevel, Integer.toString((int)position));
             Line l = new Line(xMin*zoomLevel, position*zoomLevel, xMax*zoomLevel, position*zoomLevel);
-            grid.getChildren().addAll(l, num);
+            l.setStyle("-fx-opacity: 0.5;");
+            grid.getChildren().add(l);
+            text.getChildren().add(num);
             position += step;
         }
 
         canvas.getChildren().add(grid);
-        canvas.setMargin(grid, new Insets(20, 20, 20, 20));
+        canvas.getChildren().add(text);
+        //canvas.setMargin(grid, new Insets(20, 20, 20, 20));
     }
 
     public void import_popup() {
