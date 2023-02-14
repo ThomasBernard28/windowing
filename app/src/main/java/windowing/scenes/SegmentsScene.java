@@ -34,6 +34,7 @@ public class SegmentsScene extends Scene {
     private Double mouseX = 500.0;
     private Double mouseY = 250.0;
     private Double zoomLevel = 20.0;
+    private ArrayList<Segment> segments = new ArrayList<Segment>();
 
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
@@ -56,12 +57,12 @@ public class SegmentsScene extends Scene {
         canvas.setOnScroll( (ScrollEvent e) -> {
             double deltaY = e.getDeltaY();
             if ( deltaY < 0 && zoomLevel > 10 ) { // zoom in
-                zoomLevel -= 10;
-                show_segments(app.segments);
+                zoomLevel -= 1;
+                show_segments(segments);
             }
             if ( deltaY > 0 && zoomLevel < 100 ) { // zoom out
                 zoomLevel += 1;
-                show_segments(app.segments);
+                show_segments(segments);
             }
         } );
 
@@ -89,16 +90,16 @@ public class SegmentsScene extends Scene {
         // mouse event
         canvas.setOnMouseDragged(e -> {
             if ( e.getX() < mouseX ) {
-                scrollPane.setHvalue(scrollPane.getHvalue()-1);
+                scrollPane.setHvalue(scrollPane.getHvalue()-0.005);
             } 
             if ( e.getX() > mouseX ) {
-                scrollPane.setHvalue(scrollPane.getHvalue()+1);
+                scrollPane.setHvalue(scrollPane.getHvalue()+0.005);
             }
             if ( e.getY() < mouseY ) {
-                scrollPane.setVvalue(scrollPane.getVvalue()-1);
+                scrollPane.setVvalue(scrollPane.getVvalue()-0.005);
             }
             if ( e.getY() > mouseY ) {
-                scrollPane.setVvalue(scrollPane.getVvalue()+1);
+                scrollPane.setVvalue(scrollPane.getVvalue()+0.005);
             }
             mouseX = e.getX();
             mouseY = e.getY();
@@ -133,6 +134,7 @@ public class SegmentsScene extends Scene {
         canvas.getChildren().clear();
         draw_grid();
         canvas.getChildren().add(group);
+        this.segments = segments;
     }
 
     public void show_window(String[] window) {
