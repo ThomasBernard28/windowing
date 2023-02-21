@@ -11,7 +11,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.text.Text;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.stage.Popup;
@@ -28,6 +33,8 @@ public class SegmentsScene extends Scene {
     private boolean popupOnScreen = false;
     private Double mouseX = 500.0;
     private Double mouseY = 250.0;
+    private Double zoomLevel = 20.0;
+    private ArrayList<Segment> segments = new ArrayList<Segment>();
 
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
@@ -47,6 +54,17 @@ public class SegmentsScene extends Scene {
         canvas.setMinWidth(1000);
         canvas.setMinHeight(500);
         canvas.setAlignment(Pos.CENTER);
+        canvas.setOnScroll( (ScrollEvent e) -> {
+            double deltaY = e.getDeltaY();
+            if ( deltaY < 0 && zoomLevel > 10 ) { // zoom in
+                zoomLevel -= 1;
+                show_segments(segments);
+            }
+            if ( deltaY > 0 && zoomLevel < 100 ) { // zoom out
+                zoomLevel += 1;
+                show_segments(segments);
+            }
+        } );
 
         // scrollPane config
         ScrollPane scrollPane = new ScrollPane();
@@ -72,16 +90,16 @@ public class SegmentsScene extends Scene {
         // mouse event
         canvas.setOnMouseDragged(e -> {
             if ( e.getX() < mouseX ) {
-                scrollPane.setHvalue(scrollPane.getHvalue()-1);
+                scrollPane.setHvalue(scrollPane.getHvalue()-0.005);
             } 
             if ( e.getX() > mouseX ) {
-                scrollPane.setHvalue(scrollPane.getHvalue()+1);
+                scrollPane.setHvalue(scrollPane.getHvalue()+0.005);
             }
             if ( e.getY() < mouseY ) {
-                scrollPane.setVvalue(scrollPane.getVvalue()-1);
+                scrollPane.setVvalue(scrollPane.getVvalue()-0.005);
             }
             if ( e.getY() > mouseY ) {
-                scrollPane.setVvalue(scrollPane.getVvalue()+1);
+                scrollPane.setVvalue(scrollPane.getVvalue()+0.005);
             }
             mouseX = e.getX();
             mouseY = e.getY();
@@ -107,7 +125,7 @@ public class SegmentsScene extends Scene {
             xComp = s.get_xComp();
             yComp = s.get_yComp();
 
-            Line l = new Line(xComp.get_coord1()*20, yComp.get_coord1()*20, xComp.get_coord2()*20, yComp.get_coord2()*20);
+            Line l = new Line(xComp.get_coord1()*zoomLevel, yComp.get_coord1()*zoomLevel, xComp.get_coord2()*zoomLevel, yComp.get_coord2()*zoomLevel);
             l.setStrokeWidth(3.0);
             l.setStroke(Color.GREEN);
             group.getChildren().add(l);
@@ -116,6 +134,7 @@ public class SegmentsScene extends Scene {
         canvas.getChildren().clear();
         draw_grid();
         canvas.getChildren().add(group);
+        this.segments = segments;
     }
 
     public void show_window(String[] window) {
@@ -126,27 +145,39 @@ public class SegmentsScene extends Scene {
         float yMin = app.window.get(1);
         float xMax = app.window.get(2);
         float yMax = app.window.get(3);
-        float step = ( Math.abs(xMin) + Math.abs(xMax) ) /10;
         Group grid = new Group();
+        Group text = new Group();
+
+        // determine step
+        float width = Math.abs(xMin) + Math.abs(xMax);
+        int step = 1;
+        if ( width >= 100 ) { step = 10; }
 
         // drawing vertical lines
         float position = xMin;
-        while ( position <= xMax ) {
-            Line l = new Line(position*20, yMin*20, position*20, yMax*20);
+        while ( position <= xMax) {
+            Text num = new Text(position*zoomLevel, yMin*zoomLevel-30, Integer.toString((int)position));
+            Line l = new Line(position*zoomLevel, yMin*zoomLevel, position*zoomLevel, yMax*zoomLevel);
+            l.setStyle("-fx-opacity: 0.5;");
             grid.getChildren().add(l);
+            text.getChildren().add(num);
             position += step;
         }
 
         // drawing horizontal lines
         position = yMin;
         while ( position <= yMax ) {
-            Line l = new Line(xMin*20, position*20, xMax*20, position*20);
+            Text num = new Text(xMin*zoomLevel-30, position*zoomLevel, Integer.toString((int)position));
+            Line l = new Line(xMin*zoomLevel, position*zoomLevel, xMax*zoomLevel, position*zoomLevel);
+            l.setStyle("-fx-opacity: 0.5;");
             grid.getChildren().add(l);
+            text.getChildren().add(num);
             position += step;
         }
 
         canvas.getChildren().add(grid);
-        canvas.setMargin(grid, new Insets(20, 20, 20, 20));
+        canvas.getChildren().add(text);
+        //canvas.setMargin(grid, new Insets(20, 20, 20, 20));
     }
 
     public void import_popup() {
