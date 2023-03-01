@@ -40,10 +40,10 @@ on:
         - name: Grant execute permission for gradlew
           run: |
             chmod +x gradlew
-        -name: Create fatjar with Gradle for unix
-        run: |
-          bash gradlew jar
-          mv app/build/libs/app.jar app/libs/windowing.jar
+        - name: Create fatjar with Gradle for unix
+          run: |
+            bash gradlew jar
+            mv app/build/libs/app.jar app/libs/windowing.jar
         - name: Release fatjar unix
           uses: "marvinpinto/action-automatic-releases@latest"
           with:
@@ -67,10 +67,10 @@ on:
           - name: Grant execute permission for gradlew
             run: |
               chmod +x gradlew
-          -name: Create fatjar with Gradle for windows
-          run: |
-            bash gradlew jar
-            mv app/build/libs/app.jar app/libs/windowing-windows.jar
+          - name: Create fatjar with Gradle for windows
+            run: |
+              bash gradlew jar
+              mv app/build/libs/app.jar app/libs/windowing-windows.jar
           - name: Release fatjar windows
             uses: "marvinpinto/action-automatic-releases@latest"
             with:
