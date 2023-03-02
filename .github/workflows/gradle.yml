@@ -53,7 +53,7 @@ jobs:
         files: |
           app/build/libs/windowing.jar
         
-   release_fatjar_windows:
+    release_fatjar_windows:
       runs-on: windows-latest
       steps:
       - uses: actions/checkout@v2
