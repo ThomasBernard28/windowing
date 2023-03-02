@@ -65,7 +65,7 @@ jobs:
           cache: gradle
       - name: Grant execute permission for gradlew
         run: |
-        chmod +x gradlew
+          chmod +x gradlew
       - name: Create fatjar with Gradle for windows
         run: |
           bash gradlew jar
