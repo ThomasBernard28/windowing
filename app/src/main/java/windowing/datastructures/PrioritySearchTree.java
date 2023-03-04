@@ -56,7 +56,7 @@ public class PrioritySearchTree {
             //Compute the median
             int index = find_median_index(segments);
             Segment segment = segments.get(index);
-            CompositeNumber yComp = segment.get_yComp();
+            CompositeNumber yComp = new CompositeNumber(segment.get_startComp().get_coord2(), segment.get_endComp().get_coord2());
             double median = (yComp.get_coord1() + yComp.get_coord2())/2;
             Node root = new Node(median, min);
 
@@ -88,13 +88,13 @@ public class PrioritySearchTree {
         while (index < segments.size()){
             Segment temp = segments.get(index);
             //Si la plus petite coordonnée x de temp est strictement inférieure à la plus petite coordonnée x du min courant
-            if (temp.get_xComp().get_coord1() < min.get_xComp().get_coord1()){
+            if (temp.get_startComp().get_coord1() < min.get_endComp().get_coord1()){
                 min = temp;
                 index ++;
             }
             //Si les 2 coordonnées x sont égales on va regarder celui qui le plus petit x'
-            else if (temp.get_xComp().get_coord1() == min.get_xComp().get_coord1()){
-                if (temp.get_xComp().get_coord2() < min.get_xComp().get_coord2()){
+            else if (temp.get_startComp().get_coord1() == min.get_startComp().get_coord1()){
+                if (temp.get_endComp().get_coord1() < min.get_endComp().get_coord1()){
                     min = temp;
                     index ++;
                 }

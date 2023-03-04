@@ -85,7 +85,7 @@ public class SegmentsScene extends Scene {
         importButton.setOnAction( e -> import_popup() );
         windowButton.setOnAction( e -> window_popup() );
         clearButton.setOnAction( e -> canvas.getChildren().clear() );
-        reloadButton.setOnAction( e -> show_segments(app.segments) );
+        reloadButton.setOnAction( e -> show_segments(app.hSegments));
 
         // mouse event
         canvas.setOnMouseDragged(e -> {
@@ -118,14 +118,14 @@ public class SegmentsScene extends Scene {
         * method to display the segments from the given array list
         */
 
-        CompositeNumber xComp;
-        CompositeNumber yComp;
+        CompositeNumber startComp;
+        CompositeNumber endComp;
         Group group = new Group();
         for ( Segment s : segments ) {
-            xComp = s.get_xComp();
-            yComp = s.get_yComp();
+            startComp = s.get_startComp();
+            endComp = s.get_endComp();
 
-            Line l = new Line(xComp.get_coord1()*zoomLevel, yComp.get_coord1()*zoomLevel, xComp.get_coord2()*zoomLevel, yComp.get_coord2()*zoomLevel);
+            Line l = new Line(startComp.get_coord1()*zoomLevel, startComp.get_coord2()*zoomLevel, endComp.get_coord1()*zoomLevel, endComp.get_coord2()*zoomLevel);
             l.setStrokeWidth(3.0);
             l.setStroke(Color.GREEN);
             group.getChildren().add(l);
@@ -213,7 +213,7 @@ public class SegmentsScene extends Scene {
             // button
             Button b = new Button("import");
             b.setOnAction( e -> { app.load_segments(tf.getText()); 
-                                  show_segments(app.segments); 
+                                  show_segments(app.hSegments);
                                   popupOnScreen = false; 
                                   popup.hide(); 
             });

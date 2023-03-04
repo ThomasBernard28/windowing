@@ -2,23 +2,23 @@ package windowing.datastructures;
 
 public class Segment {
 
-    private final CompositeNumber xComp;
-    private final CompositeNumber yComp;
+    private final CompositeNumber startComp;
+    private final CompositeNumber endComp;
 
-    public Segment(CompositeNumber xComp, CompositeNumber yComp){
-        this.xComp = xComp;
-        this.yComp = yComp;
+    public Segment(CompositeNumber startComp, CompositeNumber endComp){
+        this.startComp = startComp;
+        this.endComp = endComp;
     }
-    public CompositeNumber get_xComp(){
-        return xComp;
+    public CompositeNumber get_startComp(){
+        return startComp;
     }
-    public CompositeNumber get_yComp(){
-        return yComp;
+    public CompositeNumber get_endComp(){
+        return endComp;
     }
     @Override
     public String toString() {
-        return " ((x,x');(y,y')) : (" + xComp.toString() + ";" +
-                yComp.toString() + ")";
+        return " ((x,y);(x',y')) : (" + startComp.toString() + ";" +
+                endComp.toString() + ")";
     }
     /*
     private double x1; //Smallest x
