@@ -7,13 +7,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
-import windowing.datastructures.PrioritySearchTree.*;
+
+import static windowing.datastructures.PrioritySearchTree.construct_tree;
 
 public class AppWindowing {
     public ArrayList<Segment> hSegments;
     public ArrayList<Segment> vSegments;
     public ArrayList<Float> window;
-    private PrioritySearchTree pst;
+    public PrioritySearchTree horizontalPst;
+    public PrioritySearchTree verticalPst;
     
     /**
     * @Param file : name of the dataset file
@@ -67,6 +69,8 @@ public class AppWindowing {
             Alert alert = new Alert(AlertType.ERROR, "File " + file + " not found");
             alert.show();
         }
+        //horizontalPst = construct_tree(hSegments);
+        //verticalPst = construct_tree(vSegments);
     }
 
     /**

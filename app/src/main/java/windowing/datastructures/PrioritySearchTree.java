@@ -45,10 +45,11 @@ public class PrioritySearchTree {
      * The method only modify the PST by adding new nodes into it.
      * @param segments Set of segments that have to be inserted in the PST
      */
-    public PrioritySearchTree construct_tree(ArrayList<Segment> segments){
+    public static PrioritySearchTree construct_tree(ArrayList<Segment> segments){
         PrioritySearchTree tree = null;
         //TODO tester si ce n'est pas plus opti de trier segments avant (notamment pour la médiane)
         if (segments.size() > 1){
+            System.out.println("Hello i'm here");
             Segment min = find_min(segments);
             //Reduce the set to compute the median on the remaining set. Min will figure in the current tree/substree root.
             segments.remove(min);
@@ -81,37 +82,43 @@ public class PrioritySearchTree {
      * @param segments Set of differents segments that are not yet inserted in the PST.
      * @return min : the minimal segment that should figure in the root of the current tree/subtree.
      */
-    private Segment find_min(ArrayList<Segment> segments){
+    private static Segment find_min(ArrayList<Segment> segments){
         //TODO: Voir comment opti cette méthode au niveau de l'extraction des coordonnées.
         int index = 0;
         Segment min = segments.get(0);
+        System.out.println("got the first segment");
         while (index < segments.size()){
+            System.out.println(index);
             Segment temp = segments.get(index);
+            System.out.println("temp found");
             //Si la plus petite coordonnée x de temp est strictement inférieure à la plus petite coordonnée x du min courant
             if (temp.get_startComp().get_coord1() < min.get_endComp().get_coord1()){
                 min = temp;
                 index ++;
+                System.out.println("found a better min");
             }
             //Si les 2 coordonnées x sont égales on va regarder celui qui le plus petit x'
             else if (temp.get_startComp().get_coord1() == min.get_startComp().get_coord1()){
                 if (temp.get_endComp().get_coord1() < min.get_endComp().get_coord1()){
                     min = temp;
                     index ++;
+                    System.out.println("x are equals");
                 }
             }
-            else{
-                index ++;
-            }
+            index ++;
         }
+        System.out.println("found min");
         return min;
     }
 
-    private int find_median_index(ArrayList<Segment> segments){
+    private static int find_median_index(ArrayList<Segment> segments){
         // If the number of segments is even
         if (segments.size() % 2 == 0){
+            System.out.println("found median");
             return (segments.size() /2 )-1;
         //Else the number of segments is odd
         }else{
+            System.out.println("found median");
             return ((segments.size() + 1) /2 ) -1;
         }
     }
