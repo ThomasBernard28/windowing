@@ -1,7 +1,5 @@
 package windowing.scenes;
 
-import windowing.datastructures.CompositeNumber;
-import windowing.datastructures.Segment;
 import windowing.AppWindowing;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -11,18 +9,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Text;
 import javafx.geometry.Pos;
-import javafx.geometry.Insets;
 import javafx.stage.Popup;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
+import windowing.datastructures.CompositeNumber;
+import windowing.datastructures.Point;
+import windowing.datastructures.Segment;
+
 import java.util.ArrayList;
 
 public class SegmentsScene extends Scene {
@@ -118,14 +116,15 @@ public class SegmentsScene extends Scene {
         * method to display the segments from the given array list
         */
 
-        CompositeNumber startComp;
-        CompositeNumber endComp;
+        Point startPoint;
+        Point endPoint;
         Group group = new Group();
         for ( Segment s : segments ) {
-            startComp = s.get_startComp();
-            endComp = s.get_endComp();
+            startPoint = s.getStartPoint();
+            endPoint = s.getEndPoint();
 
-            Line l = new Line(startComp.get_coord1()*zoomLevel, startComp.get_coord2()*zoomLevel, endComp.get_coord1()*zoomLevel, endComp.get_coord2()*zoomLevel);
+            Line l = new Line(startPoint.getX()*zoomLevel, startPoint.getY()*zoomLevel,
+                    endPoint.getX()*zoomLevel, endPoint.getY()*zoomLevel);
             l.setStrokeWidth(3.0);
             l.setStroke(Color.GREEN);
             group.getChildren().add(l);

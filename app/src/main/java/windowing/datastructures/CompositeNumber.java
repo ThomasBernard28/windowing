@@ -1,22 +1,55 @@
 package windowing.datastructures;
 
-public class CompositeNumber {
+public class CompositeNumber{
 
-    private final double coord1;
-    private final double coord2;
-    public CompositeNumber(double coord1, double coord2){
-        this.coord1 = coord1;
-        this.coord2 = coord2;
+    private double firstTerm;
+
+    private double secondTerm;
+
+    public CompositeNumber(double firstTerm, double secondTerm) {
+        this.firstTerm = firstTerm;
+        this.secondTerm = secondTerm;
     }
-    public double get_coord1(){
-        return coord1;
+
+    public double getFirstTerm() {
+        return firstTerm;
     }
-    public double get_coord2(){
-        return coord2;
+
+    public void setFirstTerm(double firstTerm) {
+        this.firstTerm = firstTerm;
+    }
+
+    public double getSecondTerm() {
+        return secondTerm;
+    }
+
+    public void setSecondTerm(double secondTerm) {
+        this.secondTerm = secondTerm;
+    }
+
+    //This method aims to compare x coordinates of two points.
+    // return 1 if cn1 > cn2 and 0 if cn1 < cn2
+    public static int compare(CompositeNumber cn1, CompositeNumber cn2){
+        if (cn1.firstTerm < cn2.firstTerm){
+            return 0;
+        }
+        else {
+            if (cn1.firstTerm > cn2.firstTerm){
+                return 1;
+            }
+            else{
+                if (cn1.secondTerm < cn2.secondTerm){
+                    return 0;
+                }return 1;
+            }
+        }
     }
 
     @Override
-    public String toString(){
-        return "(" + coord1 + "," + coord2 + ")";
+    public String toString() {
+        return "CompositeNumber{" +
+                "firstTerm=" + firstTerm +
+                ", secondTerm=" + secondTerm +
+                '}';
     }
 }

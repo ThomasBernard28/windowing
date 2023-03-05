@@ -44,12 +44,12 @@ public class AppWindowing {
                     String[] c = line.split(" ");
 
                     //Create a segment like this : S = ((x1,y1);(x2,y2)) In order to treat horizontal segments
-                    Segment hSegment = new Segment(new CompositeNumber(Integer.parseInt(c[0]), Integer.parseInt(c[1])),
-                                                    new CompositeNumber(Integer.parseInt(c[2]), Integer.parseInt(c[3])));
+                    Segment hSegment = new Segment(new Point(Double.parseDouble(c[0]), Double.parseDouble(c[1])),
+                                                    new Point(Double.parseDouble(c[2]), Double.parseDouble(c[3])));
                     hSegments.add(hSegment);
                     //Create a segment like this : S = ((y1,x1);(y2,x2)) In order to treat vertical segments
-                    Segment vSegment = new Segment(new CompositeNumber(Integer.parseInt(c[1]), Integer.parseInt(c[0])),
-                                                    new CompositeNumber(Integer.parseInt(c[3]), Integer.parseInt(c[2])));
+                    Segment vSegment = new Segment(new Point(Double.parseDouble(c[1]), Double.parseDouble(c[0])),
+                                                    new Point(Double.parseDouble(c[3]), Double.parseDouble(c[2])));
                     vSegments.add(vSegment);
 
                 }
@@ -81,10 +81,10 @@ public class AppWindowing {
 
     public void quicksort(ArrayList<Segment> segments, Segment start, Segment end){
         // yStart and yEnd are like (y1,y2)
-        CompositeNumber yStart = new CompositeNumber(start.get_startComp().get_coord2(), start.get_endComp().get_coord2());
-        CompositeNumber yEnd = new CompositeNumber(end.get_startComp().get_coord2(), end.get_endComp().get_coord2());
+        CompositeNumber yStart = new CompositeNumber(start.getStartPoint().getY(), start.getEndPoint().getY());
+        CompositeNumber yEnd = new CompositeNumber(start.getStartPoint().getY(), start.getEndPoint().getY());
         // We compare the mean of the y component of each segment because they could both have one y coordinate in common.
-        if ((yStart.get_coord1() + yStart.get_coord2())/2 < (yEnd.get_coord1() + yEnd.get_coord2())/2){
+        if ((yStart.getFirstTerm() + yStart.getSecondTerm())/2 < (yEnd.getFirstTerm() + yEnd.getSecondTerm())/2){
             int partIndex = partition(segments, start, end);
 
             if (partIndex >= 1 && partIndex < segments.size() - 1){
@@ -102,15 +102,15 @@ public class AppWindowing {
         int endIndex = segments.indexOf(end);
         for (int i = startIndex; i < endIndex -1; i ++){
 
-            CompositeNumber yCurrent = new CompositeNumber(segments.get(i).get_startComp().get_coord2(),
-                                        segments.get(i).get_endComp().get_coord2());
+            CompositeNumber yCurrent = new CompositeNumber(segments.get(i).getStartPoint().getY(),
+                                        segments.get(i).getEndPoint().getY());
 
-            CompositeNumber yEnd = new CompositeNumber(segments.get(endIndex).get_startComp().get_coord2(),
-                                        segments.get(endIndex).get_endComp().get_coord2());
+            CompositeNumber yEnd = new CompositeNumber(segments.get(endIndex).getStartPoint().getY(),
+                                        segments.get(endIndex).getEndPoint().getY());
 
 
             // We compare the mean of the y component of each segment because they could both have one y coordinate in common.
-            if ((yCurrent.get_coord1() + yCurrent.get_coord2())/2 < (yEnd.get_coord1() + yEnd.get_coord2())/2){
+            if ((yCurrent.getFirstTerm() + yCurrent.getSecondTerm())/2 < (yEnd.getFirstTerm() + yEnd.getSecondTerm())/2){
                 swap(segments, i, partIndex);
                 partIndex ++;
             }

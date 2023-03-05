@@ -2,43 +2,9 @@ package windowing.datastructures;
 
 import java.util.ArrayList;
 
+import static windowing.datastructures.Point.compareX;
+
 public class PrioritySearchTree {
-
-    private Node root;
-
-    private PrioritySearchTree lson;
-
-    private PrioritySearchTree rson;
-
-    public PrioritySearchTree(Node root, PrioritySearchTree lson, PrioritySearchTree rson){
-        this.root = root;
-        this.lson = lson;
-        this.rson = rson;
-    }
-
-    public Node getRoot() {
-        return root;
-    }
-
-    public void setRoot(Node root) {
-        this.root = root;
-    }
-
-    public PrioritySearchTree getLson() {
-        return lson;
-    }
-
-    public PrioritySearchTree getRson() {
-        return rson;
-    }
-
-    public void setLson(PrioritySearchTree lson) {
-        this.lson = lson;
-    }
-
-    public void setRson(PrioritySearchTree rson) {
-        this.rson = rson;
-    }
 
     /**
      * This method is an adaptation (to our specific needs) of the pseudo code algorithm from our report.
@@ -86,21 +52,20 @@ public class PrioritySearchTree {
         int index = 0;
         Segment min = segments.get(0);
         while (index < segments.size()){
+
             Segment temp = segments.get(index);
-            //Si la plus petite coordonnée x de temp est strictement inférieure à la plus petite coordonnée x du min courant
-            if (temp.get_startComp().get_coord1() < min.get_endComp().get_coord1()){
-                min = temp;
-                index ++;
-            }
-            //Si les 2 coordonnées x sont égales on va regarder celui qui le plus petit x'
-            else if (temp.get_startComp().get_coord1() == min.get_startComp().get_coord1()){
-                if (temp.get_endComp().get_coord1() < min.get_endComp().get_coord1()){
+            int comparator = compareX(temp.getStartPoint(), min.getStartPoint());
+
+            switch(comparator){
+                case 0:
+                    index ++;
+                    break;
+                case 1:
                     min = temp;
                     index ++;
-                }
-            }
-            else{
-                index ++;
+                    break;
+                default:
+                    break;
             }
         }
         return min;

@@ -1,15 +1,28 @@
 package windowing.datastructures;
 
-import java.util.ArrayList;
-
 public class Node {
 
-    private final double median;
     private Segment segment;
+    private CompositeNumber median;
 
-    public Node(double median, Segment segment){
+    public Node(Segment segment, CompositeNumber median) {
+        this.segment = segment;
         this.median = median;
+    }
+
+    public Segment getSegment() {
+        return segment;
+    }
+
+    public void setSegment(Segment segment) {
         this.segment = segment;
     }
 
+    public CompositeNumber getMedian() {
+        return median;
+    }
+
+    public void setMedian(CompositeNumber median) {
+        this.median = median;
+    }
 }
