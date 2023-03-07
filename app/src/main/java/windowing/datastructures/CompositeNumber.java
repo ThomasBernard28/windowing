@@ -14,6 +14,15 @@ public class CompositeNumber {
     public double get_coord2(){
         return coord2;
     }
+    
+    public boolean is_smaller_than(CompositeNumber n) {
+        double nCoord1 = n.get_coord1();
+        double nCoord2 = n.get_coord2();
+        if (coord1 < nCoord1 || (coord1==nCoord1 && coord2 < nCoord2)) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public String toString(){

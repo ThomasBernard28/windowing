@@ -125,6 +125,9 @@ public class SegmentsScene extends Scene {
             startComp = s.get_startComp();
             endComp = s.get_endComp();
 
+            System.out.println(startComp);
+            System.out.println(endComp);
+
             Line l = new Line(startComp.get_coord1()*zoomLevel, startComp.get_coord2()*zoomLevel, endComp.get_coord1()*zoomLevel, endComp.get_coord2()*zoomLevel);
             l.setStrokeWidth(3.0);
             l.setStroke(Color.GREEN);
