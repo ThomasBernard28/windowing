@@ -2,20 +2,20 @@ package windowing.datastructures;
 
 public class Node {
 
-    private Segment segment;
+    private Point point;
     private CompositeNumber median;
 
-    public Node(Segment segment, CompositeNumber median) {
-        this.segment = segment;
+    public Node(Point point, CompositeNumber median) {
+        this.point = point;
         this.median = median;
     }
 
-    public Segment getSegment() {
-        return segment;
+    public Point getPoint() {
+        return point;
     }
 
-    public void setSegment(Segment segment) {
-        this.segment = segment;
+    public void setPoint(Point point) {
+        this.point = point;
     }
 
     public CompositeNumber getMedian() {

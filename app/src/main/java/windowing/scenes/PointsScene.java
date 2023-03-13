@@ -17,13 +17,12 @@ import javafx.stage.Popup;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
-import windowing.datastructures.CompositeNumber;
 import windowing.datastructures.Point;
 import windowing.datastructures.Segment;
 
 import java.util.ArrayList;
 
-public class SegmentsScene extends Scene {
+public class PointsScene extends Scene {
     
     private StackPane canvas;
     private Stage stage;
@@ -32,9 +31,9 @@ public class SegmentsScene extends Scene {
     private Double mouseX = 500.0;
     private Double mouseY = 250.0;
     private Double zoomLevel = 20.0;
-    private ArrayList<Segment> segments = new ArrayList<Segment>();
+    private ArrayList<Point> points = new ArrayList<Point>();
 
-    public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
+    public PointsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
         this.canvas = new StackPane();
         this.stage = stage;
@@ -56,11 +55,11 @@ public class SegmentsScene extends Scene {
             double deltaY = e.getDeltaY();
             if ( deltaY < 0 && zoomLevel > 10 ) { // zoom in
                 zoomLevel -= 1;
-                show_segments(segments);
+                show_points(points);
             }
             if ( deltaY > 0 && zoomLevel < 100 ) { // zoom out
                 zoomLevel += 1;
-                show_segments(segments);
+                show_points(points);
             }
         } );
 
@@ -83,7 +82,7 @@ public class SegmentsScene extends Scene {
         importButton.setOnAction( e -> import_popup() );
         windowButton.setOnAction( e -> window_popup() );
         clearButton.setOnAction( e -> canvas.getChildren().clear() );
-        reloadButton.setOnAction( e -> show_segments(app.hSegments));
+        reloadButton.setOnAction( e -> show_points(app.points));
 
         // mouse event
         canvas.setOnMouseDragged(e -> {
@@ -111,20 +110,17 @@ public class SegmentsScene extends Scene {
     /**
      * @Param segments : Segments to be displayed
     **/
-    public void show_segments(ArrayList<Segment> segments) {
+    public void show_points(ArrayList<Point> points) {
         /**
         * method to display the segments from the given array list
         */
 
-        Point startPoint;
-        Point endPoint;
         Group group = new Group();
-        for ( Segment s : segments ) {
-            startPoint = s.getStartPoint();
-            endPoint = s.getEndPoint();
+        for ( Point p : points ) {
 
-            Line l = new Line(startPoint.getX()*zoomLevel, startPoint.getY()*zoomLevel,
-                    endPoint.getX()*zoomLevel, endPoint.getY()*zoomLevel);
+
+            Line l = new Line(p.getX()*zoomLevel, p.getY()*zoomLevel,
+                    p.getX()*zoomLevel, p.getY()*zoomLevel);
             l.setStrokeWidth(3.0);
             l.setStroke(Color.GREEN);
             group.getChildren().add(l);
@@ -133,7 +129,7 @@ public class SegmentsScene extends Scene {
         canvas.getChildren().clear();
         draw_grid();
         canvas.getChildren().add(group);
-        this.segments = segments;
+        this.points = points;
     }
 
     public void show_window(String[] window) {
@@ -211,8 +207,8 @@ public class SegmentsScene extends Scene {
 
             // button
             Button b = new Button("import");
-            b.setOnAction( e -> { app.load_segments(tf.getText()); 
-                                  show_segments(app.hSegments);
+            b.setOnAction( e -> { app.load_points(tf.getText());
+                                  show_points(app.points);
                                   popupOnScreen = false; 
                                   popup.hide(); 
             });
@@ -254,7 +250,7 @@ public class SegmentsScene extends Scene {
             // button
             Button b = new Button("apply");
             b.setOnAction( e -> { show_window(tf.getText().split(" ", 0));
-                                  show_segments(app.query(tf.getText().split(" ", 0))); 
+                                  show_points(app.query(tf.getText().split(" ", 0)));
                                   popupOnScreen = false; 
                                   popup.hide(); 
             });

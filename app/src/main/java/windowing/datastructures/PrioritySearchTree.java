@@ -1,68 +1,97 @@
 package windowing.datastructures;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static windowing.datastructures.Point.compareX;
 
 public class PrioritySearchTree {
 
+    Node root;
+    PrioritySearchTree leftSubTree;
+    PrioritySearchTree rightSubTree;
+
+    public PrioritySearchTree(Node root){
+        this.root=root;
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public PrioritySearchTree getLeftSubTree() {
+        return leftSubTree;
+    }
+
+    public PrioritySearchTree getRightSubTree() {
+        return rightSubTree;
+    }
+
+    public void setRoot(Node root) {
+        this.root = root;
+    }
+
+    public void setLeftSubTree(PrioritySearchTree leftSubTree) {
+        this.leftSubTree = leftSubTree;
+    }
+
+    public void setRightSubTree(PrioritySearchTree rightSubTree) {
+        this.rightSubTree = rightSubTree;
+    }
+
     /**
      * This method is an adaptation (to our specific needs) of the pseudo code algorithm from our report.
      * The method only modify the PST by adding new nodes into it.
-     * @param segments Set of segments that have to be inserted in the PST
+     * @param points Set of points that have to be inserted in the PST
      */
-    public PrioritySearchTree construct_tree(ArrayList<Segment> segments){
+    public PrioritySearchTree construct_tree(ArrayList<Point> points){
         PrioritySearchTree tree = null;
-        //TODO tester si ce n'est pas plus opti de trier segments avant (notamment pour la médiane)
-        if (segments.size() > 1){
-            Segment min = find_min(segments);
-            //Reduce the set to compute the median on the remaining set. Min will figure in the current tree/substree root.
-            segments.remove(min);
+
+        if (points.size() > 1){
+            Point min = find_min(points);
+            points.remove(min);
 
             //Compute the median
-            int index = find_median_index(segments);
-            Segment segment = segments.get(index);
-            CompositeNumber yComp = new CompositeNumber(segment.get_startComp().get_coord2(), segment.get_endComp().get_coord2());
-            double median = (yComp.get_coord1() + yComp.get_coord2())/2;
-            Node root = new Node(median, min);
+            int index = find_median_index(points);
+            Point point = points.get(index);
+            CompositeNumber median = new CompositeNumber(point.getY(), point.getX());
+            Node root = new Node(min, median);
 
-            //Split the ArrayList in two parts.
-            ArrayList<Segment> leftPart = (ArrayList<Segment>) segments.subList(0, index);
-            ArrayList<Segment> rightPart = (ArrayList<Segment>) segments.subList(index, segments.size() - 1);
-            PrioritySearchTree lson = construct_tree(leftPart);
-            PrioritySearchTree rson = construct_tree(rightPart);
-            tree = new PrioritySearchTree(root, lson, rson);
+            ArrayList<Point> leftPart = (ArrayList<Point>) points.subList(0, index);
+            ArrayList<Point> rightPart = (ArrayList<Point>) points.subList(index, points.size() - 1);
+            tree = new PrioritySearchTree(root);
+            tree.setLeftSubTree(construct_tree(leftPart));
+            tree.setRightSubTree(construct_tree(rightPart));
 
         }
-        else if (segments.size() == 1){
-            Node root = new Node(0 , segments.get(0));
-            segments.remove(0);
-            tree = new PrioritySearchTree(root, construct_tree(segments), construct_tree(segments));
+        else if (points.size() == 1) {
+            Node root = new Node(points.get(0), new CompositeNumber(points.get(0).getY(), points.get(0).getX()));
+            points.remove(0);
+            tree = new PrioritySearchTree(root);
         }
         return tree;
     }
 
     /**
-     * Method to find the segment with the minimal x coordinate in the set.
-     * @param segments Set of differents segments that are not yet inserted in the PST.
-     * @return min : the minimal segment that should figure in the root of the current tree/subtree.
+     * Method to find the point with the minimal x coordinate in the set.
+     * @param points Set of different points that are not yet inserted in the PST.
+     * @return min : the minimal point that should figure in the root of the current tree/subtree.
      */
-    private Segment find_min(ArrayList<Segment> segments){
-        //TODO: Voir comment opti cette méthode au niveau de l'extraction des coordonnées.
+    private Point find_min(ArrayList<Point> points){
         int index = 0;
-        Segment min = segments.get(0);
-        while (index < segments.size()){
+        Point min = points.get(0);
+        while(index < points.size()){
 
-            Segment temp = segments.get(index);
-            int comparator = compareX(temp.getStartPoint(), min.getStartPoint());
+            Point temp = points.get(index);
+            int comparator = compareX(temp, min);
 
-            switch(comparator){
+            switch (comparator){
                 case 0:
                     index ++;
                     break;
                 case 1:
                     min = temp;
-                    index ++;
+                    index++;
                     break;
                 default:
                     break;
@@ -71,13 +100,13 @@ public class PrioritySearchTree {
         return min;
     }
 
-    private int find_median_index(ArrayList<Segment> segments){
+    private int find_median_index(ArrayList<Point> points){
         // If the number of segments is even
-        if (segments.size() % 2 == 0){
-            return (segments.size() /2 )-1;
+        if (points.size() % 2 == 0){
+            return (points.size() /2 )-1;
         //Else the number of segments is odd
         }else{
-            return ((segments.size() + 1) /2 ) -1;
+            return ((points.size() + 1) /2 ) -1;
         }
     }
 }
