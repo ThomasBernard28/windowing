@@ -50,7 +50,6 @@ public class AppWindowing {
             }
             reader.close();
             pst = new PrioritySearchTree(segments);
-            System.out.println(pst); // DEBUG 
 
         } catch ( FileNotFoundException e ) {
             Alert alert = new Alert(AlertType.ERROR, "File " + file + " not found");

@@ -64,6 +64,7 @@ public class PrioritySearchTree {
 
         if ( nodes.size() == 1 ) {
             data = nodes.get(0); 
+            nodes.clear();
         }
         return null;
     }
@@ -108,17 +109,6 @@ public class PrioritySearchTree {
         }
         //Else the number of nodes is odd
         return ((nodes.size() + 1) /2 ) -1;
-    }
-
-    @Override
-    public String toString() {
-        if ( leftTree == null ) {
-            return "";
-        }
-        if ( rightTree == null ) {
-            return "";
-        }
-        return leftTree.toString() + " " + data.toString() + " " + rightTree.toString() + '\n'; 
     }
 
 }
