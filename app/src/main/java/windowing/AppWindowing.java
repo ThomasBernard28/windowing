@@ -9,10 +9,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 
 public class AppWindowing {
+
     public ArrayList<Segment> segments;
     public ArrayList<Float> window;
 
-    public PrioritySearchTree pst;
+    private PrioritySearchTree pst;
     
     /**
     * @Param file : name of the dataset file
@@ -62,8 +63,8 @@ public class AppWindowing {
     * @Return an arrayList of segments that are within the window
     */
     public ArrayList query(String[] window) {
-        ArrayList wSegments = new ArrayList();
-        return wSegments;
+        return pst.query(Double.parseDouble(window[0]), Double.parseDouble(window[1]),
+                         Double.parseDouble(window[2]), Double.parseDouble(window[3]));
     }
 
     public void print_segments(ArrayList<Segment> segments) {

@@ -10,6 +10,7 @@ public class PrioritySearchTree {
     private PrioritySearchTree rightTree;
     private ArrayList<Segment> segments;
     private ArrayList<Node> nodes;
+    private ArrayList<Segment> reportedSegments;
 
     public PrioritySearchTree(ArrayList<Segment> segments) {
         this.segments = segments;
@@ -26,8 +27,7 @@ public class PrioritySearchTree {
         construct_tree(nodes);
     }
 
-    private PrioritySearchTree(Node data) {
-        this.data = data;
+    private PrioritySearchTree() {
     }
 
     public ArrayList<Node> get_nodes() {
@@ -57,8 +57,10 @@ public class PrioritySearchTree {
             }
 
             // recursively construct left and right trees 
-            this.leftTree = new PrioritySearchTree(construct_tree(leftTree));
-            this.rightTree = new PrioritySearchTree(construct_tree(rightTree));
+            this.leftTree = new PrioritySearchTree();
+            this.rightTree = new PrioritySearchTree();
+            this.leftTree.construct_tree(leftTree);
+            this.rightTree.construct_tree(rightTree);
             return data;
         }
 
@@ -74,7 +76,7 @@ public class PrioritySearchTree {
     private int find_min_index(ArrayList<Node> nodes){
         int index = 0;
         for ( int n=1; n<nodes.size(); n++ ) {
-            if ( nodes.get(index).point.is_x_smaller_than(nodes.get(index).point) ) {
+            if ( nodes.get(n).point.is_x_smaller_than(nodes.get(index).point) ) {
                 index = n;
             }
         }
@@ -109,6 +111,32 @@ public class PrioritySearchTree {
         }
         //Else the number of nodes is odd
         return ((nodes.size() + 1) /2 ) -1;
+    }
+
+    public ArrayList<Segment> query(double xMin, double yMin, double xMax, double yMax) {
+        reportedSegments = new ArrayList<Segment>();
+        System.out.println(data); // DEBUG
+        apply_window(xMin, yMin, xMax, yMax, reportedSegments);
+        return reportedSegments;
+    }
+
+    private void apply_window(double xMin, double yMin, double xMax, double yMax, ArrayList<Segment> reportedSegments) {
+        double x = data.point.get_coord1(); 
+        double y = data.point.get_coord2(); 
+        // first case : at least one endpoint lie within the window
+        if ( x>=xMin && x<=xMax && y>=yMin && y<=yMax ) {
+            if ( !reportedSegments.contains(data.segment) ) {
+                reportedSegments.add(data.segment);
+                System.out.println("reported one segment : " + data.segment.toString()); // DEBUG
+            }
+            if ( leftTree != null ) { 
+                leftTree.apply_window(xMin, yMin, xMax, yMax, reportedSegments);
+            }
+            if ( rightTree != null ) { 
+                rightTree.apply_window(xMin, yMin, xMax, yMax, reportedSegments);
+            }
+        }
+        // second case : the segment cross entierly the window i.e. no endpoint within the window
     }
 
 }
