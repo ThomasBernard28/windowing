@@ -15,10 +15,19 @@ public class CompositeNumber {
         return coord2;
     }
     
-    public boolean is_smaller_than(CompositeNumber n) {
+    public boolean is_x_smaller_than(CompositeNumber n) {
         double nCoord1 = n.get_coord1();
         double nCoord2 = n.get_coord2();
         if (coord1 < nCoord1 || (coord1==nCoord1 && coord2 < nCoord2)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean is_y_smaller_than(CompositeNumber n) {
+        double nCoord1 = n.get_coord1();
+        double nCoord2 = n.get_coord2();
+        if (coord2 < nCoord2 || (coord2==nCoord2 && coord1 < nCoord1)) {
             return true;
         }
         return false;

@@ -85,7 +85,7 @@ public class SegmentsScene extends Scene {
         importButton.setOnAction( e -> import_popup() );
         windowButton.setOnAction( e -> window_popup() );
         clearButton.setOnAction( e -> canvas.getChildren().clear() );
-        reloadButton.setOnAction( e -> show_segments(app.hSegments));
+        reloadButton.setOnAction( e -> show_segments(app.segments));
 
         // mouse event
         canvas.setOnMouseDragged(e -> {
@@ -213,7 +213,7 @@ public class SegmentsScene extends Scene {
             // button
             Button b = new Button("import");
             b.setOnAction( e -> { app.load_segments(tf.getText()); 
-                                  show_segments(app.hSegments);
+                                  show_segments(app.segments);
                                   popupOnScreen = false; 
                                   popup.hide(); 
             });

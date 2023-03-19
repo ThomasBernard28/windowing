@@ -11,8 +11,8 @@ public class CompositeNumberTest {
         CompositeNumber cnumber2 = new CompositeNumber(1.0, 9.0);
         CompositeNumber cnumber3 = new CompositeNumber(2.0, 9.0);
         
-        Assertions.assertEquals(cnumber1.is_smaller_than(cnumber2), false);
-        Assertions.assertEquals(cnumber1.is_smaller_than(cnumber3), true);
-        Assertions.assertEquals(cnumber3.is_smaller_than(cnumber2), false);
+        Assertions.assertEquals(cnumber1.is_x_smaller_than(cnumber2), false);
+        Assertions.assertEquals(cnumber1.is_x_smaller_than(cnumber3), true);
+        Assertions.assertEquals(cnumber3.is_x_smaller_than(cnumber2), false);
     }
 }

@@ -1,125 +1,142 @@
 package windowing.datastructures;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PrioritySearchTree {
 
-    private Node root;
+    private Node data;
+    private PrioritySearchTree leftTree;
+    private PrioritySearchTree rightTree;
+    private ArrayList<Segment> segments;
+    private ArrayList<Node> nodes;
+    private ArrayList<Segment> reportedSegments;
 
-    private PrioritySearchTree lson;
-
-    private PrioritySearchTree rson;
-
-    public PrioritySearchTree(Node root, PrioritySearchTree lson, PrioritySearchTree rson){
-        this.root = root;
-        this.lson = lson;
-        this.rson = rson;
+    public PrioritySearchTree(ArrayList<Segment> segments) {
+        this.segments = segments;
+        nodes = new ArrayList<Node>();
+        // we start by creating our set of points i.e. all segments endpoints 
+        for ( Segment s : segments ) {
+            nodes.add(new Node(s.get_startComp(), s));
+            nodes.add(new Node(s.get_endComp(), s));
+        }
+        // points are sorted to improve the efficiency when calculating the median
+        quicksort(nodes, 0, nodes.size()-1);
+        // DEBUG nodes.forEach((n) -> System.out.println(n));
+        // now we can construct the tree 
+        construct_tree(nodes);
     }
 
-    public Node getRoot() {
-        return root;
+    private PrioritySearchTree() {
     }
 
-    public void setRoot(Node root) {
-        this.root = root;
-    }
-
-    public PrioritySearchTree getLson() {
-        return lson;
-    }
-
-    public PrioritySearchTree getRson() {
-        return rson;
-    }
-
-    public void setLson(PrioritySearchTree lson) {
-        this.lson = lson;
-    }
-
-    public void setRson(PrioritySearchTree rson) {
-        this.rson = rson;
+    public ArrayList<Node> get_nodes() {
+        return nodes;
     }
 
     /**
-     * This method is an adaptation (to our specific needs) of the pseudo code algorithm from our report.
-     * The method only modify the PST by adding new nodes into it.
-     * @param segments Set of segments that have to be inserted in the PST
      */
-    public static PrioritySearchTree construct_tree(ArrayList<Segment> segments){
-        PrioritySearchTree tree = null;
-        //TODO tester si ce n'est pas plus opti de trier segments avant (notamment pour la médiane)
-        if (segments.size() > 1){
-            System.out.println("Hello i'm here");
-            Segment min = find_min(segments);
-            //Reduce the set to compute the median on the remaining set. Min will figure in the current tree/substree root.
-            segments.remove(min);
+    private Node construct_tree(ArrayList<Node> nodes){
+        if ( nodes.size() > 1 ) {
 
-            //Compute the median
-            int index = find_median_index(segments);
-            Segment segment = segments.get(index);
-            CompositeNumber yComp = new CompositeNumber(segment.get_startComp().get_coord2(), segment.get_endComp().get_coord2());
-            double median = (yComp.get_coord1() + yComp.get_coord2())/2;
-            Node root = new Node(median, min);
+            // finding the root of the tree
+            data = nodes.get(find_min_index(nodes));
+            nodes.remove(data);
 
-            //Split the ArrayList in two parts.
-            ArrayList<Segment> leftPart = (ArrayList<Segment>) segments.subList(0, index);
-            ArrayList<Segment> rightPart = (ArrayList<Segment>) segments.subList(index, segments.size() - 1);
-            PrioritySearchTree lson = construct_tree(leftPart);
-            PrioritySearchTree rson = construct_tree(rightPart);
-            tree = new PrioritySearchTree(root, lson, rson);
-
-        }
-        else if (segments.size() == 1){
-            Node root = new Node(0 , segments.get(0));
-            segments.remove(0);
-            tree = new PrioritySearchTree(root, construct_tree(segments), construct_tree(segments));
-        }
-        return tree;
-    }
-
-    /**
-     * Method to find the segment with the minimal x coordinate in the set.
-     * @param segments Set of differents segments that are not yet inserted in the PST.
-     * @return min : the minimal segment that should figure in the root of the current tree/subtree.
-     */
-    private static Segment find_min(ArrayList<Segment> segments){
-        //TODO: Voir comment opti cette méthode au niveau de l'extraction des coordonnées.
-        int index = 0;
-        Segment min = segments.get(0);
-        System.out.println("got the first segment");
-        while (index < segments.size()){
-            System.out.println(index);
-            Segment temp = segments.get(index);
-            System.out.println("temp found");
-            //Si la plus petite coordonnée x de temp est strictement inférieure à la plus petite coordonnée x du min courant
-            if (temp.get_startComp().get_coord1() < min.get_endComp().get_coord1()){
-                min = temp;
-                index ++;
-                System.out.println("found a better min");
-            }
-            //Si les 2 coordonnées x sont égales on va regarder celui qui le plus petit x'
-            else if (temp.get_startComp().get_coord1() == min.get_startComp().get_coord1()){
-                if (temp.get_endComp().get_coord1() < min.get_endComp().get_coord1()){
-                    min = temp;
-                    index ++;
-                    System.out.println("x are equals");
+            // calculating the median and separate the remaining nodes into left and right trees 
+            double median = find_median_value(nodes);
+            ArrayList<Node> leftTree = new ArrayList<Node>();
+            ArrayList<Node> rightTree = new ArrayList<Node>();
+            for ( Node node : nodes ) {
+                if ( node.point.get_coord2() <= median ) {
+                    leftTree.add(node);
+                }
+                else {
+                    rightTree.add(node);
                 }
             }
-            index ++;
+
+            // recursively construct left and right trees 
+            this.leftTree = new PrioritySearchTree();
+            this.rightTree = new PrioritySearchTree();
+            this.leftTree.construct_tree(leftTree);
+            this.rightTree.construct_tree(rightTree);
+            return data;
         }
-        System.out.println("found min");
-        return min;
+
+        if ( nodes.size() == 1 ) {
+            data = nodes.get(0); 
+            nodes.clear();
+        }
+        return null;
     }
 
-    private static int find_median_index(ArrayList<Segment> segments){
-        // If the number of segments is even
-        if (segments.size() % 2 == 0){
-            System.out.println("found median");
-            return (segments.size() /2 )-1;
-        //Else the number of segments is odd
-        }else{
-            System.out.println("found median");
-            return ((segments.size() + 1) /2 ) -1;
+    /**
+     */
+    private int find_min_index(ArrayList<Node> nodes){
+        int index = 0;
+        for ( int n=1; n<nodes.size(); n++ ) {
+            if ( nodes.get(n).point.is_x_smaller_than(nodes.get(index).point) ) {
+                index = n;
+            }
+        }
+        return index;
+    }
+
+    private void quicksort(ArrayList<Node> nodes, int start, int end) {
+        if ( start < end ) {
+            int part = partition(nodes, start, end);
+            quicksort(nodes, start, part-1);
+            quicksort(nodes, part+1, end);
         }
     }
+
+    private int partition(ArrayList<Node> nodes, int start, int end) {
+        Node node = nodes.get(end);
+        int i = start - 1;
+        for ( int j=start; j<=end-1; j++ ) {
+            if ( nodes.get(j).point.is_y_smaller_than(node.point) ) {
+                i++;
+                Collections.swap(nodes, i, j);
+            }
+        }
+        Collections.swap(nodes, i+1, end);
+        return i+1;
+    }
+
+    private double find_median_value(ArrayList<Node> nodes){
+        // If the number of nodes is even
+        if ( nodes.size() % 2 == 0 ){
+            return (nodes.size() /2 )-1;
+        }
+        //Else the number of nodes is odd
+        return ((nodes.size() + 1) /2 ) -1;
+    }
+
+    public ArrayList<Segment> query(double xMin, double yMin, double xMax, double yMax) {
+        reportedSegments = new ArrayList<Segment>();
+        System.out.println(data); // DEBUG
+        apply_window(xMin, yMin, xMax, yMax, reportedSegments);
+        return reportedSegments;
+    }
+
+    private void apply_window(double xMin, double yMin, double xMax, double yMax, ArrayList<Segment> reportedSegments) {
+        double x = data.point.get_coord1(); 
+        double y = data.point.get_coord2(); 
+        // first case : at least one endpoint lie within the window
+        if ( x>=xMin && x<=xMax && y>=yMin && y<=yMax ) {
+            if ( !reportedSegments.contains(data.segment) ) {
+                reportedSegments.add(data.segment);
+                System.out.println("reported one segment : " + data.segment.toString()); // DEBUG
+            }
+            if ( leftTree != null ) { 
+                leftTree.apply_window(xMin, yMin, xMax, yMax, reportedSegments);
+            }
+            if ( rightTree != null ) { 
+                rightTree.apply_window(xMin, yMin, xMax, yMax, reportedSegments);
+            }
+        }
+        // second case : the segment cross entierly the window i.e. no endpoint within the window
+    }
+
 }
