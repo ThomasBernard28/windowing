@@ -6,7 +6,7 @@ public class Node {
 
     public CompositeNumber point;
     public Segment segment;
-    public int median;
+    public double median;
 
     public Node(CompositeNumber point, Segment segment){
         this.point = point;

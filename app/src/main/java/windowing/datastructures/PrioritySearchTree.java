@@ -45,6 +45,7 @@ public class PrioritySearchTree {
 
             // calculating the median and separate the remaining nodes into left and right trees 
             double median = find_median_value(nodes);
+            data.median = median;
             ArrayList<Node> leftTree = new ArrayList<Node>();
             ArrayList<Node> rightTree = new ArrayList<Node>();
             for ( Node node : nodes ) {
@@ -105,29 +106,34 @@ public class PrioritySearchTree {
     }
 
     private double find_median_value(ArrayList<Node> nodes){
-        // If the number of nodes is even
-        if ( nodes.size() % 2 == 0 ){
-            return (nodes.size() /2 )-1;
+        if ( nodes.size() == 1 ) {
+            return nodes.get(0).point.get_coord2();
         }
-        //Else the number of nodes is odd
-        return ((nodes.size() + 1) /2 ) -1;
+        if ( nodes.size() % 2 == 0 ) {
+            return nodes.get(nodes.size()/2).point.get_coord2();
+        }
+        return nodes.get(nodes.size()/2 +1).point.get_coord2();
     }
 
     public ArrayList<Segment> query(double xMin, double yMin, double xMax, double yMax) {
         reportedSegments = new ArrayList<Segment>();
-        System.out.println(data); // DEBUG
         apply_window(xMin, yMin, xMax, yMax, reportedSegments);
         return reportedSegments;
     }
 
+    /*
+     * This is dogshit, it must be completely reworked.
+     */
     private void apply_window(double xMin, double yMin, double xMax, double yMax, ArrayList<Segment> reportedSegments) {
-        double x = data.point.get_coord1(); 
-        double y = data.point.get_coord2(); 
-        // first case : at least one endpoint lie within the window
-        if ( x>=xMin && x<=xMax && y>=yMin && y<=yMax ) {
-            if ( !reportedSegments.contains(data.segment) ) {
-                reportedSegments.add(data.segment);
-                System.out.println("reported one segment : " + data.segment.toString()); // DEBUG
+        if ( data != null ) {
+            double x = data.point.get_coord1(); 
+            double y = data.point.get_coord2(); 
+            // first case : at least one endpoint lie within the window
+            if ( x>=xMin && x<=xMax && y>=yMin && y<=yMax ) {
+                if ( !reportedSegments.contains(data.segment) ) {
+                    reportedSegments.add(data.segment);
+                    System.out.println("reported one segment : " + data.segment.toString()); // DEBUG
+                }
             }
             if ( leftTree != null ) { 
                 leftTree.apply_window(xMin, yMin, xMax, yMax, reportedSegments);
@@ -135,8 +141,8 @@ public class PrioritySearchTree {
             if ( rightTree != null ) { 
                 rightTree.apply_window(xMin, yMin, xMax, yMax, reportedSegments);
             }
-        }
         // second case : the segment cross entierly the window i.e. no endpoint within the window
-    }
+        }
 
+    }
 }
