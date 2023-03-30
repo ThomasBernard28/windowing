@@ -27,6 +27,18 @@ public class PrioritySearchTree {
         construct_tree(nodes);
     }
 
+    public Node getData() {
+        return data;
+    }
+
+    public PrioritySearchTree getLeftTree() {
+        return leftTree;
+    }
+
+    public PrioritySearchTree getRightTree() {
+        return rightTree;
+    }
+
     private PrioritySearchTree() {
     }
 
