@@ -1,5 +1,7 @@
 package windowing.datastructures;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -54,12 +56,17 @@ public class PrioritySearchTree {
             // finding the root of the tree
             data = nodes.get(find_min_index(nodes));
             nodes.remove(data);
+            System.out.println("Root : " + data.point.toString());
 
             // calculating the median and separate the remaining nodes into left and right trees 
-            double median = find_median_value(nodes);
-            data.median = median;
+            //double median = find_median_value(nodes);
+            CompositeNumber compositeMedian = find_median(nodes);
+            data.compositeMedian = compositeMedian;
+            System.out.println("Median : " + compositeMedian);
+            //data.median = median;
             ArrayList<Node> leftTree = new ArrayList<Node>();
             ArrayList<Node> rightTree = new ArrayList<Node>();
+            /*
             for ( Node node : nodes ) {
                 if ( node.point.get_coord2() <= median ) {
                     leftTree.add(node);
@@ -69,10 +76,28 @@ public class PrioritySearchTree {
                 }
             }
 
+             */
+            for (Node node : nodes){
+                if (node.point.is_y_smaller_than(compositeMedian)|| node.point.is_equal_to(compositeMedian)){
+                    //System.out.println("-------- I'm adding data in left tree --------");
+                    //System.out.println("Point : " + node.point.toString());
+                    //System.out.println("Median : " + compositeMedian.toString());
+                    leftTree.add(node);
+                }
+                else{
+                    //System.out.println("-------- I'm adding nodes in right tree ---------");
+                    //System.out.println("Point : " + node.point.toString());
+                    //System.out.println("Median : " + compositeMedian.toString());
+                    rightTree.add(node);
+                }
+            }
+
             // recursively construct left and right trees 
             this.leftTree = new PrioritySearchTree();
             this.rightTree = new PrioritySearchTree();
+            System.out.println("Going in left tree");
             this.leftTree.construct_tree(leftTree);
+            System.out.println("Going in right tree");
             this.rightTree.construct_tree(rightTree);
             return data;
         }
@@ -125,6 +150,24 @@ public class PrioritySearchTree {
             return nodes.get(nodes.size()/2).point.get_coord2();
         }
         return nodes.get(nodes.size()/2 +1).point.get_coord2();
+    }
+
+    // Method to compute a CompositeNumber median in order to sort properly all points
+    // considering the case where all y coordinates in the set are equals.
+    private CompositeNumber find_median(ArrayList<Node> nodes){
+        // Median will be a composite number (x|y) with the median on y and x on values.
+        CompositeNumber median;
+        if (nodes.size() == 1){
+            median = new CompositeNumber(nodes.get(0).point.get_coord1(), nodes.get(0).point.get_coord2()/2);
+        }
+        if (nodes.size() % 2 == 0){
+            median = new CompositeNumber(((nodes.get((nodes.size()/2)-1).point.get_coord1())+(nodes.get(nodes.size()/2).point.get_coord1()))/2
+                    ,((nodes.get((nodes.size()/2)-1).point.get_coord2())+(nodes.get(nodes.size()/2).point.get_coord2()))/2);
+        }
+        else{
+            median = new CompositeNumber(nodes.get((nodes.size() - 1)/2).point.get_coord1(), nodes.get((nodes.size()-1)/2).point.get_coord2());
+        }
+        return median;
     }
 
     public ArrayList<Segment> query(double xMin, double yMin, double xMax, double yMax) {
