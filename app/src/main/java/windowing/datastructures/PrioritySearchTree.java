@@ -19,8 +19,9 @@ public class PrioritySearchTree {
         nodes = new ArrayList<Node>();
         // we start by creating our set of points i.e. all segments endpoints 
         for ( Segment s : segments ) {
+            // We only need to take the starting component for the tree
             nodes.add(new Node(s.get_startComp(), s));
-            nodes.add(new Node(s.get_endComp(), s));
+            //nodes.add(new Node(s.get_endComp(), s));
         }
         // points are sorted to improve the efficiency when calculating the median
         quicksort(nodes, 0, nodes.size()-1);
@@ -58,25 +59,14 @@ public class PrioritySearchTree {
             nodes.remove(data);
             System.out.println("Root : " + data.point.toString());
 
-            // calculating the median and separate the remaining nodes into left and right trees 
-            //double median = find_median_value(nodes);
+            // computing the median and separate the remaining nodes into left and right trees
             CompositeNumber compositeMedian = find_median(nodes);
             data.compositeMedian = compositeMedian;
             System.out.println("Median : " + compositeMedian);
-            //data.median = median;
+
             ArrayList<Node> leftTree = new ArrayList<Node>();
             ArrayList<Node> rightTree = new ArrayList<Node>();
-            /*
-            for ( Node node : nodes ) {
-                if ( node.point.get_coord2() <= median ) {
-                    leftTree.add(node);
-                }
-                else {
-                    rightTree.add(node);
-                }
-            }
 
-             */
             for (Node node : nodes){
                 if (node.point.is_y_smaller_than(compositeMedian)|| node.point.is_equal_to(compositeMedian)){
                     //System.out.println("-------- I'm adding data in left tree --------");
@@ -109,8 +99,7 @@ public class PrioritySearchTree {
         return null;
     }
 
-    /**
-     */
+
     private int find_min_index(ArrayList<Node> nodes){
         int index = 0;
         for ( int n=1; n<nodes.size(); n++ ) {

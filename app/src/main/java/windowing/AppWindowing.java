@@ -11,21 +11,24 @@ import javafx.scene.control.Alert;
 public class AppWindowing {
 
     public ArrayList<Segment> segments;
+    public ArrayList<Segment> invertedSegments;
     public ArrayList<Float> window;
-
     private PrioritySearchTree pst;
+    private PrioritySearchTree invertedPst;
     
     /**
     * @Param file : name of the dataset file
     **/
+    /**
+     * Method that read the file at the given path and transform
+     * the information of each line into a Segment or an invertedSegment.
+     * The result is stored in the 'segments' resp. ('invertedSegments') ArrayList
+     * @param file : name of the dataset file
+     */
     public void load_segments(String file) {
-        /**
-        * method that read the file at the given path and transform
-        * the information of each line into a Segment
-        * the result is stored in the 'segments' array list
-        */
         
         segments = new ArrayList<Segment>();
+        invertedSegments = new ArrayList<Segment>();
         window = new ArrayList<Float>();
         try {
             File myFile = new File(file);
@@ -47,10 +50,16 @@ public class AppWindowing {
                                                     new CompositeNumber(Integer.parseInt(c[2]), Integer.parseInt(c[3])));
                     segments.add(segment);
 
+                    //Create a segment like this : S = ((y1,x1);(y2,x2)) in order to treat vertical segments
+                    Segment invertedSegment = new Segment(new CompositeNumber(Integer.parseInt(c[1]), Integer.parseInt(c[0])),
+                                                            new CompositeNumber(Integer.parseInt(c[3]), Integer.parseInt(c[2])));
+                    invertedSegments.add(invertedSegment);
+
                 }
             }
             reader.close();
             pst = new PrioritySearchTree(segments);
+            invertedPst = new PrioritySearchTree(invertedSegments);
 
         } catch ( FileNotFoundException e ) {
             Alert alert = new Alert(AlertType.ERROR, "File " + file + " not found");

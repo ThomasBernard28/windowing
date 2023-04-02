@@ -6,7 +6,6 @@ public class Node {
 
     public CompositeNumber point;
     public Segment segment;
-    public double median;
     public CompositeNumber compositeMedian;
 
     public Node(CompositeNumber point, Segment segment){
