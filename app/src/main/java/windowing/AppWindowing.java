@@ -1,7 +1,9 @@
 package windowing;
 
 import windowing.datastructures.*;
-import java.util.ArrayList; 
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,7 +61,7 @@ public class AppWindowing {
             }
             reader.close();
             pst = new PrioritySearchTree(segments);
-            System.out.println("Going in inverted segment");
+            System.out.println("Going in inverted segment"); //DEBUG
             invertedPst = new PrioritySearchTree(invertedSegments);
 
         } catch ( FileNotFoundException e ) {
@@ -69,12 +71,19 @@ public class AppWindowing {
     }
 
     /**
-    * @Param window : bounds of the window
-    * @Return an arrayList of segments that are within the window
+    * @param window : bounds of the window
+    * @return an arrayList of segments that are within the window
     */
-    public ArrayList query(String[] window) {
-        return pst.query(Double.parseDouble(window[0]), Double.parseDouble(window[1]),
-                         Double.parseDouble(window[2]), Double.parseDouble(window[3]));
+    public ArrayList<Segment> query(String[] window) {
+        ArrayList<Segment> horizontalSegments = pst.query(Double.parseDouble(window[0]), Double.parseDouble(window[1]),
+                Double.parseDouble(window[2]), Double.parseDouble(window[3]));
+
+        //In the inverted pst y component are inverted with x components
+        ArrayList<Segment> verticalSegments = invertedPst.query(Double.parseDouble(window[1]), Double.parseDouble(window[0]),
+                Double.parseDouble(window[3]), Double.parseDouble(window[2]));
+
+        horizontalSegments.addAll(verticalSegments);
+        return horizontalSegments;
     }
 
     public void print_segments(ArrayList<Segment> segments) {

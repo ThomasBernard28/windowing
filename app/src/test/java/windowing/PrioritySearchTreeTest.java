@@ -26,16 +26,5 @@ public class PrioritySearchTreeTest {
 
         Assertions.assertTrue(pst.getData().point.is_x_smaller_than(pst.getLeftTree().getData().point) &&
                     pst.getData().point.is_x_smaller_than(pst.getRightTree().getData().point));
-
-
-        //Check y condition
-        /*
-        Assertions.assertTrue(((pst.getLeftTree().getData().point.is_y_smaller_than(pst.getData().point)
-                || pst.getLeftTree().getData().point.is_equal_to(pst.getData().point)))
-                && pst.getData().point.is_y_smaller_than(pst.getRightTree().getData().point));
-
-
-         */
-        //Assertions.assertTrue((pst.getLeftTree().getData().point.is_y_smaller_than(pst.getData().point))&& pst.getLeftTree().getData().point.is_equal_to(pst.getData().point));
     }
 }
