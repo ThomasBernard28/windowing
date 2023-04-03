@@ -59,6 +59,7 @@ public class AppWindowing {
             }
             reader.close();
             pst = new PrioritySearchTree(segments);
+            System.out.println("Going in inverted segment");
             invertedPst = new PrioritySearchTree(invertedSegments);
 
         } catch ( FileNotFoundException e ) {

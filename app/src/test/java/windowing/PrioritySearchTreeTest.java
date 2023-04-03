@@ -19,7 +19,7 @@ public class PrioritySearchTreeTest {
         segments.add(new Segment(new CompositeNumber(8.0, -3.0), new CompositeNumber(8.0, -6.0)));
         segments.add(new Segment(new CompositeNumber(11.0, 4.0), new CompositeNumber(8.0, 4.0)));
         segments.add(new Segment(new CompositeNumber(-6.0, 5.0), new CompositeNumber(-6.0, 12.0)));
-        //segments.add(new Segment(new CompositeNumber(7.0, 9.0), new CompositeNumber(1.0, 9.0)));
+        segments.add(new Segment(new CompositeNumber(7.0, 9.0), new CompositeNumber(1.0, 9.0)));
         PrioritySearchTree pst = new PrioritySearchTree(segments);
 
         //Check x condition.
