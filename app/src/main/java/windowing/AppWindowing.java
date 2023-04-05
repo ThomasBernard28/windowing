@@ -14,7 +14,7 @@ public class AppWindowing {
 
     public ArrayList<Segment> segments;
     public ArrayList<Segment> invertedSegments;
-    public ArrayList<Float> window;
+    public ArrayList<Double> window;
     private PrioritySearchTree pst;
     private PrioritySearchTree invertedPst;
     
@@ -26,12 +26,13 @@ public class AppWindowing {
      * the information of each line into a Segment or an invertedSegment.
      * The result is stored in the 'segments' resp. ('invertedSegments') ArrayList
      * @param file : name of the dataset file
+     * @return the window containing all segments
      */
     public void load_segments(String file) {
         
         segments = new ArrayList<Segment>();
         invertedSegments = new ArrayList<Segment>();
-        window = new ArrayList<Float>();
+        window = new ArrayList<Double>();
         try {
             File myFile = new File(file);
             Scanner reader = new Scanner(myFile); 
@@ -40,7 +41,7 @@ public class AppWindowing {
                 String line = reader.nextLine();
                 if ( firstLine ) {
                     for ( String w : line.split(" ", 0) ) {
-                        window.add(Float.parseFloat(w));
+                        window.add(Double.parseDouble(w));
                     }
                     firstLine = false;
                 }
@@ -61,7 +62,6 @@ public class AppWindowing {
             }
             reader.close();
             pst = new PrioritySearchTree(segments);
-            System.out.println("Going in inverted segment"); //DEBUG
             invertedPst = new PrioritySearchTree(invertedSegments);
 
         } catch ( FileNotFoundException e ) {
@@ -75,12 +75,17 @@ public class AppWindowing {
     * @return an arrayList of segments that are within the window
     */
     public ArrayList<Segment> query(String[] window) {
-        ArrayList<Segment> horizontalSegments = pst.query(Double.parseDouble(window[0]), Double.parseDouble(window[1]),
-                Double.parseDouble(window[2]), Double.parseDouble(window[3]));
+        this.window.clear();
+        this.window.add(Double.parseDouble(window[0]));
+        this.window.add(Double.parseDouble(window[1]));
+        this.window.add(Double.parseDouble(window[2]));
+        this.window.add(Double.parseDouble(window[3]));
+        ArrayList<Segment> horizontalSegments = pst.query(this.window.get(0), this.window.get(1),
+                this.window.get(2), this.window.get(3));
 
         //In the inverted pst y component are inverted with x components
-        ArrayList<Segment> verticalSegments = invertedPst.query(Double.parseDouble(window[1]), Double.parseDouble(window[0]),
-                Double.parseDouble(window[3]), Double.parseDouble(window[2]));
+        ArrayList<Segment> verticalSegments = invertedPst.query(this.window.get(1), this.window.get(0),
+                this.window.get(3), this.window.get(2));
 
         horizontalSegments.addAll(verticalSegments);
         return horizontalSegments;

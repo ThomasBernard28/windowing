@@ -11,14 +11,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Text;
 import javafx.geometry.Pos;
-import javafx.geometry.Insets;
 import javafx.stage.Popup;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -33,8 +31,9 @@ public class SegmentsScene extends Scene {
     private boolean popupOnScreen = false;
     private Double mouseX = 500.0;
     private Double mouseY = 250.0;
-    private Double zoomLevel = 20.0;
+    private Double zoomLevel = 1.0;
     private ArrayList<Segment> segments = new ArrayList<Segment>();
+    private ArrayList<Double> window = new ArrayList<Double>();
 
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
@@ -56,12 +55,12 @@ public class SegmentsScene extends Scene {
         canvas.setAlignment(Pos.CENTER);
         canvas.setOnScroll( (ScrollEvent e) -> {
             double deltaY = e.getDeltaY();
-            if ( deltaY < 0 && zoomLevel > 10 ) { // zoom in
-                zoomLevel -= 1;
+            if ( deltaY < 0 ) { // zoom in
+                zoomLevel /= 1.5;
                 show_segments(segments);
             }
-            if ( deltaY > 0 && zoomLevel < 100 ) { // zoom out
-                zoomLevel += 1;
+            if ( deltaY > 0 ) { // zoom out
+                zoomLevel *= 1.5;
                 show_segments(segments);
             }
         } );
@@ -134,27 +133,40 @@ public class SegmentsScene extends Scene {
         canvas.getChildren().clear();
         draw_grid();
         canvas.getChildren().add(group);
+        draw_window();
         this.segments = segments;
     }
 
-    public void show_window(String[] window) {
+    public void draw_window() {
+        Double x1 = app.window.get(0);
+        Double y1 = app.window.get(1);
+        Double x2 = app.window.get(2);
+        Double y2 = app.window.get(3);
+        Group group = new Group();
+        ArrayList<Line> lines = new ArrayList<Line>();
+        lines.add(new Line(x1*zoomLevel, y1*zoomLevel, x2*zoomLevel, y1*zoomLevel));
+        lines.add(new Line(x1*zoomLevel, y2*zoomLevel, x2*zoomLevel, y2*zoomLevel));
+        lines.add(new Line(x1*zoomLevel, y1*zoomLevel, x1*zoomLevel, y2*zoomLevel));
+        lines.add(new Line(x2*zoomLevel, y1*zoomLevel, x2*zoomLevel, y2*zoomLevel));
+        lines.forEach( (l) -> { l.setStrokeWidth(3.0); l.setStroke(Color.RED); group.getChildren().add(l); });
+        canvas.getChildren().add(group);
     }
 
     public void draw_grid() {
-        float xMin = app.window.get(0);
-        float yMin = app.window.get(1);
-        float xMax = app.window.get(2);
-        float yMax = app.window.get(3);
+        double xMin = app.window.get(0);
+        double yMin = app.window.get(2);
+        double xMax = app.window.get(1);
+        double yMax = app.window.get(3);
         Group grid = new Group();
         Group text = new Group();
 
         // determine step
-        float width = Math.abs(xMin) + Math.abs(xMax);
+        double width = Math.abs(xMin) + Math.abs(xMax);
         int step = 1;
-        if ( width >= 100 ) { step = 10; }
+        if ( width >= 100 ) { step = 100; }
 
         // drawing vertical lines
-        float position = xMin;
+        double position = xMin;
         while ( position <= xMax) {
             Text num = new Text(position*zoomLevel, yMin*zoomLevel-30, Integer.toString((int)position));
             Line l = new Line(position*zoomLevel, yMin*zoomLevel, position*zoomLevel, yMax*zoomLevel);
@@ -200,7 +212,7 @@ public class SegmentsScene extends Scene {
             Label l = new Label("Path :");
 
             // textfield
-            TextField tf = new TextField(System.getProperty("user.dir")+"/build/resources/main/segments2.txt");
+            TextField tf = new TextField(System.getProperty("user.dir")+"/build/resources/main/5000.txt");
             tf.setPrefWidth(700);
             tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 public void handle(KeyEvent ke) {
@@ -254,8 +266,7 @@ public class SegmentsScene extends Scene {
 
             // button
             Button b = new Button("apply");
-            b.setOnAction( e -> { show_window(tf.getText().split(" ", 0));
-                                  show_segments(app.query(tf.getText().split(" ", 0))); 
+            b.setOnAction( e -> { show_segments(app.query(tf.getText().split(" ", 0))); 
                                   popupOnScreen = false; 
                                   popup.hide(); 
             });

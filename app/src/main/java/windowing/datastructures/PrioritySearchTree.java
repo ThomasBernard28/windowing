@@ -57,12 +57,10 @@ public class PrioritySearchTree {
             // finding the root of the tree
             data = nodes.get(find_min_index(nodes));
             nodes.remove(data);
-            System.out.println("Root : " + data.point.toString());
 
             // computing the median and separate the remaining nodes into left and right trees
             CompositeNumber compositeMedian = find_median(nodes);
             data.compositeMedian = compositeMedian;
-            System.out.println("Median : " + compositeMedian);
 
             ArrayList<Node> leftTree = new ArrayList<Node>();
             ArrayList<Node> rightTree = new ArrayList<Node>();
@@ -85,9 +83,7 @@ public class PrioritySearchTree {
             // recursively construct left and right trees 
             this.leftTree = new PrioritySearchTree();
             this.rightTree = new PrioritySearchTree();
-            System.out.println("Going in left tree");
             this.leftTree.construct_tree(leftTree);
-            System.out.println("Going in right tree");
             this.rightTree.construct_tree(rightTree);
             return data;
         }
@@ -176,7 +172,6 @@ public class PrioritySearchTree {
             if ( x>=xMin && x<=xMax && y>=yMin && y<=yMax ) {
                 if ( !reportedSegments.contains(data.segment) ) {
                     reportedSegments.add(data.segment);
-                    System.out.println("reported one segment : " + data.segment.toString()); // DEBUG
                 }
             }
             if ( leftTree != null ) { 
