@@ -1,8 +1,5 @@
 package windowing.datastructures;
 
-import org.checkerframework.checker.units.qual.C;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -158,14 +155,14 @@ public class PrioritySearchTree {
     public ArrayList<Segment> query(double xMin, double yMin, double xMax, double yMax) {
         reportedSegments = new ArrayList<Segment>();
         //apply_window(xMin, yMin, xMax, yMax, reportedSegments);
-        query_pst(xMin, yMin, xMax, yMax, reportedSegments, false, false);
+        query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
         return reportedSegments;
     }
 
     /*
      * This is dogshit, it must be completely reworked.
      */
-    private void apply_window(double xMin, double yMin, double xMax, double yMax, ArrayList<Segment> reportedSegments) {
+    private void apply_window(double xMin, double xMax, double yMin, double yMax, ArrayList<Segment> reportedSegments) {
         if (data != null) {
             double x = data.point.get_coord1();
             double y = data.point.get_coord2();
@@ -176,17 +173,17 @@ public class PrioritySearchTree {
                 }
             }
             if (leftTree != null) {
-                leftTree.apply_window(xMin, yMin, xMax, yMax, reportedSegments);
+                leftTree.apply_window(xMin, xMax, yMin, yMax, reportedSegments);
             }
             if (rightTree != null) {
-                rightTree.apply_window(xMin, yMin, xMax, yMax, reportedSegments);
+                rightTree.apply_window(xMin, xMax, yMin, yMax, reportedSegments);
             }
             // second case : the segment cross entierly the window i.e. no endpoint within the window
         }
 
     }
 
-    private void query_pst(double xMin, double yMin, double xMax, double yMax, ArrayList<Segment> reportedSegments, boolean split, boolean maxSearching) {
+    private void query_pst(double xMin, double xMax, double yMin, double yMax, ArrayList<Segment> reportedSegments, boolean split, boolean maxSearching) {
         //search unbounded to the left. vsplit is the node where two search path splits
         // for each node on the search path of yMin yMax check if node is in range if so report it
         // for each node on the path of yMin i.e in the left subtree of vsplit : Si le chemin continue à gauche du noeud v reportInSubtree( filsDroit(v), xMax)
@@ -208,7 +205,7 @@ public class PrioritySearchTree {
                     //We are in the right subtree of vsplit
                     if (yMax > median.get_coord2()){
                         // Then the leftsubtree will match the y condition and can be explored only on x condition
-                        rightTree.report_in_subtree(xMin, yMin, xMax, yMax, reportedSegments);
+                        rightTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
                         //TODO implement report_in_subtree() method
                     }
                 }
@@ -216,7 +213,7 @@ public class PrioritySearchTree {
                     // We are in the left subtree of vsplit
                     if (yMin <= median.get_coord2()){
                         //Then the right subtree will match the y condition and can be explored only on x condition
-                        leftTree.report_in_subtree(xMin, yMin, xMax, yMax, reportedSegments);
+                        leftTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
                         //TODO implement report_in_subtree() method
                     }
                 }
@@ -235,21 +232,21 @@ public class PrioritySearchTree {
                     }
                     // In this cas we only need to go in the left subtree
                     if (yMax <= median.get_coord2()){
-                        leftTree.query_pst(xMin, yMin, xMax, yMax, reportedSegments, false, false);
+                        leftTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
                     }
                     //In this case we only need to go in the right subtree and we didn't find the vsplit
                     else if (yMin >= median.get_coord2()){
-                        rightTree.query_pst(xMin, yMin, xMax, yMax, reportedSegments, false, false);
+                        rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
                     }
                     else{
                         //We've found the vsplit point and so we need to explore both subtree
                         // In the case of the left subTree we are looking for the min condition
                         if(leftTree != null){
-                            leftTree.query_pst(xMin, yMin, xMax, yMax, reportedSegments, true, false);
+                            leftTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, false);
                         }
                         // In the cas of the right subTree we are looking for the max condition
                         if (rightTree != null){
-                            rightTree.query_pst(xMin, yMin, xMax, yMax, reportedSegments, true, true);
+                            rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, true);
                         }
                     }
                 }
@@ -257,7 +254,7 @@ public class PrioritySearchTree {
         }
     }
 
-    public void report_in_subtree(double xMin, double yMin, double xMax, double yMax, ArrayList<Segment> reportedSegments){
+    public void report_in_subtree(double xMin, double xMax, double yMin, double yMax, ArrayList<Segment> reportedSegments){
         if (data != null){
             // Si notre point a une extrémité dans la fenêtre
             if (data.point.get_coord1() <= xMax && data.point.get_coord1() >= xMin){
@@ -265,10 +262,10 @@ public class PrioritySearchTree {
                     reportedSegments.add(data.segment);
                 }
                 if(leftTree != null){
-                    leftTree.report_in_subtree(xMin, yMin, xMax, yMax, reportedSegments);
+                    leftTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
                 }
                 if(rightTree != null){
-                    rightTree.report_in_subtree(xMin, yMin, xMax, yMax, reportedSegments);
+                    rightTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
                 }
             }
             // Si notre point n'a pas l'extrémité considérée dans la fenêtre
@@ -282,10 +279,10 @@ public class PrioritySearchTree {
                             reportedSegments.add(data.segment);
                         }
                         if(leftTree != null){
-                            leftTree.report_in_subtree(xMin, yMin, xMax, yMax, reportedSegments);
+                            leftTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
                         }
                         if(rightTree != null){
-                            rightTree.report_in_subtree(xMin, yMin, xMax, yMax, reportedSegments);
+                            rightTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
                         }
                     }
                 }
@@ -300,10 +297,10 @@ public class PrioritySearchTree {
                             reportedSegments.add(data.segment);
                         }
                         if(leftTree != null){
-                            leftTree.report_in_subtree(xMin, yMin, xMax, yMax, reportedSegments);
+                            leftTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
                         }
                         if(rightTree != null){
-                            rightTree.report_in_subtree(xMin, yMin, xMax, yMax, reportedSegments);
+                            rightTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
                         }
                     }
                 }
