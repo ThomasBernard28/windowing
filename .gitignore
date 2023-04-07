@@ -20,6 +20,13 @@
 # Compiled class file
 *.class
 
+# Eclipse specific files/directories #
+######################################
+.classpath
+.project
+.settings
+.metadata
+
 # Log file
 *.log
 
