@@ -2,6 +2,7 @@ package windowing;
 
 import windowing.datastructures.CompositeNumber;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 public class CompositeNumberTest {
     
