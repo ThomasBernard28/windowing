@@ -2,7 +2,6 @@ package windowing;
 
 import windowing.datastructures.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
@@ -75,17 +74,21 @@ public class AppWindowing {
     * @return an arrayList of segments that are within the window
     */
     public ArrayList<Segment> query(String[] window) {
-        this.window.clear();
-        this.window.add(Double.parseDouble(window[0]));
-        this.window.add(Double.parseDouble(window[1]));
-        this.window.add(Double.parseDouble(window[2]));
-        this.window.add(Double.parseDouble(window[3]));
+        ArrayList<Double> queryWindow = new ArrayList<Double>();
+        for (int x=0; x<4; x++) {
+            if (window[x].equals("-inf") || window[x].equals("+inf")) {
+                queryWindow.add(this.window.get(x));  
+            } 
+            else {
+                queryWindow.add(Double.parseDouble(window[x]));
+            }
+        }
         ArrayList<Segment> horizontalSegments = pst.query(this.window.get(0), this.window.get(1),
                 this.window.get(2), this.window.get(3));
 
         //In the inverted pst y component are inverted with x components
-        ArrayList<Segment> verticalSegments = invertedPst.query(this.window.get(1), this.window.get(0),
-                this.window.get(3), this.window.get(2));
+        ArrayList<Segment> verticalSegments = invertedPst.query(this.window.get(2), this.window.get(3),
+                this.window.get(0), this.window.get(1));
 
         horizontalSegments.addAll(verticalSegments);
         return horizontalSegments;

@@ -33,7 +33,6 @@ public class SegmentsScene extends Scene {
     private Double mouseY = 250.0;
     private Double zoomLevel = 1.0;
     private ArrayList<Segment> segments = new ArrayList<Segment>();
-    private ArrayList<Double> window = new ArrayList<Double>();
 
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
@@ -139,8 +138,8 @@ public class SegmentsScene extends Scene {
 
     public void draw_window() {
         Double x1 = app.window.get(0);
-        Double y1 = app.window.get(1);
-        Double x2 = app.window.get(2);
+        Double y1 = app.window.get(2);
+        Double x2 = app.window.get(1);
         Double y2 = app.window.get(3);
         Group group = new Group();
         ArrayList<Line> lines = new ArrayList<Line>();
@@ -255,7 +254,7 @@ public class SegmentsScene extends Scene {
             Label l = new Label("Window size :");
 
             // textfield
-            TextField tf = new TextField("x1 y1 x2 y2");
+            TextField tf = new TextField("x1 x2 y1 y2");
             tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 public void handle(KeyEvent ke) {
                     if (ke.getCode().equals(KeyCode.ESCAPE)) {
