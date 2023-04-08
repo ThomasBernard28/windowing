@@ -165,6 +165,7 @@ public class SegmentsScene extends Scene {
         double width = Math.abs(xMin) + Math.abs(xMax);
         int step = 1;
         if ( width >= 100 ) { step = 100; }
+        if ( width >= 1000 ) { step = 200; }
 
         // drawing vertical lines
         double position = xMin;
