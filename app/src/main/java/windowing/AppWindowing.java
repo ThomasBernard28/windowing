@@ -83,12 +83,12 @@ public class AppWindowing {
                 queryWindow.add(Double.parseDouble(window[x]));
             }
         }
-        ArrayList<Segment> horizontalSegments = pst.query(this.window.get(0), this.window.get(1),
-                this.window.get(2), this.window.get(3));
+        ArrayList<Segment> horizontalSegments = pst.query(queryWindow.get(0), queryWindow.get(1),
+                queryWindow.get(2), queryWindow.get(3));
 
         //In the inverted pst y component are inverted with x components
-        ArrayList<Segment> verticalSegments = invertedPst.query(this.window.get(2), this.window.get(3),
-                this.window.get(0), this.window.get(1));
+        ArrayList<Segment> verticalSegments = invertedPst.query(queryWindow.get(2), queryWindow.get(3),
+                queryWindow.get(0), queryWindow.get(1));
 
         horizontalSegments.addAll(verticalSegments);
         return horizontalSegments;
