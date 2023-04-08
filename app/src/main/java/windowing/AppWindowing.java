@@ -73,16 +73,7 @@ public class AppWindowing {
     * @param window : bounds of the window
     * @return an arrayList of segments that are within the window
     */
-    public ArrayList<Segment> query(String[] window) {
-        ArrayList<Double> queryWindow = new ArrayList<Double>();
-        for (int x=0; x<4; x++) {
-            if (window[x].equals("-inf") || window[x].equals("+inf")) {
-                queryWindow.add(this.window.get(x));  
-            } 
-            else {
-                queryWindow.add(Double.parseDouble(window[x]));
-            }
-        }
+    public ArrayList<Segment> query(ArrayList<Double> queryWindow) {
         //In the inverted pst y component are inverted with x components
         ArrayList<Segment> verticalSegments = invertedPst.query(queryWindow.get(2), queryWindow.get(3),
                 queryWindow.get(0), queryWindow.get(1));

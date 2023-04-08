@@ -33,6 +33,7 @@ public class SegmentsScene extends Scene {
     private Double mouseY = 250.0;
     private Double zoomLevel = 1.0;
     private ArrayList<Segment> segments = new ArrayList<Segment>();
+    private ArrayList<Double> window = new ArrayList<Double>();
 
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
@@ -82,8 +83,8 @@ public class SegmentsScene extends Scene {
         // buttons event
         importButton.setOnAction( e -> import_popup() );
         windowButton.setOnAction( e -> window_popup() );
-        clearButton.setOnAction( e -> canvas.getChildren().clear() );
-        reloadButton.setOnAction( e -> show_segments(app.segments));
+        clearButton.setOnAction( e -> { canvas.getChildren().clear(); window.clear(); });
+        reloadButton.setOnAction( e -> { window.clear(); show_segments(app.segments); });
 
         // mouse event
         canvas.setOnMouseDragged(e -> {
@@ -119,6 +120,8 @@ public class SegmentsScene extends Scene {
         CompositeNumber startComp;
         CompositeNumber endComp;
         Group group = new Group();
+        canvas.getChildren().clear();
+        draw_grid(group);
         for ( Segment s : segments ) {
             startComp = s.get_startComp();
             endComp = s.get_endComp();
@@ -128,36 +131,35 @@ public class SegmentsScene extends Scene {
             l.setStroke(Color.GREEN);
             group.getChildren().add(l);
         }
-
-        canvas.getChildren().clear();
-        draw_grid();
+        draw_window(group);
         canvas.getChildren().add(group);
-        draw_window();
         this.segments = segments;
     }
 
-    public void draw_window() {
+    public void draw_window(Group group) {
         Double x1 = app.window.get(0);
-        Double y1 = app.window.get(2);
         Double x2 = app.window.get(1);
+        Double y1 = app.window.get(2);
         Double y2 = app.window.get(3);
-        Group group = new Group();
+        if (window.size() != 0) {
+            x1 = window.get(0);
+            x2 = window.get(1);
+            y1 = window.get(2);
+            y2 = window.get(3);
+        }
         ArrayList<Line> lines = new ArrayList<Line>();
         lines.add(new Line(x1*zoomLevel, y1*zoomLevel, x2*zoomLevel, y1*zoomLevel));
         lines.add(new Line(x1*zoomLevel, y2*zoomLevel, x2*zoomLevel, y2*zoomLevel));
         lines.add(new Line(x1*zoomLevel, y1*zoomLevel, x1*zoomLevel, y2*zoomLevel));
         lines.add(new Line(x2*zoomLevel, y1*zoomLevel, x2*zoomLevel, y2*zoomLevel));
         lines.forEach( (l) -> { l.setStrokeWidth(3.0); l.setStroke(Color.RED); group.getChildren().add(l); });
-        canvas.getChildren().add(group);
     }
 
-    public void draw_grid() {
+    public void draw_grid(Group group) {
         double xMin = app.window.get(0);
         double yMin = app.window.get(2);
         double xMax = app.window.get(1);
         double yMax = app.window.get(3);
-        Group grid = new Group();
-        Group text = new Group();
 
         // determine step
         double width = Math.abs(xMin) + Math.abs(xMax);
@@ -167,11 +169,11 @@ public class SegmentsScene extends Scene {
         // drawing vertical lines
         double position = xMin;
         while ( position <= xMax) {
-            Text num = new Text(position*zoomLevel, yMin*zoomLevel-30, Integer.toString((int)position));
+            Text num = new Text(position*zoomLevel, yMin*zoomLevel-10, Integer.toString((int)position));
             Line l = new Line(position*zoomLevel, yMin*zoomLevel, position*zoomLevel, yMax*zoomLevel);
             l.setStyle("-fx-opacity: 0.5;");
-            grid.getChildren().add(l);
-            text.getChildren().add(num);
+            group.getChildren().add(l);
+            group.getChildren().add(num);
             position += step;
         }
 
@@ -181,14 +183,22 @@ public class SegmentsScene extends Scene {
             Text num = new Text(xMin*zoomLevel-30, position*zoomLevel, Integer.toString((int)position));
             Line l = new Line(xMin*zoomLevel, position*zoomLevel, xMax*zoomLevel, position*zoomLevel);
             l.setStyle("-fx-opacity: 0.5;");
-            grid.getChildren().add(l);
-            text.getChildren().add(num);
+            group.getChildren().add(l);
+            group.getChildren().add(num);
             position += step;
         }
+    }
 
-        canvas.getChildren().add(grid);
-        canvas.getChildren().add(text);
-        //canvas.setMargin(grid, new Insets(20, 20, 20, 20));
+    private void set_window(String[] window) {
+        this.window.clear();
+        for (int x=0; x<4; x++) {
+            if (window[x].equals("-inf") || window[x].equals("+inf")) {
+                this.window.add(app.window.get(x));  
+            } 
+            else {
+                this.window.add(Double.parseDouble(window[x]));
+            }
+        }
     }
 
     public void import_popup() {
@@ -224,6 +234,8 @@ public class SegmentsScene extends Scene {
             // button
             Button b = new Button("import");
             b.setOnAction( e -> { app.load_segments(tf.getText()); 
+                                  this.window.clear(); // reset custom window
+                                  auto_zoom(Math.abs(app.window.get(1) - app.window.get(0)));
                                   show_segments(app.segments);
                                   popupOnScreen = false; 
                                   popup.hide(); 
@@ -267,7 +279,8 @@ public class SegmentsScene extends Scene {
             Button b = new Button("apply");
             b.setOnAction( e -> { 
                 if (verify_window_input(tf.getText().split(" ", 0))) {
-                    show_segments(app.query(tf.getText().split(" ", 0))); 
+                    set_window(tf.getText().split(" ", 0));
+                    show_segments(app.query(this.window)); 
                 }
                 else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -299,6 +312,10 @@ public class SegmentsScene extends Scene {
             }
         }
         return true;
+    }
+
+    private void auto_zoom(Double size) {
+        zoomLevel = 200.0/size; 
     }
 
 }
