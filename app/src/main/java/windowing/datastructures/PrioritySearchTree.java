@@ -205,16 +205,34 @@ public class PrioritySearchTree {
                     //We are in the right subtree of vsplit
                     if (yMax > median.get_coord2()){
                         // Then the leftsubtree will match the y condition and can be explored only on x condition
-                        rightTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
-                        //TODO implement report_in_subtree() method
+                        if(leftTree != null){
+                            leftTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
+                        }
+                        if(rightTree != null){
+                            rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, true);
+                        }
+                    }
+                    else{
+                        if(leftTree != null){
+                            leftTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, true);
+                        }
                     }
                 }
                 else{
                     // We are in the left subtree of vsplit
                     if (yMin <= median.get_coord2()){
                         //Then the right subtree will match the y condition and can be explored only on x condition
-                        leftTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
-                        //TODO implement report_in_subtree() method
+                        if(rightTree != null){
+                            rightTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
+                        }
+                        if(leftTree != null){
+                            leftTree.query_pst(xMin,xMax,yMin,yMax, reportedSegments, true, false);
+                        }
+                    }
+                    else{
+                        if(rightTree != null){
+                            rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, false);
+                        }
                     }
                 }
             }
@@ -232,11 +250,16 @@ public class PrioritySearchTree {
                     }
                     // In this cas we only need to go in the left subtree
                     if (yMax <= median.get_coord2()){
-                        leftTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
+                        if(leftTree != null){
+                            leftTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
+                        }
                     }
                     //In this case we only need to go in the right subtree and we didn't find the vsplit
                     else if (yMin >= median.get_coord2()){
-                        rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
+                        if (rightTree != null){
+                            rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
+                        }
+
                     }
                     else{
                         //We've found the vsplit point and so we need to explore both subtree
