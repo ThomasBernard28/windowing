@@ -2,8 +2,8 @@ package windowing.datastructures;
 
 public class CompositeNumber {
 
-    private final double coord1;
-    private final double coord2;
+    private double coord1;
+    private double coord2;
     public CompositeNumber(double coord1, double coord2){
         this.coord1 = coord1;
         this.coord2 = coord2;
@@ -15,6 +15,11 @@ public class CompositeNumber {
         return coord2;
     }
 
+    public void invert_coords(){
+        double tempsCoord1 = this.coord1;
+        this.coord1 = this.coord2;
+        this.coord2 = tempsCoord1;
+    }
     public boolean is_equal_to(CompositeNumber n){
         double nCoord1 = n.get_coord1();
         double nCoord2 = n.get_coord2();

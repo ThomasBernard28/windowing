@@ -83,15 +83,22 @@ public class AppWindowing {
                 queryWindow.add(Double.parseDouble(window[x]));
             }
         }
-        ArrayList<Segment> horizontalSegments = pst.query(queryWindow.get(0), queryWindow.get(1),
-                queryWindow.get(2), queryWindow.get(3));
-
         //In the inverted pst y component are inverted with x components
         ArrayList<Segment> verticalSegments = invertedPst.query(queryWindow.get(2), queryWindow.get(3),
                 queryWindow.get(0), queryWindow.get(1));
 
-        horizontalSegments.addAll(verticalSegments);
-        return horizontalSegments;
+        //We need to re_flip vertical segments to their original axis
+        for (Segment segment: verticalSegments) {
+            segment.get_startComp().invert_coords();
+            segment.get_endComp().invert_coords();
+
+        }
+        ArrayList<Segment> horizontalSegments = pst.query(queryWindow.get(0), queryWindow.get(1),
+                queryWindow.get(2), queryWindow.get(3));
+
+
+        verticalSegments.addAll(horizontalSegments);
+        return verticalSegments;
     }
 
     public void print_segments(ArrayList<Segment> segments) {
