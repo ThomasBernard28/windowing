@@ -154,36 +154,13 @@ public class PrioritySearchTree {
         return median;
     }
 
-    public ArrayList<Segment> query(double xMin, double yMin, double xMax, double yMax) {
+    public ArrayList<Segment> query(double xMin, double xMax, double yMin, double yMax) {
         reportedSegments = new ArrayList<Segment>();
         //apply_window(xMin, yMin, xMax, yMax, reportedSegments);
         query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
         return reportedSegments;
     }
 
-    /*
-     * This is dogshit, it must be completely reworked.
-     */
-    private void apply_window(double xMin, double xMax, double yMin, double yMax, ArrayList<Segment> reportedSegments) {
-        if (data != null) {
-            double x = data.point.get_coord1();
-            double y = data.point.get_coord2();
-            // first case : at least one endpoint lie within the window
-            if (x >= xMin && x <= xMax && y >= yMin && y <= yMax) {
-                if (!reportedSegments.contains(data.segment)) {
-                    reportedSegments.add(data.segment);
-                }
-            }
-            if (leftTree != null) {
-                leftTree.apply_window(xMin, xMax, yMin, yMax, reportedSegments);
-            }
-            if (rightTree != null) {
-                rightTree.apply_window(xMin, xMax, yMin, yMax, reportedSegments);
-            }
-            // second case : the segment cross entierly the window i.e. no endpoint within the window
-        }
-
-    }
 
     private void query_pst(double xMin, double xMax, double yMin, double yMax, ArrayList<Segment> reportedSegments, boolean split, boolean maxSearching) {
         //search unbounded to the left. vsplit is the node where two search path splits
@@ -196,27 +173,34 @@ public class PrioritySearchTree {
                 double x = data.point.get_coord1();
                 double y = data.point.get_coord2();
                 CompositeNumber median = data.compositeMedian;
+                System.out.println("median : " + median.toString());
 
                 // First look if the point needs to be reported.
                 if(x >= xMin && x <= xMax && y >= yMin && y <= yMax){
                     if(!reportedSegments.contains(data.segment)){
                         reportedSegments.add(data.segment);
+                        System.out.println("found a segment : " + data.segment);
                     }
                 }
                 //Then we will consider if we are in the right or left subtree.
                 if(maxSearching){
                     //We are in the right subtree of vsplit
                     if (yMax > median.get_coord2()){
+                        System.out.println("Max not found");
                         // Then the leftsubtree will match the y condition and can be explored only on x condition
                         if(leftTree != null){
+                            System.out.println("Going to report the left tree");
                             leftTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
                         }
                         if(rightTree != null){
+                            System.out.println("Going to explore the right tree");
                             rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, true);
                         }
                     }
                     else{
+                        System.out.println("Max found");
                         if(leftTree != null){
+                            System.out.println("going to explore the left subtree");
                             leftTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, true);
                         }
                     }
@@ -248,6 +232,8 @@ public class PrioritySearchTree {
                 double y = data.point.get_coord2();
                 CompositeNumber median = data.compositeMedian;
                 System.out.println(median.toString());
+                System.out.println("xMin" + xMin);
+                System.out.println("xMax" + xMax);
                 System.out.println("yMax" + yMax);
                 System.out.println("yMin" + yMin);
 
