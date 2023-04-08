@@ -265,15 +265,40 @@ public class SegmentsScene extends Scene {
 
             // button
             Button b = new Button("apply");
-            b.setOnAction( e -> { show_segments(app.query(tf.getText().split(" ", 0))); 
-                                  popupOnScreen = false; 
-                                  popup.hide(); 
+            b.setOnAction( e -> { 
+                if (verify_window_input(tf.getText().split(" ", 0))) {
+                    show_segments(app.query(tf.getText().split(" ", 0))); 
+                }
+                else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Input Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("The input can contain only float numbers and -inf or +inf");
+                    alert.showAndWait();      
+                }
+                popupOnScreen = false; 
+                popup.hide(); 
             });
 
             vb.getChildren().addAll(l, tf, b);
             popup.getContent().add(vb);
             popup.show(stage, stage.getX()+400, stage.getY()+100);
         }
+    }
+
+    private boolean verify_window_input(String[] input) {
+        if (input.length != 4) {
+            return false;
+        }
+        if (input[0].equals("-inf") && input[1].equals("+inf") || input[2].equals("-inf") && input[3].equals("+inf")) {
+            return false;
+        }
+        for (String str : input) {
+            if (!str.matches("[-+]?((\\d+\\.?\\d*)|(\\.\\d+))|([-+]?inf)")) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
