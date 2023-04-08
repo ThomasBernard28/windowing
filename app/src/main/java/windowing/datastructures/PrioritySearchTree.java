@@ -88,6 +88,8 @@ public class PrioritySearchTree {
 
         if (nodes.size() == 1) {
             data = nodes.get(0);
+            CompositeNumber median = find_median(nodes);
+            data.compositeMedian = median;
             nodes.clear();
         }
         return null;
@@ -189,6 +191,7 @@ public class PrioritySearchTree {
         // for each node on the path of yMin i.e in the left subtree of vsplit : Si le chemin continue à gauche du noeud v reportInSubtree( filsDroit(v), xMax)
         // for each node on the path of yMax i.e int the right subtree of vsplit : Si le chemin continue à droite du noeud v reportInSubtree(filsGauche(v), xMax)
         if (split){
+            System.out.println("After split");
             if (data != null){
                 double x = data.point.get_coord1();
                 double y = data.point.get_coord2();
@@ -240,37 +243,45 @@ public class PrioritySearchTree {
 
         else{
             if(data != null){
+                System.out.println("Looking for split");
                 double x = data.point.get_coord1();
                 double y = data.point.get_coord2();
                 CompositeNumber median = data.compositeMedian;
+                System.out.println(median.toString());
+                System.out.println("yMax" + yMax);
+                System.out.println("yMin" + yMin);
 
                 if (x >= xMin && x <= xMax && y>= yMin && y <= yMax){
                     if(!reportedSegments.contains(data.segment)){
                         reportedSegments.add(data.segment);
+                        System.out.println("Reported segment" + data.segment.toString());
                     }
-                    // In this cas we only need to go in the left subtree
-                    if (yMax <= median.get_coord2()){
-                        if(leftTree != null){
-                            leftTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
-                        }
+                }
+                // In this cas we only need to go in the left subtree
+                if (yMax <= median.get_coord2() && yMin <= median.get_coord2()){
+                    if(leftTree != null){
+                        System.out.println("vsplit not found going in the left subtree");
+                        leftTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
                     }
-                    //In this case we only need to go in the right subtree and we didn't find the vsplit
-                    else if (yMin >= median.get_coord2()){
-                        if (rightTree != null){
-                            rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
-                        }
+                }
+                //In this case we only need to go in the right subtree and we didn't find the vsplit
+                else if (yMin >= median.get_coord2() && yMax >= median.get_coord2()){
+                    if (rightTree != null){
+                        System.out.println("vsplit not found going in the right subtree");
+                        rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, false, false);
+                    }
 
+                }
+                else{
+                    //We've found the vsplit point and so we need to explore both subtree
+                    // In the case of the left subTree we are looking for the min condition
+                    System.out.println("vsplit found");
+                    if(leftTree != null){
+                        leftTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, false);
                     }
-                    else{
-                        //We've found the vsplit point and so we need to explore both subtree
-                        // In the case of the left subTree we are looking for the min condition
-                        if(leftTree != null){
-                            leftTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, false);
-                        }
-                        // In the cas of the right subTree we are looking for the max condition
-                        if (rightTree != null){
-                            rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, true);
-                        }
+                    // In the cas of the right subTree we are looking for the max condition
+                    if (rightTree != null){
+                        rightTree.query_pst(xMin, xMax, yMin, yMax, reportedSegments, true, true);
                     }
                 }
             }
@@ -279,10 +290,12 @@ public class PrioritySearchTree {
 
     public void report_in_subtree(double xMin, double xMax, double yMin, double yMax, ArrayList<Segment> reportedSegments){
         if (data != null){
+            System.out.println("In report subtree");
             // Si notre point a une extrémité dans la fenêtre
             if (data.point.get_coord1() <= xMax && data.point.get_coord1() >= xMin){
                 if(!reportedSegments.contains(data.segment)){
                     reportedSegments.add(data.segment);
+                    System.out.println("Found a segment with at least one endpoitn within the window " + data.segment.toString());
                 }
                 if(leftTree != null){
                     leftTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
@@ -300,6 +313,7 @@ public class PrioritySearchTree {
                         //On rapporte le segment
                         if(!reportedSegments.contains(data.segment)){
                             reportedSegments.add(data.segment);
+                            System.out.println("Found that the other endpoint was in the window " + data.segment.toString());
                         }
                         if(leftTree != null){
                             leftTree.report_in_subtree(xMin, xMax, yMin, yMax, reportedSegments);
