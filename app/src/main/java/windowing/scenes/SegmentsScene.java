@@ -107,9 +107,6 @@ public class SegmentsScene extends Scene {
         });
 
         group.setOnMouseDragged( e -> {
-            System.out.println("x: " + startX);
-            System.out.println("y: " +startY);
-            System.out.println("zl:" +zoomLevel);
             endX = e.getX();
             endY = e.getY();
             rectangle.setX(Math.min(startX, e.getX()));
@@ -128,7 +125,6 @@ public class SegmentsScene extends Scene {
             window.add(startY/zoomLevel);
             window.add(endY/zoomLevel);
             show_segments(app.query(this.window)); 
-            System.out.println(this.window);
         });
         /*
         canvas.setOnMouseDragged(e -> {
@@ -201,6 +197,13 @@ public class SegmentsScene extends Scene {
         double yMin = app.window.get(2);
         double xMax = app.window.get(1);
         double yMax = app.window.get(3);
+
+        // background for mouse click detection
+        Rectangle bg = new Rectangle(Math.abs(xMax-xMin)*zoomLevel, Math.abs(yMax-yMin)*zoomLevel);
+        bg.setX(xMin*zoomLevel);
+        bg.setY(yMin*zoomLevel);
+        bg.setFill(Color.TRANSPARENT);
+        group.getChildren().add(bg);
 
         // determine step
         double width = Math.abs(xMin) + Math.abs(xMax);
