@@ -1,5 +1,6 @@
 package windowing;
 
+import org.checkerframework.checker.units.qual.C;
 import windowing.datastructures.*;
 
 import java.util.ArrayList;
@@ -47,16 +48,18 @@ public class AppWindowing {
                 else {
                     String[] c = line.split(" ");
 
+
                     //Create a segment like this : S = ((x1,y1);(x2,y2)) In order to treat horizontal segments
                     Segment segment = new Segment(new CompositeNumber(Double.parseDouble(c[0]), Double.parseDouble(c[1])),
-                                                    new CompositeNumber(Double.parseDouble(c[2]), Double.parseDouble(c[3])));
+                            new CompositeNumber(Double.parseDouble(c[2]), Double.parseDouble(c[3])));
+                    System.out.println("New horizontal segment : " + segment);
                     segments.add(segment);
 
                     //Create a segment like this : S = ((y1,x1);(y2,x2)) in order to treat vertical segments
                     Segment invertedSegment = new Segment(new CompositeNumber(Double.parseDouble(c[1]), Double.parseDouble(c[0])),
-                                                            new CompositeNumber(Double.parseDouble(c[3]), Double.parseDouble(c[2])));
+                            new CompositeNumber(Double.parseDouble(c[3]), Double.parseDouble(c[2])));
+                    System.out.println("New vertical segment : " + invertedSegment);
                     invertedSegments.add(invertedSegment);
-
                 }
             }
             reader.close();
@@ -70,26 +73,36 @@ public class AppWindowing {
     }
 
     /**
-    * @param window : bounds of the window
+    * @param queryWindow : bounds of the window
     * @return an arrayList of segments that are within the window
     */
     public ArrayList<Segment> query(ArrayList<Double> queryWindow) {
         //In the inverted pst y component are inverted with x components
         ArrayList<Segment> verticalSegments = invertedPst.query(queryWindow.get(2), queryWindow.get(3),
-                queryWindow.get(0), queryWindow.get(1));
+                queryWindow.get(0), queryWindow.get(1), true);
 
         //We need to re_flip vertical segments to their original axis
-        for (Segment segment: verticalSegments) {
-            segment.get_startComp().invert_coords();
-            segment.get_endComp().invert_coords();
-
-        }
         ArrayList<Segment> horizontalSegments = pst.query(queryWindow.get(0), queryWindow.get(1),
-                queryWindow.get(2), queryWindow.get(3));
+                queryWindow.get(2), queryWindow.get(3), false);
 
 
-        verticalSegments.addAll(horizontalSegments);
-        return verticalSegments;
+        ArrayList<Segment> segmentsToReport = new ArrayList<>();
+        for (Segment hSegment : horizontalSegments){
+            if (!segmentsToReport.contains(hSegment)){
+                segmentsToReport.add(hSegment);
+            }
+        }
+
+        for(Segment segment : verticalSegments){
+            Segment reInvertedSegment = new Segment(new CompositeNumber(segment.get_startComp().get_coord2(), segment.get_startComp().get_coord1()),
+                                            new CompositeNumber(segment.get_endComp().get_coord2(), segment.get_endComp().get_coord1()));
+            if (!segmentsToReport.contains(reInvertedSegment)){
+                segmentsToReport.add(reInvertedSegment);
+            }
+        }
+        verticalSegments.clear();
+        horizontalSegments.clear();
+        return segmentsToReport;
     }
 
     public void print_segments(ArrayList<Segment> segments) {

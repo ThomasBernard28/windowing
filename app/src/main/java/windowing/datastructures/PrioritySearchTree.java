@@ -21,11 +21,9 @@ public class PrioritySearchTree {
         for (Segment s : segments) {
             // We only need to take the starting component for the tree
             nodes.add(new Node(s.get_startComp(), s));
-            //nodes.add(new Node(s.get_endComp(), s));
         }
         // points are sorted to improve the efficiency when calculating the median
         quicksort(nodes, 0, nodes.size() - 1);
-        // DEBUG nodes.forEach((n) -> System.out.println(n));
         // now we can construct the tree 
         construct_tree(nodes);
     }
@@ -63,19 +61,14 @@ public class PrioritySearchTree {
             CompositeNumber compositeMedian = find_median(nodes);
             data.compositeMedian = compositeMedian;
 
+
             ArrayList<Node> leftTree = new ArrayList<Node>();
             ArrayList<Node> rightTree = new ArrayList<Node>();
 
             for (Node node : nodes) {
                 if (node.point.is_y_smaller_than(compositeMedian) || node.point.is_equal_to(compositeMedian)) {
-                    //System.out.println("-------- I'm adding data in left tree --------");
-                    //System.out.println("Point : " + node.point.toString());
-                    //System.out.println("Median : " + compositeMedian.toString());
                     leftTree.add(node);
                 } else {
-                    //System.out.println("-------- I'm adding nodes in right tree ---------");
-                    //System.out.println("Point : " + node.point.toString());
-                    //System.out.println("Median : " + compositeMedian.toString());
                     rightTree.add(node);
                 }
             }
@@ -156,9 +149,10 @@ public class PrioritySearchTree {
         return median;
     }
 
-    public ArrayList<Segment> query(double xMin, double xMax, double yMin, double yMax) {
+    public ArrayList<Segment> query(double xMin, double xMax, double yMin, double yMax, boolean invertedSegments) {
         reportedSegments = new ArrayList<Segment>();
         reportedSubTrees = new ArrayList<PrioritySearchTree>();
+
         //apply_window(xMin, yMin, xMax, yMax, reportedSegments);
         query_pst(xMin, xMax, yMin, yMax, reportedSegments, reportedSubTrees,false, false);
         for (PrioritySearchTree reportedSubtree: reportedSubTrees) {
@@ -172,7 +166,7 @@ public class PrioritySearchTree {
             double y = data.point.get_coord2();
             CompositeNumber median = data.compositeMedian;
 
-            if(x >= xMin && x <= xMax && y >= yMin && y <= yMax || segmentIntersectWindow(data.segment, xMin, yMin, yMax)){
+            if(x >= xMin && x <= xMax && y >= yMin && y <= yMax || (y == data.segment.get_endComp().get_coord2() && segmentIntersectWindow(data.segment, xMin, yMin, yMax))){
                 //If the current endPoint is inside the bounds we check if it's not already reported
                 if (!reportedSegments.contains(data.segment)){
                     reportedSegments.add(data.segment);
@@ -255,7 +249,7 @@ public class PrioritySearchTree {
 
             if(x <= xMax){
                 // In this case we can consider the node + the rest of the subtree
-                if (x >= xMin && y >= yMin && y <= yMax || segmentIntersectWindow(data.segment, xMin, yMin, yMax)){
+                if (x >= xMin && y >= yMin && y <= yMax || (y == data.segment.get_endComp().get_coord2() && segmentIntersectWindow(data.segment, xMin, yMin, yMax))){
                     if (!reportedSegments.contains(data.segment)){
                         reportedSegments.add(data.segment);
                     }
