@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.MouseButton;
@@ -31,6 +32,12 @@ public class SegmentsScene extends Scene {
     private boolean popupOnScreen = false;
     private Double mouseX = 500.0;
     private Double mouseY = 250.0;
+    private Double startX = 0.0;
+    private Double startY = 0.0;
+    private Double endX = 0.0;
+    private Double endY = 0.0;
+    private Rectangle rectangle;
+    private Group group;
     private Double zoomLevel = 1.0;
     private ArrayList<Segment> segments = new ArrayList<Segment>();
     private ArrayList<Double> window = new ArrayList<Double>();
@@ -38,6 +45,7 @@ public class SegmentsScene extends Scene {
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
         this.canvas = new StackPane();
+        this.group = new Group();
         this.stage = stage;
         this.app = app;
 
@@ -86,7 +94,43 @@ public class SegmentsScene extends Scene {
         clearButton.setOnAction( e -> { canvas.getChildren().clear(); window.clear(); });
         reloadButton.setOnAction( e -> { window.clear(); show_segments(app.segments); });
 
-        // mouse event
+        // mouse event 
+        group.setOnMousePressed( e -> {
+            rectangle = new Rectangle();
+            rectangle.setStroke(Color.BLUE);
+            rectangle.setFill(Color.TRANSPARENT);  
+            startX = e.getX();
+            startY = e.getY();
+            rectangle.setX(startX);
+            rectangle.setY(startY);
+            group.getChildren().add(rectangle);
+        });
+
+        group.setOnMouseDragged( e -> {
+            System.out.println("x: " + startX);
+            System.out.println("y: " +startY);
+            System.out.println("zl:" +zoomLevel);
+            endX = e.getX();
+            endY = e.getY();
+            rectangle.setX(Math.min(startX, e.getX()));
+            rectangle.setY(Math.min(startY, e.getY()));
+            rectangle.setWidth(Math.abs(endX - startX));
+            rectangle.setHeight(Math.abs(endY - startY));
+        });
+
+        group.setOnMouseReleased( e -> {
+            endX = e.getX();
+            endY = e.getY();
+            group.getChildren().remove(rectangle);
+            window.clear();
+            window.add(startX/zoomLevel);
+            window.add(endX/zoomLevel);
+            window.add(startY/zoomLevel);
+            window.add(endY/zoomLevel);
+            show_segments(app.query(this.window)); 
+            System.out.println(this.window);
+        });
+        /*
         canvas.setOnMouseDragged(e -> {
             if ( e.getX() < mouseX ) {
                 scrollPane.setHvalue(scrollPane.getHvalue()-0.005);
@@ -103,10 +147,7 @@ public class SegmentsScene extends Scene {
             mouseX = e.getX();
             mouseY = e.getY();
         });
-
-        // click event
-        //canvas.setOnMousePressed( e -> System.out.println(Double.toString(e.getX()) + ", " +  Double.toString(e.getY())) );
-        //canvas.setOnMouseReleased( e -> System.out.println(Double.toString(e.getX()) + ", " +  Double.toString(e.getY())) );
+        */
     }
     
     /**
@@ -119,7 +160,7 @@ public class SegmentsScene extends Scene {
 
         CompositeNumber startComp;
         CompositeNumber endComp;
-        Group group = new Group();
+        group.getChildren().clear();
         canvas.getChildren().clear();
         draw_grid(group);
         for ( Segment s : segments ) {
