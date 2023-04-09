@@ -52,13 +52,11 @@ public class AppWindowing {
                     //Create a segment like this : S = ((x1,y1);(x2,y2)) In order to treat horizontal segments
                     Segment segment = new Segment(new CompositeNumber(Double.parseDouble(c[0]), Double.parseDouble(c[1])),
                             new CompositeNumber(Double.parseDouble(c[2]), Double.parseDouble(c[3])));
-                    System.out.println("New horizontal segment : " + segment);
                     segments.add(segment);
 
                     //Create a segment like this : S = ((y1,x1);(y2,x2)) in order to treat vertical segments
                     Segment invertedSegment = new Segment(new CompositeNumber(Double.parseDouble(c[1]), Double.parseDouble(c[0])),
                             new CompositeNumber(Double.parseDouble(c[3]), Double.parseDouble(c[2])));
-                    System.out.println("New vertical segment : " + invertedSegment);
                     invertedSegments.add(invertedSegment);
                 }
             }
