@@ -66,6 +66,9 @@ public class AppWindowing {
         } catch ( FileNotFoundException e ) {
             Alert alert = new Alert(AlertType.ERROR, "File " + file + " not found");
             alert.show();
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR, "File " + file + " could not be loaded");
+            alert.show();
         }
     }
 

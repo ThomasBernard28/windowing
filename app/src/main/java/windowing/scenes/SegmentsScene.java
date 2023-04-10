@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.shape.Line;
@@ -16,10 +17,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Text;
 import javafx.geometry.Pos;
+import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class SegmentsScene extends Scene {
@@ -242,6 +246,13 @@ public class SegmentsScene extends Scene {
             vb.setStyle("-fx-background-color: #457b9d; -fx-padding: 10px;");
             vb.setAlignment(Pos.CENTER);
 
+            // hbox
+            HBox hb = new HBox();
+            hb.setStyle("-fx-background-color: #457b9d; -fx-padding: 0px;");
+
+            // file chooser
+            FileChooser fc = new FileChooser();
+
             // label
             Label l = new Label("Path :");
 
@@ -256,7 +267,15 @@ public class SegmentsScene extends Scene {
                     }
             }});
 
-            // button
+            // buttons
+            Button fileChooserButton = new Button("...");
+            fileChooserButton.setOnAction( e -> {
+                File file = fc.showOpenDialog(stage);
+                if (file != null) {
+                    tf.setText(file.getAbsolutePath());
+                }
+            });
+
             Button b = new Button("import");
             b.setOnAction( e -> { app.load_segments(tf.getText()); 
                                   this.window.clear(); // reset custom window
@@ -266,7 +285,8 @@ public class SegmentsScene extends Scene {
                                   popup.hide(); 
             });
 
-            vb.getChildren().addAll(l, tf, b);
+            hb.getChildren().addAll(tf, fileChooserButton);
+            vb.getChildren().addAll(l, hb, b);
             popup.getContent().add(vb);
             popup.show(stage, stage.getX()+125, stage.getY()+100);
         }
