@@ -13,8 +13,6 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Text;
 import javafx.geometry.Pos;
@@ -30,8 +28,6 @@ public class SegmentsScene extends Scene {
     private Stage stage;
     private AppWindowing app;
     private boolean popupOnScreen = false;
-    private Double mouseX = 500.0;
-    private Double mouseY = 250.0;
     private Double startX = 0.0;
     private Double startY = 0.0;
     private Double endX = 0.0;
@@ -120,30 +116,12 @@ public class SegmentsScene extends Scene {
             endY = e.getY();
             group.getChildren().remove(rectangle);
             window.clear();
-            window.add(startX/zoomLevel);
-            window.add(endX/zoomLevel);
-            window.add(startY/zoomLevel);
-            window.add(endY/zoomLevel);
+            window.add(Math.min(startX, endX)/zoomLevel);
+            window.add(Math.max(startX, endX)/zoomLevel);
+            window.add(Math.min(startY, endY)/zoomLevel);
+            window.add(Math.max(startY, endY)/zoomLevel);
             show_segments(app.query(this.window)); 
         });
-        /*
-        canvas.setOnMouseDragged(e -> {
-            if ( e.getX() < mouseX ) {
-                scrollPane.setHvalue(scrollPane.getHvalue()-0.005);
-            } 
-            if ( e.getX() > mouseX ) {
-                scrollPane.setHvalue(scrollPane.getHvalue()+0.005);
-            }
-            if ( e.getY() < mouseY ) {
-                scrollPane.setVvalue(scrollPane.getVvalue()-0.005);
-            }
-            if ( e.getY() > mouseY ) {
-                scrollPane.setVvalue(scrollPane.getVvalue()+0.005);
-            }
-            mouseX = e.getX();
-            mouseY = e.getY();
-        });
-        */
     }
     
     /**
