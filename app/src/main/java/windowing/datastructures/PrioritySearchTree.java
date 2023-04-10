@@ -151,9 +151,6 @@ public class PrioritySearchTree {
     }
 
 
-    // Method to compute a CompositeNumber median in order to sort properly all points
-    // considering the case where all y coordinates in the set are equals.
-
     /**
      * This method is used to compute the median of the set of nodes based on their y coordinate.
      * It's a simple algorithm that uses the theory about the median of a sorted list.
