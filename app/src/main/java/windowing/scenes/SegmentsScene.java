@@ -125,12 +125,10 @@ public class SegmentsScene extends Scene {
     }
     
     /**
+     * method to display the segments from the given array list
      * @Param segments : Segments to be displayed
     **/
-    public void show_segments(ArrayList<Segment> segments) {
-        /**
-        * method to display the segments from the given array list
-        */
+    private void show_segments(ArrayList<Segment> segments) {
 
         CompositeNumber startComp;
         CompositeNumber endComp;
@@ -151,7 +149,7 @@ public class SegmentsScene extends Scene {
         this.segments = segments;
     }
 
-    public void draw_window(Group group) {
+    private void draw_window(Group group) {
         Double x1 = app.window.get(0);
         Double x2 = app.window.get(1);
         Double y1 = app.window.get(2);
@@ -170,7 +168,7 @@ public class SegmentsScene extends Scene {
         lines.forEach( (l) -> { l.setStrokeWidth(3.0); l.setStroke(Color.RED); group.getChildren().add(l); });
     }
 
-    public void draw_grid(Group group) {
+    private void draw_grid(Group group) {
         double xMin = app.window.get(0);
         double yMin = app.window.get(2);
         double xMax = app.window.get(1);
@@ -212,6 +210,10 @@ public class SegmentsScene extends Scene {
         }
     }
 
+    /**
+     * Transforms a user input into an ArrayList.
+     * @param window : array of String containing user input 
+     */
     private void set_window(String[] window) {
         this.window.clear();
         for (int x=0; x<4; x++) {
@@ -224,10 +226,10 @@ public class SegmentsScene extends Scene {
         }
     }
 
-    public void import_popup() {
-        /**
-        * display a popup window asking for a segments file 
-        */
+    /**
+    * display a popup window asking for a segments file 
+    */
+    private void import_popup() {
         if ( !popupOnScreen ) {
             popupOnScreen = true;
 
@@ -258,7 +260,7 @@ public class SegmentsScene extends Scene {
             Button b = new Button("import");
             b.setOnAction( e -> { app.load_segments(tf.getText()); 
                                   this.window.clear(); // reset custom window
-                                  auto_zoom(Math.abs(app.window.get(1) - app.window.get(0)));
+                                  auto_zoom(Math.abs(app.window.get(3) - app.window.get(2)));
                                   show_segments(app.segments);
                                   popupOnScreen = false; 
                                   popup.hide(); 
@@ -270,10 +272,10 @@ public class SegmentsScene extends Scene {
         }
     }
 
-    public void window_popup() {
-        /**
-        * display a popup window asking for a window's size
-        */
+    /**
+    * display a popup window asking for a window's size
+    */
+    private void window_popup() {
         if ( !popupOnScreen ) {
             popupOnScreen = true;
             
@@ -322,6 +324,11 @@ public class SegmentsScene extends Scene {
         }
     }
 
+    /**
+     * This method verify if the window entered by the user is correct.
+     * @param input : user inputs 
+     * @return true if the input is correct
+     */
     private boolean verify_window_input(String[] input) {
         if (input.length != 4) {
             return false;
@@ -337,8 +344,12 @@ public class SegmentsScene extends Scene {
         return true;
     }
 
+    /**
+     * This method calculate the zoomLevel for the segments set
+     * @param size : the height of the segments set.
+     */
     private void auto_zoom(Double size) {
-        zoomLevel = 200.0/size; 
+        zoomLevel = 400.0/size; 
     }
 
 }

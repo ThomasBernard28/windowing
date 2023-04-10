@@ -1,6 +1,5 @@
 package windowing;
 
-import org.checkerframework.checker.units.qual.C;
 import windowing.datastructures.*;
 
 import java.util.ArrayList;
