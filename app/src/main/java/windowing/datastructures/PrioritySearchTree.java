@@ -150,7 +150,6 @@ public class PrioritySearchTree {
         return i + 1;
     }
 
-
     /**
      * This method is used to compute the median of the set of nodes based on their y coordinate.
      * It's a simple algorithm that uses the theory about the median of a sorted list.
