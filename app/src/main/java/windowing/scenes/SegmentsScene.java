@@ -31,6 +31,7 @@ public class SegmentsScene extends Scene {
     private StackPane canvas;
     private Stage stage;
     private AppWindowing app;
+    private Popup popup;
     private boolean popupOnScreen = false;
     private Double startX = 0.0;
     private Double startY = 0.0;
@@ -45,6 +46,7 @@ public class SegmentsScene extends Scene {
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
         this.canvas = new StackPane();
+        this.popup = new Popup();
         this.group = new Group();
         this.stage = stage;
         this.app = app;
@@ -87,6 +89,15 @@ public class SegmentsScene extends Scene {
         windowButton.setStyle("-fx-background-color: #a8dadc;");
         clearButton.setStyle("-fx-background-color: #e63946;");
         toolbar.setStyle("-fx-background-color: #1d3557;");
+
+        // popup event
+        root.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                if (ke.getCode().equals(KeyCode.ESCAPE)) {
+                    popupOnScreen = false;
+                    popup.hide();
+                }
+        }});
 
         // buttons event
         importButton.setOnAction( e -> import_popup() );
@@ -238,7 +249,7 @@ public class SegmentsScene extends Scene {
             popupOnScreen = true;
 
             // popup
-            Popup popup = new Popup();
+            popup = new Popup();
             popup.setHideOnEscape(false);
 
             // vbox
@@ -259,23 +270,8 @@ public class SegmentsScene extends Scene {
             // textfield
             TextField tf = new TextField(System.getProperty("user.dir")+"/build/resources/main/5000.txt");
             tf.setPrefWidth(700);
-            tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                public void handle(KeyEvent ke) {
-                    if (ke.getCode().equals(KeyCode.ESCAPE)) {
-                        popupOnScreen = false;
-                        popup.hide();
-                    }
-            }});
 
             // buttons
-            Button fileChooserButton = new Button("...");
-            fileChooserButton.setOnAction( e -> {
-                File file = fc.showOpenDialog(stage);
-                if (file != null) {
-                    tf.setText(file.getAbsolutePath());
-                }
-            });
-
             Button b = new Button("import");
             b.setOnAction( e -> { app.load_segments(tf.getText()); 
                                   this.window.clear(); // reset custom window
@@ -283,6 +279,15 @@ public class SegmentsScene extends Scene {
                                   show_segments(app.segments);
                                   popupOnScreen = false; 
                                   popup.hide(); 
+            });
+
+            Button fileChooserButton = new Button("...");
+            fileChooserButton.setOnAction( e -> {
+                File file = fc.showOpenDialog(stage);
+                if (file != null) {
+                    tf.setText(file.getAbsolutePath());
+                    b.fire();
+                }
             });
 
             hb.getChildren().addAll(tf, fileChooserButton);
@@ -300,7 +305,8 @@ public class SegmentsScene extends Scene {
             popupOnScreen = true;
             
             // popup
-            Popup popup = new Popup();
+            popup = new Popup();
+            popup.setHideOnEscape(false);
 
             //vbox
             VBox vb = new VBox(10);
@@ -312,13 +318,6 @@ public class SegmentsScene extends Scene {
 
             // textfield
             TextField tf = new TextField("x1 x2 y1 y2");
-            tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                public void handle(KeyEvent ke) {
-                    if (ke.getCode().equals(KeyCode.ESCAPE)) {
-                        popupOnScreen = false;
-                        popup.hide();
-                    }
-            }});
 
             // button
             Button b = new Button("apply");
