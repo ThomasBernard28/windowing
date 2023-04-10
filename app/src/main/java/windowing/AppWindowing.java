@@ -9,6 +9,12 @@ import java.io.FileNotFoundException;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 
+/**
+ * This class is the link between the GUI and the data structures.
+ * It contains the methods that are called by the GUI to perform the different operations.
+ * This class loads the dataset and stores the segments in the PrioritySearchTree.
+ * It also contains the methods to perform the windowing operations.
+ */
 public class AppWindowing {
 
     public ArrayList<Segment> segments;
@@ -17,15 +23,12 @@ public class AppWindowing {
     private PrioritySearchTree pst;
     private PrioritySearchTree invertedPst;
     
-    /**
-    * @Param file : name of the dataset file
-    **/
+
     /**
      * Method that read the file at the given path and transform
      * the information of each line into a Segment or an invertedSegment.
      * The result is stored in the 'segments' resp. ('invertedSegments') ArrayList
      * @param file : name of the dataset file
-     * @return the window containing all segments
      */
     public void load_segments(String file) {
         
@@ -73,8 +76,12 @@ public class AppWindowing {
     }
 
     /**
+     * Method that query the PrioritySearchTree with the given window
+     * and return the segments that are within the window.
+     * As we retrieve the segments from the PrioritySearchTree, we need to re_flip the vertical segments to their original axis.
+     * We then add both horizontal and vertical segments to the segmentsToReport ArrayList (And check if they are not already in the list).
     * @param queryWindow : bounds of the window
-    * @return an arrayList of segments that are within the window
+    * @return an arrayList of segments that are within the window and that will be displayed.
     */
     public ArrayList<Segment> query(ArrayList<Double> queryWindow) {
         //In the inverted pst y component are inverted with x components
