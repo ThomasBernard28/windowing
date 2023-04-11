@@ -48,17 +48,21 @@ public class AppWindowing {
                     firstLine = false;
                 }
                 else {
-                    String[] c = line.split(" ");
-
+                    ArrayList<Double> coords = new ArrayList<Double>();
+                    for (String coord : line.split(" ")) {
+                        coords.add(Double.parseDouble(coord));  
+                    }
+                    double x1 = Math.min(coords.get(0), coords.get(2));
+                    double y1 = Math.min(coords.get(1), coords.get(3));
+                    double x2 = Math.max(coords.get(0), coords.get(2));
+                    double y2 = Math.max(coords.get(1), coords.get(3));
 
                     //Create a segment like this : S = ((x1,y1);(x2,y2)) In order to treat horizontal segments
-                    Segment segment = new Segment(new CompositeNumber(Double.parseDouble(c[0]), Double.parseDouble(c[1])),
-                            new CompositeNumber(Double.parseDouble(c[2]), Double.parseDouble(c[3])));
+                    Segment segment = new Segment(new CompositeNumber(x1, y1), new CompositeNumber(x2, y2));
                     segments.add(segment);
 
                     //Create a segment like this : S = ((y1,x1);(y2,x2)) in order to treat vertical segments
-                    Segment invertedSegment = new Segment(new CompositeNumber(Double.parseDouble(c[1]), Double.parseDouble(c[0])),
-                            new CompositeNumber(Double.parseDouble(c[3]), Double.parseDouble(c[2])));
+                    Segment invertedSegment = new Segment(new CompositeNumber(y1, x1), new CompositeNumber(y2, x2));
                     invertedSegments.add(invertedSegment);
                 }
             }
