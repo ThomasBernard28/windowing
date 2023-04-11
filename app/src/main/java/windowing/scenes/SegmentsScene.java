@@ -26,6 +26,10 @@ import javafx.scene.input.KeyCode;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * This is the main scene of the application.
+ * It contains buttons and layouts to display and interact with segments sets.
+ */
 public class SegmentsScene extends Scene {
     
     private StackPane canvas;
@@ -43,6 +47,14 @@ public class SegmentsScene extends Scene {
     private ArrayList<Segment> segments = new ArrayList<Segment>();
     private ArrayList<Double> window = new ArrayList<Double>();
 
+    /**
+     * The constructor initiate the basic elements of the scene.
+     * It creates the references to the layouts and configure them.
+     * It also add the handlers for mouse events. 
+     * @param stage is the main (and only) stage of the application.
+     * @param app is an instance of AppWindowing the class linking ui and datastructures.
+     * @param root is the root layout of the scene. It is a VBox containing the topbar and a scrollpane.
+     */
     public SegmentsScene(Stage stage, AppWindowing app, VBox root) {
         super(root, 1000, 500);
         this.canvas = new StackPane();
@@ -140,7 +152,9 @@ public class SegmentsScene extends Scene {
     }
     
     /**
-     * method to display the segments from the given array list
+     * This method display the segments from the given array list.
+     * Each segment is added to the group and is multiplied by zoomLevel to scale their size.
+     * The method also calls draw_window and draw_grid.
      * @Param segments : Segments to be displayed
     **/
     private void show_segments(ArrayList<Segment> segments) {
@@ -164,6 +178,11 @@ public class SegmentsScene extends Scene {
         this.segments = segments;
     }
 
+    /**
+     * This method will display the window based on the window described in the file or given by the user.
+     * Each line of the window is scaled with the zoomLevel variable.
+     * @param group the Group object containing all Lines to be displayed to the user inferface.
+     */
     private void draw_window(Group group) {
         Double x1 = app.window.get(0);
         Double x2 = app.window.get(1);
@@ -183,6 +202,12 @@ public class SegmentsScene extends Scene {
         lines.forEach( (l) -> { l.setStrokeWidth(3.0); l.setStroke(Color.RED); group.getChildren().add(l); });
     }
 
+    /**
+     * This method will display the grid. 
+     * The width of the global window of the segemnts set is used to determine the side of each square (it is the variable step).
+     * Like other lines displayed in the ui, the lines of the grid are scaled using the zoomlevel.
+     * @param group the Group object containing all Lines to be displayed to the user interface.
+     */
     private void draw_grid(Group group) {
         double xMin = app.window.get(0);
         double yMin = app.window.get(2);
@@ -227,6 +252,9 @@ public class SegmentsScene extends Scene {
 
     /**
      * Transforms a user input into an ArrayList.
+     * The user input consists of an array of 4 strings describing the window.
+     * This method will parse the array and transfrom every value into a double before adding them in the window arraylist.
+     * For the -inf and +inf values, we transfrom them into the minimum/maximum possible value of the window.
      * @param window : array of String containing user input 
      */
     private void set_window(String[] window) {
@@ -345,8 +373,9 @@ public class SegmentsScene extends Scene {
 
     /**
      * This method verify if the window entered by the user is correct.
-     * @param input : user inputs 
+     * @param input : user inputs. It consists of an array of 4 strings.
      * @return true if the input is correct
+     * @return false if the input is not correct
      */
     private boolean verify_window_input(String[] input) {
         if (input.length != 4) {
