@@ -22,6 +22,7 @@ import javafx.stage.Popup;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -118,36 +119,52 @@ public class SegmentsScene extends Scene {
         reloadButton.setOnAction( e -> { window.clear(); show_segments(app.segments); });
 
         // mouse event 
+        
+        // disabling scrollpane pan on leftCLick
+        scrollPane.setOnMousePressed( e -> {
+            if (!e.isPrimaryButtonDown()) { scrollPane.setPannable(true); }
+        });
+        scrollPane.setOnMouseReleased( e -> { 
+            scrollPane.setPannable(false);
+        });
+
+        // selection rectangle
         group.setOnMousePressed( e -> {
-            rectangle = new Rectangle();
-            rectangle.setStroke(Color.BLUE);
-            rectangle.setFill(Color.TRANSPARENT);  
-            startX = e.getX();
-            startY = e.getY();
-            rectangle.setX(startX);
-            rectangle.setY(startY);
-            group.getChildren().add(rectangle);
+            if (e.isPrimaryButtonDown()) {
+                rectangle = new Rectangle();
+                rectangle.setStroke(Color.BLUE);
+                rectangle.setFill(Color.TRANSPARENT);  
+                startX = e.getX();
+                startY = e.getY();
+                rectangle.setX(startX);
+                rectangle.setY(startY);
+                group.getChildren().add(rectangle);
+            }
         });
 
         group.setOnMouseDragged( e -> {
-            endX = e.getX();
-            endY = e.getY();
-            rectangle.setX(Math.min(startX, e.getX()));
-            rectangle.setY(Math.min(startY, e.getY()));
-            rectangle.setWidth(Math.abs(endX - startX));
-            rectangle.setHeight(Math.abs(endY - startY));
+            if (e.isPrimaryButtonDown()) {
+                endX = e.getX();
+                endY = e.getY();
+                rectangle.setX(Math.min(startX, e.getX()));
+                rectangle.setY(Math.min(startY, e.getY()));
+                rectangle.setWidth(Math.abs(endX - startX));
+                rectangle.setHeight(Math.abs(endY - startY));
+            }
         });
 
         group.setOnMouseReleased( e -> {
-            endX = e.getX();
-            endY = e.getY();
-            group.getChildren().remove(rectangle);
-            window.clear();
-            window.add(Math.min(startX, endX)/zoomLevel);
-            window.add(Math.max(startX, endX)/zoomLevel);
-            window.add(Math.min(startY, endY)/zoomLevel);
-            window.add(Math.max(startY, endY)/zoomLevel);
-            show_segments(app.query(this.window)); 
+            if (e.getButton() == MouseButton.PRIMARY) {
+                endX = e.getX();
+                endY = e.getY();
+                group.getChildren().remove(rectangle);
+                window.clear();
+                window.add(Math.min(startX, endX)/zoomLevel);
+                window.add(Math.max(startX, endX)/zoomLevel);
+                window.add(Math.min(startY, endY)/zoomLevel);
+                window.add(Math.max(startY, endY)/zoomLevel);
+                show_segments(app.query(this.window)); 
+            }
         });
     }
     
