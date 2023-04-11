@@ -330,7 +330,7 @@ public class SegmentsScene extends Scene {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Input Error");
                     alert.setHeaderText(null);
-                    alert.setContentText("The input can contain only float numbers and -inf or +inf");
+                    alert.setContentText("The input can contain only float numbers and -inf or +inf\n The window can be :\n - bounded according to both components, meaning in the form [x:x'] x [y:y'];\n - partially bounded in the x component, meaning in the form (-∞:x'] x [y:y'] or [x:+∞) x [y:y'];\n - partially bounded in the y component, meaning in the form [x:x'] x (-∞:y'] or [x:x'] x [y:+∞).");
                     alert.showAndWait();      
                 }
                 popupOnScreen = false; 
@@ -353,6 +353,9 @@ public class SegmentsScene extends Scene {
             return false;
         }
         if (input[0].equals("-inf") && input[1].equals("+inf") || input[2].equals("-inf") && input[3].equals("+inf")) {
+            return false;
+        }
+        if (input[0].equals("-inf") && input[2].equals("-inf") || input[1].equals("+inf") && input[3].equals("+inf")) {
             return false;
         }
         for (String str : input) {
